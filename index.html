@@ -249,6 +249,180 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://jeremyekek.github.io/2019/03/14/HTTP-方法：GET-对比-POST/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="EkEk">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EkEk的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/03/14/HTTP-方法：GET-对比-POST/" itemprop="url">HTTP 方法：GET 对比 POST</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-14T22:10:15+08:00">
+                2019-03-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/03/14/HTTP-方法：GET-对比-POST/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/03/14/HTTP-方法：GET-对比-POST/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time &asymp;</span>
+                
+                <span title="Reading time">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="两种最常用的-HTTP-方法是：GET-和-POST。"><a href="#两种最常用的-HTTP-方法是：GET-和-POST。" class="headerlink" title="两种最常用的 HTTP 方法是：GET 和 POST。"></a>两种最常用的 HTTP 方法是：GET 和 POST。</h2><h3 id="什么是-HTTP？"><a href="#什么是-HTTP？" class="headerlink" title="什么是 HTTP？"></a>什么是 HTTP？</h3><p>超文本传输协议（HTTP）的设计目的是保证客户机与服务器之间的通信。</p>
+<p>HTTP 的工作方式是客户机与服务器之间的请求-应答协议。</p>
+<p>web 浏览器可能是客户端，而计算机上的网络应用程序也可能作为服务器端。</p>
+<p>举例：客户端（浏览器）向服务器提交 HTTP 请求；服务器向客户端返回响应。响应包含关于请求的状态信息以及可能被请求的内容。</p>
+<ul>
+<li><em>GET</em> - 从指定的资源请求数据。</li>
+<li><em>POST</em> - 向指定的资源提交要被处理的数据</li>
+</ul>
+<h4 id="get-方法"><a href="#get-方法" class="headerlink" title="get 方法"></a>get 方法</h4><p>提交的参数拼接到URL中去传输，所有的参数可见，提交数据的容量是有限的，不安全的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">GET /DVWA-1.9/vulnerabilities/sqli/index.php?id=1&amp;Submit=Submit&amp;user_token=41b76347bec45ac7efcee4c85503c6f3 HTTP/1.1</span><br><span class="line">//请求包中第一行中有请求方式  请求的页面(参数) 协议版本</span><br><span class="line">Host: 127.0.0.1</span><br><span class="line">User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:52.0) Gecko/20100101 Firefox/52.0</span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</span><br><span class="line">Accept-Language: zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Referer: http://127.0.0.1/DVWA-1.9/vulnerabilities/sqli/?id=1&amp;Submit=Submit&amp;user_token=77352e6d05fd4ae966be81c2d32ef37a</span><br><span class="line">Cookie: security=impossible; PHPSESSID=875ahlcb2kckrg69u7qvq5rg36</span><br><span class="line">DNT: 1</span><br><span class="line">Connection: keep-alive</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br></pre></td></tr></table></figure>
+<h4 id="post-方法"><a href="#post-方法" class="headerlink" title="post 方法"></a>post 方法</h4><p>提交的参数数据不直接放在URL中，而是放在请求包中请求内容中，提交数据的容量较大，安全性比GET方式高</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">POST /DVWA-1.9/vulnerabilities/brute/ HTTP/1.1</span><br><span class="line">//请求包中第一行有请求方式  请求的页面（没有参数）</span><br><span class="line">Host: 127.0.0.1</span><br><span class="line">User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:52.0) Gecko/20100101 Firefox/52.0</span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</span><br><span class="line">Accept-Language: zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Referer: http://127.0.0.1/DVWA-1.9/vulnerabilities/brute/</span><br><span class="line">Cookie: security=impossible; PHPSESSID=875ahlcb2kckrg69u7qvq5rg36</span><br><span class="line">DNT: 1</span><br><span class="line">Connection: keep-alive</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 80</span><br><span class="line">（必须有空格）</span><br><span class="line">username=de&amp;password=123&amp;Login=Login&amp;user_token=92de6b9fdbff54788d34d424e6aa6015</span><br></pre></td></tr></table></figure>
+<p><strong>注意</strong>：请求的数据在请求内容中，每个参数使用&amp;隔开</p>
+<h5 id="username-password-Login-user-token-这些名字怎么来的？"><a href="#username-password-Login-user-token-这些名字怎么来的？" class="headerlink" title="username password Login user_token 这些名字怎么来的？"></a>username password Login user_token 这些名字怎么来的？</h5><p>​    这些参数对应的名称都是前端的form表单中的input输入框的name值</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://jeremyekek.github.io/2019/03/14/Metasploit-MSF/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -890,7 +1064,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/03/13/利用github-pages-hexo搭建个人博客/" itemprop="url">2019-03-13-利用github pages+hexo搭建个人博客</a></h1>
+                <a class="post-title-link" href="/2019/03/13/利用github-pages-hexo搭建个人博客/" itemprop="url">利用GitHub Pages搭建个人博客</a></h1>
         
 
         <div class="post-meta">
@@ -1091,7 +1265,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
