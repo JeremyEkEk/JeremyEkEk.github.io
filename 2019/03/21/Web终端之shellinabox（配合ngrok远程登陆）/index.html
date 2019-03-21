@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="nmap,">
+  <meta name="keywords" content="shellinabox,ngrok,">
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="nmap (network mapper)最早是Linux中扫描和嗅探工具，网络连接端扫描工具，主要是探测目标机器上开启的服务、安全性问题、主机存活等等 基本功能： 探测机器存活情况；（是否开机） 扫端口；（服务） 扫描目标机器系统类型；（OS类型：NT/Linux）  高级用法； 扫描目标机器上的安全漏洞；">
-<meta name="keywords" content="nmap">
+<meta name="description" content="Shellinabox 是一个基于 web 的终端模拟器，采用 C 语言编写，使用 Ajax 与后端服务通信。它实现了一个 Webserver，默认监听 4200 端口，在支持 Javascript 和 CSS 的浏览器上访问 http://host:4200 即可。并且可以配置 SSL/TLS 证书，使用 https 方式加密通信。 安装12apt-get install shellinabox">
+<meta name="keywords" content="shellinabox,ngrok">
 <meta property="og:type" content="article">
-<meta property="og:title" content="nmap基础命令">
-<meta property="og:url" content="https://jeremyekek.github.io/2019/03/16/nmap基础命令/index.html">
+<meta property="og:title" content="Web终端之shellinabox（配合ngrok远程登陆）">
+<meta property="og:url" content="https://jeremyekek.github.io/2019/03/21/Web终端之shellinabox（配合ngrok远程登陆）/index.html">
 <meta property="og:site_name" content="EkEk的个人博客">
-<meta property="og:description" content="nmap (network mapper)最早是Linux中扫描和嗅探工具，网络连接端扫描工具，主要是探测目标机器上开启的服务、安全性问题、主机存活等等 基本功能： 探测机器存活情况；（是否开机） 扫端口；（服务） 扫描目标机器系统类型；（OS类型：NT/Linux）  高级用法； 扫描目标机器上的安全漏洞；">
+<meta property="og:description" content="Shellinabox 是一个基于 web 的终端模拟器，采用 C 语言编写，使用 Ajax 与后端服务通信。它实现了一个 Webserver，默认监听 4200 端口，在支持 Javascript 和 CSS 的浏览器上访问 http://host:4200 即可。并且可以配置 SSL/TLS 证书，使用 https 方式加密通信。 安装12apt-get install shellinabox">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-03-16T11:42:42.869Z">
+<meta property="og:updated_time" content="2019-03-21T12:48:29.310Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="nmap基础命令">
-<meta name="twitter:description" content="nmap (network mapper)最早是Linux中扫描和嗅探工具，网络连接端扫描工具，主要是探测目标机器上开启的服务、安全性问题、主机存活等等 基本功能： 探测机器存活情况；（是否开机） 扫端口；（服务） 扫描目标机器系统类型；（OS类型：NT/Linux）  高级用法； 扫描目标机器上的安全漏洞；">
+<meta name="twitter:title" content="Web终端之shellinabox（配合ngrok远程登陆）">
+<meta name="twitter:description" content="Shellinabox 是一个基于 web 的终端模拟器，采用 C 语言编写，使用 Ajax 与后端服务通信。它实现了一个 Webserver，默认监听 4200 端口，在支持 Javascript 和 CSS 的浏览器上访问 http://host:4200 即可。并且可以配置 SSL/TLS 证书，使用 https 方式加密通信。 安装12apt-get install shellinabox">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://jeremyekek.github.io/2019/03/16/nmap基础命令/">
+  <link rel="canonical" href="https://jeremyekek.github.io/2019/03/21/Web终端之shellinabox（配合ngrok远程登陆）/">
 
 
 
 
 
-  <title>nmap基础命令 | EkEk的个人博客</title>
+  <title>Web终端之shellinabox（配合ngrok远程登陆） | EkEk的个人博客</title>
   
 
 
@@ -255,7 +255,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://jeremyekek.github.io/2019/03/16/nmap基础命令/">
+    <link itemprop="mainEntityOfPage" href="https://jeremyekek.github.io/2019/03/21/Web终端之shellinabox（配合ngrok远程登陆）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="EkEk">
@@ -272,7 +272,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">nmap基础命令</h1>
+          <h1 class="post-title" itemprop="name headline">Web终端之shellinabox（配合ngrok远程登陆）</h1>
         
 
         <div class="post-meta">
@@ -284,8 +284,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-16T15:10:27+08:00">
-                2019-03-16
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-21T19:23:39+08:00">
+                2019-03-21
               </time>
             
 
@@ -325,8 +325,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2019/03/16/nmap基础命令/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/03/16/nmap基础命令/" itemprop="commentCount"></span>
+                <a href="/2019/03/21/Web终端之shellinabox（配合ngrok远程登陆）/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/03/21/Web终端之shellinabox（配合ngrok远程登陆）/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -354,29 +354,23 @@
       
 
       
-        <h3 id="nmap-network-mapper"><a href="#nmap-network-mapper" class="headerlink" title="nmap (network mapper)"></a>nmap (network mapper)</h3><p>最早是Linux中扫描和嗅探工具，网络连接端扫描工具，主要是探测目标机器上开启的服务、安全性问题、主机存活等等</p>
-<h4 id="基本功能："><a href="#基本功能：" class="headerlink" title="基本功能："></a>基本功能：</h4><ol>
-<li>探测机器存活情况；（是否开机）</li>
-<li>扫端口；（服务）</li>
-<li>扫描目标机器系统类型；（OS类型：NT/Linux）</li>
+        <p>Shellinabox 是一个基于 web 的终端模拟器，采用 C 语言编写，使用 Ajax 与后端服务通信。它实现了一个 Webserver，默认监听 4200 端口，在支持 Javascript 和 CSS 的浏览器上访问 <a href="http://host:4200" target="_blank" rel="noopener">http://host:4200</a> 即可。并且可以配置 SSL/TLS 证书，使用 https 方式加密通信。</p>
+<h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">apt-get install shellinabox		#Debian系</span><br><span class="line">yum install shellinabox			#RHEL系</span><br></pre></td></tr></table></figure>
+<h4 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">shellinaboxd -h		#查看帮助信息</span><br><span class="line">shellinaboxd -b -t  #运行</span><br><span class="line">-b		#在后台运行</span><br><span class="line">-t		#使用基于http协议的终端</span><br></pre></td></tr></table></figure>
+<p>##### </p>
+<h4 id="查看端口"><a href="#查看端口" class="headerlink" title="查看端口"></a>查看端口</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat -ntulp | grep shellinabox</span><br></pre></td></tr></table></figure>
+<h4 id="默认禁用root登陆，需要创建一个普通用户"><a href="#默认禁用root登陆，需要创建一个普通用户" class="headerlink" title="默认禁用root登陆，需要创建一个普通用户"></a>默认禁用root登陆，需要创建一个普通用户</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">useradd username</span><br></pre></td></tr></table></figure>
+<h4 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/default/shellinabox</span><br></pre></td></tr></table></figure>
+<h4 id="登陆"><a href="#登陆" class="headerlink" title="登陆"></a>登陆</h4><p>局域网内访问  <a href="ip:4200" target="_blank" rel="noopener">ip:4200</a></p>
+<p>输入用户名密码即可登陆</p>
+<p><strong>接下开启ngrok，将本地4200端口服务映射到公网Ngrok</strong></p>
+<ol>
+<li>访问<a href="https://www.ngrok.cc/user.html" target="_blank" rel="noopener">https://www.ngrok.cc/user.html</a> 注册 登录 找到”开通隧道”；</li>
+<li>选择  <code>香港Ngrok免费服务器</code> ,在接下来的界面中选择隧道协议 <code>http</code> ,名称<code>shellinabox</code>（可随便填），前置域名 (不冲突即可)，本地端口(IP:PORT)被转发的ip和端口（不要填127.0.0.1），用户名密码可选填</li>
+<li>在隧道管理中可以看到刚才建立的隧道，需要关注 <code>隧道ID</code>  <code>本地端口</code> 以及<code>域名</code> ，然后去下载Ngrok客户端</li>
+<li>下载linux客户端，./sunny clientid 隧道ID</li>
+<li>然后等待该隧道的建立  访问域名即可</li>
 </ol>
-<h4 id="高级用法；"><a href="#高级用法；" class="headerlink" title="高级用法；"></a>高级用法；</h4><ol>
-<li>扫描目标机器上的安全漏洞；</li>
-</ol>
-<a id="more"></a>
-<h4 id="nmap安装、配置环境变量"><a href="#nmap安装、配置环境变量" class="headerlink" title="nmap安装、配置环境变量"></a>nmap安装、配置环境变量</h4><h4 id="nmap的基本用法：（命令行模式）"><a href="#nmap的基本用法：（命令行模式）" class="headerlink" title="nmap的基本用法：（命令行模式）"></a>nmap的基本用法：（命令行模式）</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">nmap -h 			#帮助信息</span><br><span class="line">nmap 	[扫描类型] [选项] [目标]</span><br><span class="line">nmap 192.168.1.100	#对单个目标进行扫描</span><br><span class="line"></span><br><span class="line">Nmap scan report for 192.168.11.1</span><br><span class="line">Host is up (0.0013s latency).</span><br><span class="line">Not shown: 999 closed ports</span><br><span class="line">PORT   STATE SERVICE</span><br><span class="line">80/tcp open  http</span><br></pre></td></tr></table></figure>
-<p>端口状态</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">open</span><br><span class="line">closed</span><br><span class="line">filtered		 #被过滤的，探测包被拦截，无法定位该端口是否开启</span><br><span class="line">unfiltered	 #未过滤的，探测包没有被拦截，但是nmap还是无法判断该端口是否开启</span><br><span class="line">open|filtered #开放或者被过滤</span><br><span class="line">close|filtered	#关闭或者被过滤</span><br></pre></td></tr></table></figure>
-<p>批量扫描</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">nmap 192.168.11.0/24	#扫描整个网段</span><br><span class="line">nmap 192.179.1.1-200	#扫描1-200之间的主机</span><br><span class="line">nmap 192.167.1.1,2,7-40	</span><br><span class="line">nmap 192.168.168.1.0/24 192.10.1.3.1-200	#多网段扫描</span><br></pre></td></tr></table></figure>
-<p>文件扫描</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">echo 192.168.10.11 &gt; titlename</span><br><span class="line">nmap iL titlename（扫描文件）</span><br></pre></td></tr></table></figure>
-<p>随机选择目标 nmap -iR ，例:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap -sS -PS80 -iR 0（无休止去扫描） -p80</span><br></pre></td></tr></table></figure>
-<p>排除扫描</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">nmap 192.168.1.0/24 --exculde 192.168.1.1,255,4-10</span><br><span class="line">				   	--exculde 排除主机/网络</span><br><span class="line">nmap -iL scan_file(要扫的目标) --exculdefile noscan_file(不需要扫)</span><br></pre></td></tr></table></figure>
-<h4 id="带有参数的扫描"><a href="#带有参数的扫描" class="headerlink" title="带有参数的扫描"></a>带有参数的扫描</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">-s（Scan）</span><br><span class="line">-T（TCP）</span><br><span class="line"></span><br><span class="line">nmap -sT 使用-sT实现TCP全连接扫描，扫描过程中有三次握手</span><br><span class="line">建立连接 则表明端口开放 扫描速度慢</span><br><span class="line"></span><br><span class="line">nmap -sS 192.168.1.1 使用syn的数据包去探测,如果收到ACK，则说明端口开放</span><br><span class="line">nmap -sN -p- 192.168.1.1 NULL扫描，不设置任何控制位</span><br><span class="line">	-p 	端口 1-1000	-p-	所有端口</span><br><span class="line">	-p20,21,22,23,24,25	</span><br><span class="line"></span><br><span class="line">nmap -sV 192.168.1.1	-V 探测服务的版本</span><br><span class="line"></span><br><span class="line">将结果写入到文件中</span><br><span class="line">nmap 192.168.1.1 &gt;./result.txt</span><br><span class="line">nmap  -sV 192.168.10.5 -oX  result.html</span><br><span class="line"></span><br><span class="line">nmap -A 192.168.1.1 所有扫描结果的详细信息 全面扫描</span><br><span class="line">nmap -O 192.168.1.1 显示操作系统信息</span><br></pre></td></tr></table></figure>
-<h4 id="高级用法：扫描安全漏洞"><a href="#高级用法：扫描安全漏洞" class="headerlink" title="高级用法：扫描安全漏洞"></a>高级用法：扫描安全漏洞</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">--script	使用脚本探测漏洞</span><br><span class="line">nmap --script	脚本名称 目标</span><br><span class="line">在nmap的安装路径中有 /script/</span><br><span class="line">在该目录中存放nmap的脚本</span><br><span class="line"></span><br><span class="line">nmap --script smb-vuln-ms17-010 192.168.11.232</span><br><span class="line">永恒之蓝</span><br><span class="line"></span><br><span class="line">nmap --script smb-check-vulns 192.168.11.232</span><br><span class="line">MS08-067（SMB）溢出漏洞</span><br><span class="line"></span><br><span class="line">nmap --script ssl-heartbleed 192.168.11.232</span><br><span class="line">探测心脏滴血漏洞</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -394,7 +388,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/nmap/" rel="tag"># nmap</a>
+            <a href="/tags/shellinabox/" rel="tag"># shellinabox</a>
+          
+            <a href="/tags/ngrok/" rel="tag"># ngrok</a>
           
         </div>
       
@@ -407,8 +403,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/03/16/Metasploit利用-WinRAR远程代码执行漏洞复现/" rel="next" title="Metasploit利用-WinRAR远程代码执行漏洞复现">
-                <i class="fa fa-chevron-left"></i> Metasploit利用-WinRAR远程代码执行漏洞复现
+              <a href="/2019/03/16/nmap基础命令/" rel="next" title="nmap基础命令">
+                <i class="fa fa-chevron-left"></i> nmap基础命令
               </a>
             
           </div>
@@ -416,10 +412,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/03/21/Web终端之shellinabox（配合ngrok远程登陆）/" rel="prev" title="Web终端之shellinabox（配合ngrok远程登陆）">
-                Web终端之shellinabox（配合ngrok远程登陆） <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -577,7 +569,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#nmap-network-mapper"><span class="nav-text">nmap (network mapper)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#基本功能："><span class="nav-text">基本功能：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#高级用法；"><span class="nav-text">高级用法；</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#nmap安装、配置环境变量"><span class="nav-text">nmap安装、配置环境变量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#nmap的基本用法：（命令行模式）"><span class="nav-text">nmap的基本用法：（命令行模式）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#带有参数的扫描"><span class="nav-text">带有参数的扫描</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#高级用法：扫描安全漏洞"><span class="nav-text">高级用法：扫描安全漏洞</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装"><span class="nav-text">安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#启动"><span class="nav-text">启动</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查看端口"><span class="nav-text">查看端口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#默认禁用root登陆，需要创建一个普通用户"><span class="nav-text">默认禁用root登陆，需要创建一个普通用户</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置"><span class="nav-text">配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#登陆"><span class="nav-text">登陆</span></a></li></ol></div>
             
 
           </div>
@@ -734,9 +726,9 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'https://jeremyekek.github.io/2019/03/16/nmap基础命令/';
-          this.page.identifier = '2019/03/16/nmap基础命令/';
-          this.page.title = 'nmap基础命令';
+          this.page.url = 'https://jeremyekek.github.io/2019/03/21/Web终端之shellinabox（配合ngrok远程登陆）/';
+          this.page.identifier = '2019/03/21/Web终端之shellinabox（配合ngrok远程登陆）/';
+          this.page.title = 'Web终端之shellinabox（配合ngrok远程登陆）';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://jeremyekek-github-io.disqus.com/embed.js';
