@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next mist use-motion" lang="zh-Hans">
+<html class="theme-next pisces use-motion" lang="zh-Hans">
 <head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="EkEk的个人博客">
 <meta property="og:description" content="Shellinabox 是一个基于 web 的终端模拟器，采用 C 语言编写，使用 Ajax 与后端服务通信。它实现了一个 Webserver，默认监听 4200 端口，在支持 Javascript 和 CSS 的浏览器上访问 http://host:4200 即可。并且可以配置 SSL/TLS 证书，使用 https 方式加密通信。 安装12apt-get install shellinabox">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-03-21T12:48:29.310Z">
+<meta property="og:updated_time" content="2019-03-21T12:51:21.947Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Web终端之shellinabox（配合ngrok远程登陆）">
 <meta name="twitter:description" content="Shellinabox 是一个基于 web 的终端模拟器，采用 C 语言编写，使用 Ajax 与后端服务通信。它实现了一个 Webserver，默认监听 4200 端口，在支持 Javascript 和 CSS 的浏览器上访问 http://host:4200 即可。并且可以配置 SSL/TLS 证书，使用 https 方式加密通信。 安装12apt-get install shellinabox">
@@ -98,7 +98,7 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Mist',
+    scheme: 'Pisces',
     version: '5.1.4',
     sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: true,
@@ -357,7 +357,7 @@
         <p>Shellinabox 是一个基于 web 的终端模拟器，采用 C 语言编写，使用 Ajax 与后端服务通信。它实现了一个 Webserver，默认监听 4200 端口，在支持 Javascript 和 CSS 的浏览器上访问 <a href="http://host:4200" target="_blank" rel="noopener">http://host:4200</a> 即可。并且可以配置 SSL/TLS 证书，使用 https 方式加密通信。</p>
 <h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">apt-get install shellinabox		#Debian系</span><br><span class="line">yum install shellinabox			#RHEL系</span><br></pre></td></tr></table></figure>
 <h4 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">shellinaboxd -h		#查看帮助信息</span><br><span class="line">shellinaboxd -b -t  #运行</span><br><span class="line">-b		#在后台运行</span><br><span class="line">-t		#使用基于http协议的终端</span><br></pre></td></tr></table></figure>
-<p>##### </p>
+<a id="more"></a>
 <h4 id="查看端口"><a href="#查看端口" class="headerlink" title="查看端口"></a>查看端口</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat -ntulp | grep shellinabox</span><br></pre></td></tr></table></figure>
 <h4 id="默认禁用root登陆，需要创建一个普通用户"><a href="#默认禁用root登陆，需要创建一个普通用户" class="headerlink" title="默认禁用root登陆，需要创建一个普通用户"></a>默认禁用root登陆，需要创建一个普通用户</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">useradd username</span><br></pre></td></tr></table></figure>
 <h4 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/default/shellinabox</span><br></pre></td></tr></table></figure>
@@ -700,6 +700,13 @@
 
   
   
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
 
   
   <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
