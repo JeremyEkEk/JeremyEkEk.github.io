@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="Shellinabox 是一个基于 web 的终端模拟器，采用 C 语言编写，使用 Ajax 与后端服务通信。它实现了一个 Webserver，默认监听 4200 端口，在支持 Javascript 和 CSS 的浏览器上访问 http://host:4200 即可。并且可以配置 SSL/TLS 证书，使用 https 方式加密通信。 安装12apt-get install shellinabox">
+<meta name="description" content="一、介绍Shellinabox 是一个基于 web 的终端模拟器，采用 C 语言编写，使用 Ajax 与后端服务通信。它实现了一个 Webserver，默认监听 4200 端口，在支持 Javascript 和 CSS 的浏览器上访问 http://host:4200 即可。并且可以配置 SSL/TLS 证书，使用 https 方式加密通信。 二、安装12apt-get install shell">
 <meta name="keywords" content="shellinabox,ngrok">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Web终端之shellinabox（配合ngrok远程登陆）">
 <meta property="og:url" content="https://jeremyekek.github.io/2019/03/21/Web终端之shellinabox（配合ngrok远程登陆）/index.html">
 <meta property="og:site_name" content="EkEk的个人博客">
-<meta property="og:description" content="Shellinabox 是一个基于 web 的终端模拟器，采用 C 语言编写，使用 Ajax 与后端服务通信。它实现了一个 Webserver，默认监听 4200 端口，在支持 Javascript 和 CSS 的浏览器上访问 http://host:4200 即可。并且可以配置 SSL/TLS 证书，使用 https 方式加密通信。 安装12apt-get install shellinabox">
+<meta property="og:description" content="一、介绍Shellinabox 是一个基于 web 的终端模拟器，采用 C 语言编写，使用 Ajax 与后端服务通信。它实现了一个 Webserver，默认监听 4200 端口，在支持 Javascript 和 CSS 的浏览器上访问 http://host:4200 即可。并且可以配置 SSL/TLS 证书，使用 https 方式加密通信。 二、安装12apt-get install shell">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-03-30T06:36:51.021Z">
+<meta property="og:updated_time" content="2019-04-07T03:36:54.919Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Web终端之shellinabox（配合ngrok远程登陆）">
-<meta name="twitter:description" content="Shellinabox 是一个基于 web 的终端模拟器，采用 C 语言编写，使用 Ajax 与后端服务通信。它实现了一个 Webserver，默认监听 4200 端口，在支持 Javascript 和 CSS 的浏览器上访问 http://host:4200 即可。并且可以配置 SSL/TLS 证书，使用 https 方式加密通信。 安装12apt-get install shellinabox">
+<meta name="twitter:description" content="一、介绍Shellinabox 是一个基于 web 的终端模拟器，采用 C 语言编写，使用 Ajax 与后端服务通信。它实现了一个 Webserver，默认监听 4200 端口，在支持 Javascript 和 CSS 的浏览器上访问 http://host:4200 即可。并且可以配置 SSL/TLS 证书，使用 https 方式加密通信。 二、安装12apt-get install shell">
 
 
 
@@ -354,16 +354,20 @@
       
 
       
-        <p>Shellinabox 是一个基于 web 的终端模拟器，采用 C 语言编写，使用 Ajax 与后端服务通信。它实现了一个 Webserver，默认监听 4200 端口，在支持 Javascript 和 CSS 的浏览器上访问 <a href="http://host:4200" target="_blank" rel="noopener">http://host:4200</a> 即可。并且可以配置 SSL/TLS 证书，使用 https 方式加密通信。</p>
-<h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">apt-get install shellinabox		#Debian系</span><br><span class="line">yum install shellinabox			#RHEL系</span><br></pre></td></tr></table></figure>
-<h4 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">shellinaboxd -h		#查看帮助信息</span><br><span class="line">shellinaboxd -b -t  #运行</span><br><span class="line">-b		#在后台运行</span><br><span class="line">-t		#使用基于http协议的终端</span><br></pre></td></tr></table></figure>
+        <h2 id="一、介绍"><a href="#一、介绍" class="headerlink" title="一、介绍"></a>一、介绍</h2><p>Shellinabox 是一个基于 web 的终端模拟器，采用 C 语言编写，使用 Ajax 与后端服务通信。它实现了一个 Webserver，默认监听 4200 端口，在支持 Javascript 和 CSS 的浏览器上访问 <a href="http://host:4200" target="_blank" rel="noopener">http://host:4200</a> 即可。并且可以配置 SSL/TLS 证书，使用 https 方式加密通信。</p>
+<h2 id="二、安装"><a href="#二、安装" class="headerlink" title="二、安装"></a>二、安装</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">apt-get install shellinabox		#Debian系</span><br><span class="line">yum install shellinabox			#RHEL系</span><br></pre></td></tr></table></figure>
+<h2 id="三、启动"><a href="#三、启动" class="headerlink" title="三、启动"></a>三、启动</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">shellinaboxd -h		#查看帮助信息</span><br><span class="line">shellinaboxd -b -t  #运行</span><br><span class="line">-b		#在后台运行</span><br><span class="line">-t		#使用基于http协议的终端</span><br></pre></td></tr></table></figure>
 <a id="more"></a>
-<h4 id="查看端口"><a href="#查看端口" class="headerlink" title="查看端口"></a>查看端口</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat -ntulp | grep shellinabox</span><br></pre></td></tr></table></figure>
-<h4 id="默认禁用root登陆，需要创建一个普通用户"><a href="#默认禁用root登陆，需要创建一个普通用户" class="headerlink" title="默认禁用root登陆，需要创建一个普通用户"></a>默认禁用root登陆，需要创建一个普通用户</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">useradd username</span><br></pre></td></tr></table></figure>
-<h4 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/default/shellinabox</span><br></pre></td></tr></table></figure>
-<h4 id="登陆"><a href="#登陆" class="headerlink" title="登陆"></a>登陆</h4><p>局域网内访问  <a href="ip:4200" target="_blank" rel="noopener">ip:4200</a></p>
+<p><strong>查看端口</strong></p>
+<p>查看进程，是否启动</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat -ntulp | grep shellinabox</span><br></pre></td></tr></table></figure>
+<h2 id="四、配置"><a href="#四、配置" class="headerlink" title="四、配置"></a>四、配置</h2><h3 id="1-创建普通用户"><a href="#1-创建普通用户" class="headerlink" title="1. 创建普通用户"></a>1. 创建普通用户</h3><p>默认禁用root登陆，需要创建一个普通用户</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">useradd username</span><br></pre></td></tr></table></figure>
+<h3 id="2-修改配置文件"><a href="#2-修改配置文件" class="headerlink" title="2. 修改配置文件"></a>2. 修改配置文件</h3><p>可以需修改端口，或其他配置选项</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/default/shellinabox</span><br></pre></td></tr></table></figure>
+<h2 id="五、登陆"><a href="#五、登陆" class="headerlink" title="五、登陆"></a>五、登陆</h2><p>局域网内访问  <a href="ip:4200" target="_blank" rel="noopener">ip:4200</a></p>
 <p>输入用户名密码即可登陆</p>
-<p><strong>接下使用ngrok，将基于WEB的终端映射到公网</strong></p>
+<h2 id="六、内网映射（可选）"><a href="#六、内网映射（可选）" class="headerlink" title="六、内网映射（可选）"></a>六、内网映射（可选）</h2><h3 id="1-使用ngrok"><a href="#1-使用ngrok" class="headerlink" title="1.使用ngrok"></a>1.使用ngrok</h3><p><strong>使用ngrok，将基于WEB的终端映射到公网</strong></p>
 <ol>
 <li>访问<a href="https://www.ngrok.cc/user.html" target="_blank" rel="noopener">https://www.ngrok.cc/user.html</a> 注册 登录 找到”开通隧道”；</li>
 <li>选择  <code>香港Ngrok免费服务器</code> ,在接下来的界面中选择隧道协议 <code>http</code> ,名称<code>shellinabox</code>（可随便填），前置域名 (不冲突即可)，本地端口(IP:PORT)被转发的ip和端口（不要填127.0.0.1），用户名密码可选填</li>
@@ -371,7 +375,8 @@
 <li>下载linux客户端，./sunny clientid 隧道ID</li>
 <li>然后等待该隧道的建立  访问域名即可</li>
 </ol>
-<p>ngrok.cc详细使用教程：<a href="http://www.ngrok.cc/_book/" target="_blank" rel="noopener">http://www.ngrok.cc/_book/</a></p>
+<p><strong>ngrok.cc详细使用教程：<a href="http://www.ngrok.cc/_book/" target="_blank" rel="noopener">http://www.ngrok.cc/_book/</a></strong></p>
+<h3 id="2-使用frp"><a href="#2-使用frp" class="headerlink" title="2.使用frp"></a>2.使用frp</h3><h3 id="3-使用花生壳"><a href="#3-使用花生壳" class="headerlink" title="3.使用花生壳"></a>3.使用花生壳</h3><p>可去官网开通    <a href="https://hsk.oray.com/" target="_blank" rel="noopener">https://hsk.oray.com/</a></p>
 
       
     </div>
@@ -414,8 +419,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/04/05/hello-world/" rel="prev" title="Hello World">
-                Hello World <i class="fa fa-chevron-right"></i>
+              <a href="/2019/04/07/Ubuntu16下搭建OpenVPN服务/" rel="prev" title="Ubuntu16搭建OpenVPN服务">
+                Ubuntu16搭建OpenVPN服务 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -503,7 +508,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -525,7 +530,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -712,7 +717,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装"><span class="nav-text">安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#启动"><span class="nav-text">启动</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查看端口"><span class="nav-text">查看端口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#默认禁用root登陆，需要创建一个普通用户"><span class="nav-text">默认禁用root登陆，需要创建一个普通用户</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置"><span class="nav-text">配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#登陆"><span class="nav-text">登陆</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、介绍"><span class="nav-text">一、介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、安装"><span class="nav-text">二、安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、启动"><span class="nav-text">三、启动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、配置"><span class="nav-text">四、配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-创建普通用户"><span class="nav-text">1. 创建普通用户</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-修改配置文件"><span class="nav-text">2. 修改配置文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、登陆"><span class="nav-text">五、登陆</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#六、内网映射（可选）"><span class="nav-text">六、内网映射（可选）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-使用ngrok"><span class="nav-text">1.使用ngrok</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-使用frp"><span class="nav-text">2.使用frp</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-使用花生壳"><span class="nav-text">3.使用花生壳</span></a></li></ol></li></ol></div>
             
 
           </div>

@@ -89,7 +89,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://jeremyekek.github.io/2019/03/13/利用github%20pages+hexo%20搭建个人博客/1552609247373.png">
 <meta property="og:image" content="https://jeremyekek.github.io/2019/03/13/利用github%20pages+hexo%20搭建个人博客/14398360-5516f5c5666265cd.png">
-<meta property="og:updated_time" content="2019-03-16T11:14:23.070Z">
+<meta property="og:updated_time" content="2019-04-07T03:23:45.158Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="利用GitHub Pages搭建个人博客">
 <meta name="twitter:description" content="使用Hexo+GitHub搭建免费个人博客">
@@ -361,19 +361,19 @@
       
 
       
-        <h3 id="创建自己的GitHub-Pages页面"><a href="#创建自己的GitHub-Pages页面" class="headerlink" title="创建自己的GitHub Pages页面"></a>创建自己的GitHub Pages页面</h3><p>使用GitHub Pages搭建博客的好处有：</p>
+        <h2 id="一、创建GitHub-Pages"><a href="#一、创建GitHub-Pages" class="headerlink" title="一、创建GitHub Pages"></a>一、创建GitHub Pages</h2><p>使用GitHub Pages搭建博客的好处有：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">1. 全是静态文件，访问速度快；</span><br><span class="line">2. 免费方便，不用花一分钱就可以搭建一个自由的个人博客，不需要服务器不需要后台；</span><br><span class="line">3. 可以随意绑定自己的域名，不仔细看的话根本看不出来你的网站是基于github的；</span><br><span class="line">4. 数据绝对安全，基于github的版本管理，想恢复到哪个历史版本都行；</span><br><span class="line">5. 博客内容可以轻松打包、转移、发布到其它平台；</span><br><span class="line">6. 等等；</span><br></pre></td></tr></table></figure>
 <a id="more"></a>
-<h4 id="首先创建存储库"><a href="#首先创建存储库" class="headerlink" title="首先创建存储库"></a>首先创建存储库</h4><p>前往<a href="https://github.com/" target="_blank" rel="noopener">GitHub</a>并<a href="https://github.com/new" target="_blank" rel="noopener">创建一个</a>名为<em>username</em> .github.io <a href="https://github.com/new" target="_blank" rel="noopener">的新存储库</a>，其中<em>username</em>是GitHub上的用户名（或组织名称）</p>
+<h3 id="1-首先创建存储库"><a href="#1-首先创建存储库" class="headerlink" title="1. 首先创建存储库"></a>1. 首先创建存储库</h3><p>前往<a href="https://github.com/" target="_blank" rel="noopener">GitHub</a>并<a href="https://github.com/new" target="_blank" rel="noopener">创建一个</a>名为<em>username</em> .github.io <a href="https://github.com/new" target="_blank" rel="noopener">的新存储库</a>，其中<em>username</em>是GitHub上的用户名（或组织名称）</p>
 <p><img src="/2019/03/13/利用github pages+hexo 搭建个人博客/1552609247373.png" alt="1552609247373"></p>
 <p><strong>注意：如果存储库名字的第一部分与你的用户名不完全匹配，则无法正常工作，因此请务必正确使用。</strong></p>
-<h4 id="安装-Git："><a href="#安装-Git：" class="headerlink" title="安装 Git："></a>安装 Git：</h4><ul>
+<h3 id="2-安装-Git"><a href="#2-安装-Git" class="headerlink" title="2. 安装 Git"></a>2. 安装 Git</h3><ul>
 <li>Windows：下载并安装 <a href="https://git-scm.com/download/win" target="_blank" rel="noopener">git</a>.</li>
 <li>Mac：使用 <a href="http://mxcl.github.com/homebrew/" target="_blank" rel="noopener">Homebrew</a>, <a href="http://www.macports.org/" target="_blank" rel="noopener">MacPorts</a> ：<code>brew install git</code>;或下载 <a href="http://sourceforge.net/projects/git-osx-installer/" target="_blank" rel="noopener">安装程序</a> 安装。</li>
 <li>Linux (Ubuntu, Debian)：<code>sudo apt-get install git-core</code></li>
 <li>Linux (Fedora, Red Hat, CentOS)：<code>sudo yum install git-core</code> </li>
 </ul>
-<h4 id="配置SSH连接GitHub"><a href="#配置SSH连接GitHub" class="headerlink" title="配置SSH连接GitHub"></a>配置SSH连接GitHub</h4><ol>
+<h3 id="3-配置SSH连接GitHub"><a href="#3-配置SSH连接GitHub" class="headerlink" title="3. 配置SSH连接GitHub"></a>3. 配置SSH连接GitHub</h3><ol>
 <li><p>配置SSH Key</p>
 <ul>
 <li><p>检查本机是否有ssh key设置</p>
@@ -404,11 +404,15 @@
 <p><em>Hi username! You’ve successfully authenticated, but GitHub does not provide shell access.</em></p>
 </li>
 </ol>
-<h4 id="转到要存储项目的文件夹，然后克隆新存储库："><a href="#转到要存储项目的文件夹，然后克隆新存储库：" class="headerlink" title="转到要存储项目的文件夹，然后克隆新存储库："></a>转到要存储项目的文件夹，然后克隆新存储库：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/用户名/用户名.github.io</span><br></pre></td></tr></table></figure>
-<h4 id="输入项目文件夹并添加index-html文件："><a href="#输入项目文件夹并添加index-html文件：" class="headerlink" title="输入项目文件夹并添加index.html文件："></a>输入项目文件夹并添加index.html文件：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd username.github.io</span><br><span class="line">echo“Hello World”&gt;index.html</span><br></pre></td></tr></table></figure>
-<h4 id="添加，提交和推送你的更改："><a href="#添加，提交和推送你的更改：" class="headerlink" title="添加，提交和推送你的更改："></a>添加，提交和推送你的更改：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git add --all</span><br><span class="line">git commit -m“初始提交”</span><br><span class="line">git push -u origin master</span><br></pre></td></tr></table></figure>
-<h4 id="Well-done，启动浏览器并转到https-username-github-io。"><a href="#Well-done，启动浏览器并转到https-username-github-io。" class="headerlink" title="Well done，启动浏览器并转到https://username.github.io。"></a>Well done，启动浏览器并转到<a href="https://username.github.io。" target="_blank" rel="noopener">https://username.github.io。</a></h4><h3 id="使用Hexo博客框架来快速创建一个漂亮的个人博客"><a href="#使用Hexo博客框架来快速创建一个漂亮的个人博客" class="headerlink" title="使用Hexo博客框架来快速创建一个漂亮的个人博客"></a>使用Hexo博客框架来快速创建一个漂亮的个人博客</h3><p>Hexo 是一个快速、简洁且高效的博客框架。Hexo 使用 <a href="http://daringfireball.net/projects/markdown/" target="_blank" rel="noopener">Markdown</a>（或其他渲染引擎）解析文章，在几秒内，即可利用靓丽的主题生成静态网页。</p>
-<h4 id="安装前提"><a href="#安装前提" class="headerlink" title="安装前提"></a>安装前提</h4><ol>
+<h3 id="4-克隆到本地存储库"><a href="#4-克隆到本地存储库" class="headerlink" title="4. 克隆到本地存储库"></a>4. 克隆到本地存储库</h3><p>转到要存储项目的文件夹，然后克隆新存储库：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/用户名/用户名.github.io</span><br></pre></td></tr></table></figure>
+<h3 id="5-创建内容"><a href="#5-创建内容" class="headerlink" title="5. 创建内容"></a>5. 创建内容</h3><p>转入项目文件夹并添加index.html文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd username.github.io</span><br><span class="line">echo“Hello World”&gt;index.html</span><br></pre></td></tr></table></figure>
+<h3 id="6-推送到GitHub"><a href="#6-推送到GitHub" class="headerlink" title="6. 推送到GitHub"></a>6. 推送到GitHub</h3><p>添加，提交和推送你的更改</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git add --all</span><br><span class="line">git commit -m“初始提交”</span><br><span class="line">git push -u origin master</span><br></pre></td></tr></table></figure>
+<h3 id="7-浏览你的Github-Pages"><a href="#7-浏览你的Github-Pages" class="headerlink" title="7.浏览你的Github Pages"></a>7.浏览你的Github Pages</h3><p>Well done，启动浏览器并转到<a href="https://username.github.io。" target="_blank" rel="noopener">https://username.github.io。</a></p>
+<h2 id="二、使用Hexo博客框架"><a href="#二、使用Hexo博客框架" class="headerlink" title="二、使用Hexo博客框架"></a>二、使用Hexo博客框架</h2><p>Hexo 是一个快速、简洁且高效的博客框架。Hexo 使用 <a href="http://daringfireball.net/projects/markdown/" target="_blank" rel="noopener">Markdown</a>（或其他渲染引擎）解析文章，在几秒内，即可利用靓丽的主题生成静态网页。</p>
+<h3 id="1-安装前提"><a href="#1-安装前提" class="headerlink" title="1. 安装前提"></a>1. 安装前提</h3><ol>
 <li>安装 Hexo 相当简单。然而在安装前，需确保已安装下列应用程序：</li>
 </ol>
 <ul>
@@ -437,26 +441,32 @@
 <p>Windows 用户</p>
 <p>对于windows用户来说，建议使用安装程序进行安装。安装时，请勾选<strong>Add to PATH</strong>选项。<br>另外，您也可以使用<strong>Git Bash</strong>，这是git for windows自带的一组程序，提供了Linux风格的shell，在该环境下，您可以直接用上面提到的命令来安装Node.js。打开它的方法很简单，在任意位置单击右键，选择“Git Bash Here”即可。由于Hexo的很多操作都涉及到命令行，您可以考虑始终使用<strong>Git Bash</strong>来进行操作。</p>
 </blockquote>
-<h4 id="快速部署Hexo"><a href="#快速部署Hexo" class="headerlink" title="快速部署Hexo"></a>快速部署Hexo</h4><p>所有必备的应用程序安装完成后，即可使用 npm 安装 Hexo。</p>
+<h3 id="2-快速部署Hexo"><a href="#2-快速部署Hexo" class="headerlink" title="2. 快速部署Hexo"></a>2. 快速部署Hexo</h3><p>所有必备的应用程序安装完成后，即可使用 npm 安装 Hexo。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-cli -g</span><br></pre></td></tr></table></figure>
 <p>安装 Hexo 完成后，请执行下列命令，Hexo 将会在指定文件夹中新建所需要的文件。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo init &lt;folder&gt;</span><br><span class="line">cd &lt;folder&gt;</span><br><span class="line">npm install</span><br></pre></td></tr></table></figure>
 <p>新建完成后，指定文件夹的目录如下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── _config.yml</span><br><span class="line">├── package.json</span><br><span class="line">├── scaffolds</span><br><span class="line">├── source</span><br><span class="line">|   ├── _drafts</span><br><span class="line">|   └── _posts</span><br><span class="line">└── themes</span><br></pre></td></tr></table></figure>
-<h5 id="config-yml"><a href="#config-yml" class="headerlink" title="_config.yml"></a>_config.yml</h5><p>网站的配置信息，您可以在此配置大部分的参数。</p>
-<h5 id="package-json"><a href="#package-json" class="headerlink" title="package.json"></a>package.json</h5><p>应用程序信息，新添加的插件内容也会出现在这里面。</p>
-<h5 id="scaffolds"><a href="#scaffolds" class="headerlink" title="scaffolds"></a>scaffolds</h5><p>模版文件夹。当您新建文章时，Hexo 会根据 scaffold 来建立文件。</p>
+<p><strong>_config.yml</strong></p>
+<p>网站的配置信息，您可以在此配置大部分的参数。</p>
+<p><strong>package.json</strong></p>
+<p>应用程序信息，新添加的插件内容也会出现在这里面。</p>
+<p><strong>scaffolds</strong></p>
+<p>模版文件夹。当您新建文章时，Hexo 会根据 scaffold 来建立文件。</p>
 <p>这里放了三个模板文件，分别是新添加博客文章（posts）、新添加博客页（page）和新添加草稿（draft）的目标样式。</p>
-<h5 id="source"><a href="#source" class="headerlink" title="source"></a>source</h5><p>资源文件夹是存放博客内容的地方。除 <code>_posts</code> 文件夹之外，开头命名为 <code>_</code> (下划线)的文件 / 文件夹和隐藏的文件将会被忽略。之后我们通过命令新建tags（标签）还有categories（分类）页后，这里会相应地增加文件夹。</p>
-<h5 id="themes"><a href="#themes" class="headerlink" title="themes"></a>themes</h5><p>主题文件夹。Hexo 会根据主题来生成静态页面。</p>
-<h4 id="Hexo命令"><a href="#Hexo命令" class="headerlink" title="Hexo命令"></a>Hexo命令</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo g(generate)	#生成静态页面</span><br><span class="line">hexo s(server)		#启动服务器，默认4000端口，在本地查看内容</span><br></pre></td></tr></table></figure>
-<h4 id="部署到github"><a href="#部署到github" class="headerlink" title="部署到github"></a>部署到github</h4><p>修改git/blog/_config.yml配置，找到Deployment部分：</p>
+<p><strong>source</strong></p>
+<p>资源文件夹是存放博客内容的地方。除 <code>_posts</code> 文件夹之外，开头命名为 <code>_</code> (下划线)的文件 / 文件夹和隐藏的文件将会被忽略。之后我们通过命令新建tags（标签）还有categories（分类）页后，这里会相应地增加文件夹。</p>
+<p><strong>themes</strong></p>
+<p>主题文件夹。Hexo 会根据主题来生成静态页面。</p>
+<h3 id="3-Hexo命令"><a href="#3-Hexo命令" class="headerlink" title="3. Hexo命令"></a>3. Hexo命令</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo g(generate)	#生成静态页面</span><br><span class="line">hexo s(server)		#启动服务器，默认4000端口，在本地查看内容</span><br></pre></td></tr></table></figure>
+<h3 id="4-部署到github"><a href="#4-部署到github" class="headerlink" title="4. 部署到github"></a>4. 部署到github</h3><p>修改git/blog/_config.yml配置，找到Deployment部分：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: &lt;repository url&gt; #https://bitbucket.org/JohnSmith/johnsmith.bitbucket.io</span><br><span class="line">  branch: [branch] #published</span><br><span class="line">  message: [message]</span><br></pre></td></tr></table></figure>
 <p>安装 hexo-deployer-git</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-deployer-git --save   #第一次部署需要先安装插件</span><br></pre></td></tr></table></figure>
-<h4 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo d(deploy) 		#部署到网站</span><br></pre></td></tr></table></figure>
+<p><strong>部署</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo d(deploy) 		#部署到网站</span><br></pre></td></tr></table></figure>
 <p>接下来可以访问我们的GitHub pages页面，查看效果啦</p>
-<h4 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h4><p>关于hexo的最新详细配置，可以参考[hexo官方文档][<a href="https://hexo.io/zh-cn/docs/]" target="_blank" rel="noopener">https://hexo.io/zh-cn/docs/]</a></p>
+<h3 id="5-最后"><a href="#5-最后" class="headerlink" title="5. 最后"></a>5. 最后</h3><p>关于hexo的最新详细配置，可以参考[hexo官方文档][<a href="https://hexo.io/zh-cn/docs/]" target="_blank" rel="noopener">https://hexo.io/zh-cn/docs/]</a></p>
 
       
     </div>
@@ -586,7 +596,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -608,7 +618,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -795,7 +805,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建自己的GitHub-Pages页面"><span class="nav-text">创建自己的GitHub Pages页面</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#首先创建存储库"><span class="nav-text">首先创建存储库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装-Git："><span class="nav-text">安装 Git：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置SSH连接GitHub"><span class="nav-text">配置SSH连接GitHub</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#转到要存储项目的文件夹，然后克隆新存储库："><span class="nav-text">转到要存储项目的文件夹，然后克隆新存储库：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#输入项目文件夹并添加index-html文件："><span class="nav-text">输入项目文件夹并添加index.html文件：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#添加，提交和推送你的更改："><span class="nav-text">添加，提交和推送你的更改：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Well-done，启动浏览器并转到https-username-github-io。"><span class="nav-text">Well done，启动浏览器并转到https://username.github.io。</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用Hexo博客框架来快速创建一个漂亮的个人博客"><span class="nav-text">使用Hexo博客框架来快速创建一个漂亮的个人博客</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装前提"><span class="nav-text">安装前提</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#快速部署Hexo"><span class="nav-text">快速部署Hexo</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#config-yml"><span class="nav-text">_config.yml</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#package-json"><span class="nav-text">package.json</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#scaffolds"><span class="nav-text">scaffolds</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#source"><span class="nav-text">source</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#themes"><span class="nav-text">themes</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Hexo命令"><span class="nav-text">Hexo命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#部署到github"><span class="nav-text">部署到github</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#部署"><span class="nav-text">部署</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#最后"><span class="nav-text">最后</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、创建GitHub-Pages"><span class="nav-text">一、创建GitHub Pages</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-首先创建存储库"><span class="nav-text">1. 首先创建存储库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-安装-Git"><span class="nav-text">2. 安装 Git</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-配置SSH连接GitHub"><span class="nav-text">3. 配置SSH连接GitHub</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-克隆到本地存储库"><span class="nav-text">4. 克隆到本地存储库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-创建内容"><span class="nav-text">5. 创建内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-推送到GitHub"><span class="nav-text">6. 推送到GitHub</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-浏览你的Github-Pages"><span class="nav-text">7.浏览你的Github Pages</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、使用Hexo博客框架"><span class="nav-text">二、使用Hexo博客框架</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-安装前提"><span class="nav-text">1. 安装前提</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-快速部署Hexo"><span class="nav-text">2. 快速部署Hexo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-Hexo命令"><span class="nav-text">3. Hexo命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-部署到github"><span class="nav-text">4. 部署到github</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-最后"><span class="nav-text">5. 最后</span></a></li></ol></li></ol></div>
             
 
           </div>

