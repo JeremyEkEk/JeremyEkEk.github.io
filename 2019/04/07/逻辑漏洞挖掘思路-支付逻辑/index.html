@@ -79,22 +79,22 @@
 
 
 
-<meta name="description" content="一、现在src关注的重点​    随着常规漏洞的风险降低，以及挖掘难度的增加，现在的src更多的关注点，也就是白帽子关注的重点是逻辑漏洞。逻辑漏洞不要求有很深的基础，比如sql注入手工注入需要对sql注入有很深厚的理解；逻辑漏洞只需要对业务逻辑和关键参数有一定的了解，剩下的看运气。 二、刷src之前的准备1. 信息收集（泛讲）​    渗透测试和漏洞挖掘，信息收集是贯彻于整个流程的；在进行src挖">
+<meta name="description" content="一、现在src关注的重点​    随着常规漏洞的风险降低，以及挖掘难度的增加，现在的src更多的关注点，也就是白帽子关注的重点是逻辑漏洞。逻辑漏洞不要求有很深的基础，比如sql注入手工注入需要对sql注入有很深厚的理解；逻辑漏洞只需要对业务逻辑和关键参数有一定的了解，剩下的看运气。">
 <meta name="keywords" content="业务逻辑漏洞,支付逻辑漏洞">
 <meta property="og:type" content="article">
 <meta property="og:title" content="逻辑漏洞挖掘思路-支付逻辑">
 <meta property="og:url" content="https://jeremyekek.github.io/2019/04/07/逻辑漏洞挖掘思路-支付逻辑/index.html">
 <meta property="og:site_name" content="EkEk的个人博客">
-<meta property="og:description" content="一、现在src关注的重点​    随着常规漏洞的风险降低，以及挖掘难度的增加，现在的src更多的关注点，也就是白帽子关注的重点是逻辑漏洞。逻辑漏洞不要求有很深的基础，比如sql注入手工注入需要对sql注入有很深厚的理解；逻辑漏洞只需要对业务逻辑和关键参数有一定的了解，剩下的看运气。 二、刷src之前的准备1. 信息收集（泛讲）​    渗透测试和漏洞挖掘，信息收集是贯彻于整个流程的；在进行src挖">
+<meta property="og:description" content="一、现在src关注的重点​    随着常规漏洞的风险降低，以及挖掘难度的增加，现在的src更多的关注点，也就是白帽子关注的重点是逻辑漏洞。逻辑漏洞不要求有很深的基础，比如sql注入手工注入需要对sql注入有很深厚的理解；逻辑漏洞只需要对业务逻辑和关键参数有一定的了解，剩下的看运气。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://jeremyekek.github.io/2019/04/07/逻辑漏洞挖掘思路-支付逻辑/1554553268179.png">
 <meta property="og:image" content="https://jeremyekek.github.io/2019/04/07/逻辑漏洞挖掘思路-支付逻辑/1554553286437.png">
 <meta property="og:image" content="https://jeremyekek.github.io/2019/04/07/逻辑漏洞挖掘思路-支付逻辑/1554555632056.png">
 <meta property="og:image" content="https://jeremyekek.github.io/2019/04/07/逻辑漏洞挖掘思路-支付逻辑/1554557520785.png">
-<meta property="og:updated_time" content="2019-04-07T04:52:18.197Z">
+<meta property="og:updated_time" content="2019-04-07T04:55:01.869Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="逻辑漏洞挖掘思路-支付逻辑">
-<meta name="twitter:description" content="一、现在src关注的重点​    随着常规漏洞的风险降低，以及挖掘难度的增加，现在的src更多的关注点，也就是白帽子关注的重点是逻辑漏洞。逻辑漏洞不要求有很深的基础，比如sql注入手工注入需要对sql注入有很深厚的理解；逻辑漏洞只需要对业务逻辑和关键参数有一定的了解，剩下的看运气。 二、刷src之前的准备1. 信息收集（泛讲）​    渗透测试和漏洞挖掘，信息收集是贯彻于整个流程的；在进行src挖">
+<meta name="twitter:description" content="一、现在src关注的重点​    随着常规漏洞的风险降低，以及挖掘难度的增加，现在的src更多的关注点，也就是白帽子关注的重点是逻辑漏洞。逻辑漏洞不要求有很深的基础，比如sql注入手工注入需要对sql注入有很深厚的理解；逻辑漏洞只需要对业务逻辑和关键参数有一定的了解，剩下的看运气。">
 <meta name="twitter:image" content="https://jeremyekek.github.io/2019/04/07/逻辑漏洞挖掘思路-支付逻辑/1554553268179.png">
 
 
@@ -360,6 +360,7 @@
 
       
         <h2 id="一、现在src关注的重点"><a href="#一、现在src关注的重点" class="headerlink" title="一、现在src关注的重点"></a>一、现在src关注的重点</h2><p>​    随着常规漏洞的风险降低，以及挖掘难度的增加，现在的src更多的关注点，也就是白帽子关注的重点是逻辑漏洞。逻辑漏洞不要求有很深的基础，比如sql注入手工注入需要对sql注入有很深厚的理解；逻辑漏洞只需要对业务逻辑和关键参数有一定的了解，剩下的看运气。</p>
+<a id="more"></a>
 <h2 id="二、刷src之前的准备"><a href="#二、刷src之前的准备" class="headerlink" title="二、刷src之前的准备"></a>二、刷src之前的准备</h2><h3 id="1-信息收集（泛讲）"><a href="#1-信息收集（泛讲）" class="headerlink" title="1. 信息收集（泛讲）"></a>1. 信息收集（泛讲）</h3><p>​    渗透测试和漏洞挖掘，信息收集是贯彻于整个流程的；在进行src挖掘之前，要进行信息收集，在确定漏洞产生什么危害的时候，也要进行信息收集，也就是说渗透测试和漏洞挖掘的本质就是信息收集。</p>
 <h3 id="2-具体要收集哪些信息"><a href="#2-具体要收集哪些信息" class="headerlink" title="2. 具体要收集哪些信息"></a>2. 具体要收集哪些信息</h3><ol>
 <li><p>厂商域名和IP段（测试范围界定）</p>

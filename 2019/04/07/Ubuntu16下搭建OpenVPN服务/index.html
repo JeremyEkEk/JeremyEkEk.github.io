@@ -115,7 +115,7 @@
 <meta property="og:image" content="https://jeremyekek.github.io/2019/04/07/Ubuntu16下搭建OpenVPN服务/1554434791663.png">
 <meta property="og:image" content="https://jeremyekek.github.io/2019/04/07/Ubuntu16下搭建OpenVPN服务/1554435021629.png">
 <meta property="og:image" content="https://jeremyekek.github.io/2019/04/07/Ubuntu16下搭建OpenVPN服务/1554438169932.png">
-<meta property="og:updated_time" content="2019-04-07T03:44:55.650Z">
+<meta property="og:updated_time" content="2019-04-07T04:54:06.961Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Ubuntu16搭建OpenVPN服务">
 <meta name="twitter:description" content="一、参考Ubuntu16.04搭建OpenVPNUbuntu16.04搭建openvpn服务器 二、环境Ubuntu 16.10 yakkety (GNU/Linux 4.8.0-22-generic x86_64) 三、介绍VPN（Virtual Private Network，虚拟私人网络）是一种常用于连接中、大型企业或团体与团体间的私人网络的通讯方法。它利用隧道协议（Tunneling Pr">
@@ -387,6 +387,7 @@
 <h2 id="二、环境"><a href="#二、环境" class="headerlink" title="二、环境"></a>二、环境</h2><p>Ubuntu 16.10 yakkety (GNU/Linux 4.8.0-22-generic x86_64)</p>
 <h2 id="三、介绍"><a href="#三、介绍" class="headerlink" title="三、介绍"></a>三、介绍</h2><p><strong>VPN</strong>（Virtual Private Network，虚拟私人网络）是一种常用于连接中、大型企业或团体与团体间的私人网络的通讯方法。它利用<a href="https://zh.wikipedia.org/wiki/%E9%9A%A7%E9%81%93%E5%8D%8F%E8%AE%AE" target="_blank" rel="noopener">隧道协议</a>（Tunneling Protocol）来达到保密、发送端认证、消息准确性等私人消息安全效果，这种技术可以用不安全的网络（例如：互联网）来发送可靠、安全的消息。</p>
 <h2 id="四、安装"><a href="#四、安装" class="headerlink" title="四、安装"></a>四、安装</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install openvpn easy-rsa</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
 <p><code>easy-rsa</code>内部CA（certificate authority）证书生成软件</p>
 <p><img src="/2019/04/07/Ubuntu16下搭建OpenVPN服务/1554386400868.png" alt="1554386400868"></p>
 <h2 id="五、证书制作"><a href="#五、证书制作" class="headerlink" title="五、证书制作"></a>五、证书制作</h2><h3 id="1-证书配置"><a href="#1-证书配置" class="headerlink" title="1. 证书配置"></a>1. 证书配置</h3><p>复制证书制作工具到文件夹(该文件夹应该不存在，复制后自动创建该文件夹)，<code>make-cadir</code>为easy-rsa安装后增加的命令 </p>
