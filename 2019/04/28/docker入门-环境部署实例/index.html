@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Docker,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="一、docker介绍docker是开源的应用程序容器引擎，使用go语言开发，借助于docker打包用户的应用程序，将这些应用程序包含在容器中，实现虚拟化，容器是完全使用沙箱机制，相互独立，占用资源非常少。">
+<meta name="keywords" content="Docker">
+<meta property="og:type" content="article">
+<meta property="og:title" content="docker入门&amp;&amp;环境部署实例">
+<meta property="og:url" content="https://jeremyekek.github.io/2019/04/28/docker入门-环境部署实例/index.html">
+<meta property="og:site_name" content="EkEk的个人博客">
+<meta property="og:description" content="一、docker介绍docker是开源的应用程序容器引擎，使用go语言开发，借助于docker打包用户的应用程序，将这些应用程序包含在容器中，实现虚拟化，容器是完全使用沙箱机制，相互独立，占用资源非常少。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/04/28/docker入门-环境部署实例/8268763-bde19eff6c1fd6ea.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/04/28/docker入门-环境部署实例/8268763-1fab64e3d8195ff5.png">
+<meta property="og:updated_time" content="2019-04-28T02:10:01.688Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="docker入门&amp;&amp;环境部署实例">
+<meta name="twitter:description" content="一、docker介绍docker是开源的应用程序容器引擎，使用go语言开发，借助于docker打包用户的应用程序，将这些应用程序包含在容器中，实现虚拟化，容器是完全使用沙箱机制，相互独立，占用资源非常少。">
+<meta name="twitter:image" content="https://jeremyekek.github.io/2019/04/28/docker入门-环境部署实例/8268763-bde19eff6c1fd6ea.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://jeremyekek.github.io/2019/04/28/docker入门-环境部署实例/">
+
+
+
+
+
+  <title>docker入门&&环境部署实例 | EkEk的个人博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+    <!-- GitHub-start -->
+    <a href="https://your-url" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#64CEAA; color:#fff; position: absolute; top: 0; border: 0; left: 0; transform: scale(-1, 1);" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <!-- GitHub-end -->
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">EkEk的个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://jeremyekek.github.io/2019/04/28/docker入门-环境部署实例/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="EkEk">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EkEk的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">docker入门&&环境部署实例</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-28T10:01:08+08:00">
+                2019-04-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">学习笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/04/28/docker入门-环境部署实例/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/04/28/docker入门-环境部署实例/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="一、docker介绍"><a href="#一、docker介绍" class="headerlink" title="一、docker介绍"></a>一、docker介绍</h1><p>docker是开源的应用程序容器引擎，使用go语言开发，借助于docker打包用户的应用程序，将这些应用程序包含在容器中，实现虚拟化，容器是完全使用沙箱机制，相互独立，占用资源非常少。</p>
+<a id="more"></a>
+<h1 id="二、docker三大核心概念"><a href="#二、docker三大核心概念" class="headerlink" title="二、docker三大核心概念"></a>二、docker三大核心概念</h1><ul>
+<li><p>镜像</p>
+<ul>
+<li>image, docker镜像就是一个只读的模板，例如一个镜像中可以包含完整的操作系统，里面安装apache/php/mysql等环境，镜像可以创建容器</li>
+</ul>
+</li>
+<li><p>容器</p>
+<ul>
+<li>container，docker利用容器运行程序，容器是从镜像中创建运行的实例，容器可以运行、关闭、删除</li>
+</ul>
+</li>
+<li>仓库<ul>
+<li>repository，集中存放镜像的地方，每个仓库中包含多个镜像，分为私有和公开，dockerHub</li>
+</ul>
+</li>
+</ul>
+<h1 id="三、docker安装"><a href="#三、docker安装" class="headerlink" title="三、docker安装"></a>三、docker安装</h1><h2 id="1-一键安装Docker"><a href="#1-一键安装Docker" class="headerlink" title="1. 一键安装Docker"></a>1. 一键安装Docker</h2><ol>
+<li><p>这是推荐方式。在未安装过Docker的机器上，root权限执行如下命令即可一键安装最新版Docker：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -s https://get.docker.com/ | sh</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>也可以使用系统自带的包管理工具来安装，比如在Ubuntu下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install docker.io</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="2-手动安装"><a href="#2-手动安装" class="headerlink" title="2.手动安装"></a>2.手动安装</h2><p>常见操作系统安装Docker的方法在文档中均可查阅，这里就不再赘述： <a href="https://docs.docker.com/engine/installation/" target="_blank" rel="noopener">https://docs.docker.com/engine/installation/</a></p>
+<p><strong>注意</strong>，docker是一个系统服务，所以，安装完成后可能需要手工启动服务：<code>service start docker</code>，否则会出现连接失败的情况。同样，如果docker没有自启动，你也需要手工启动docker服务。如果你是使用一键安装工具安装的docker，则docker会自动启动。</p>
+<h2 id="3-加入docker组"><a href="#3-加入docker组" class="headerlink" title="3. 加入docker组"></a>3. 加入docker组</h2><p>安装完成之后，普通用户每次执行docker命令都需要加上<code>sudo</code> ，所以我们可以加入doker用户组获取操作权限</p>
+<ol>
+<li><p>使用有sudo权限的帐号登录系统</p>
+</li>
+<li><p>创建docker分组，并将相应的用户添加到这个分组里面</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo usermod -aG docker your_username</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>退出，然后重新登录，以便让权限生效</p>
+</li>
+</ol>
+<h2 id="4-添加国内镜像仓库"><a href="#4-添加国内镜像仓库" class="headerlink" title="4. 添加国内镜像仓库"></a>4. 添加国内镜像仓库</h2><p>由于官方资源库在国外，我们在拉取镜像资源的时候会很慢。所以，国内的Docker爱好者们就添加了一些国内的镜像（mirror）,方便大家使用。</p>
+<p><strong>国内加速站点</strong></p>
+<ul>
+<li><p><a href="https://cr.console.aliyun.com/cn-hangzhou/instances/mirrors" target="_blank" rel="noopener">阿里云</a></p>
+</li>
+<li><p><a href="https://c.163yun.com/hub#/m/home/" target="_blank" rel="noopener">网易云</a></p>
+</li>
+<li><p><a href="https://www.daocloud.io/mirror" target="_blank" rel="noopener">DaoCloud</a></p>
+</li>
+</ul>
+<ol>
+<li><p>使用脚本来配置加速站点</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -sSL https://get.daocloud.io/daotools/set_mirror.sh | sh -s http://f1361db2.m.daocloud.io</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用命令来配置加速站点</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /etc/docker</span><br><span class="line">sudo tee /etc/docker/daemon.json &lt;&lt;-&apos;EOF&apos;</span><br><span class="line">&#123;</span><br><span class="line">  &quot;registry-mirrors&quot;: [&quot;&lt;your accelerate address&gt;&quot;]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>以上操作后重启一下 Docker</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service docker restart</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="五、docker基本使用"><a href="#五、docker基本使用" class="headerlink" title="五、docker基本使用"></a>五、docker基本使用</h1><h2 id="1-启动docker"><a href="#1-启动docker" class="headerlink" title="1. 启动docker"></a>1. 启动docker</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl start docker	//centos</span><br><span class="line">server docker start		//ubuntu</span><br></pre></td></tr></table></figure>
+<p><strong>查看基本信息</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker info		//当前容器的信息</span><br><span class="line">docker stats	//运行容器的进程信息</span><br><span class="line">docker version	//版本信息</span><br></pre></td></tr></table></figure>
+<h2 id="2-镜像操作"><a href="#2-镜像操作" class="headerlink" title="2. 镜像操作"></a>2. 镜像操作</h2><p><strong>搜索镜像</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker search [关键字]</span><br></pre></td></tr></table></figure>
+<p><strong>拉取镜像</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull [镜像全称]:版本标签(可选)</span><br></pre></td></tr></table></figure>
+<p><strong>查看本地镜像</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker images</span><br></pre></td></tr></table></figure>
+<p><strong>删除镜像</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker rmi []</span><br></pre></td></tr></table></figure>
+<p><strong>导出镜像</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker save [容器id/名称] &gt; test.tar</span><br></pre></td></tr></table></figure>
+<p><strong>导入镜像</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker road &lt; test.tar</span><br></pre></td></tr></table></figure>
+<h2 id="3-容器操作"><a href="#3-容器操作" class="headerlink" title="3. 容器操作"></a>3. 容器操作</h2><p><strong>启动容器</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -P --rm --name [容器名字] [镜像名称] [可执行命令]</span><br><span class="line">参数说明：</span><br><span class="line">-d：让容器在后台运行</span><br><span class="line">-P：将容器内部使用的网络端口映射到宿主机</span><br><span class="line">-p：[主机端口:容器端口] 可自定义映射端口</span><br><span class="line">--name：可自定义容器名称</span><br><span class="line">--rm：当容器停止时，会自动删除</span><br></pre></td></tr></table></figure>
+<p><strong>查看运行容器</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker ps</span><br></pre></td></tr></table></figure>
+<p><strong>查看容器端口</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker port [容器id/名称]</span><br></pre></td></tr></table></figure>
+<p><strong>查看容器内部日志</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker logs -f [容器id/名称] //可以查看容器内部的标准输出</span><br><span class="line">-f: 让 docker logs 像使用 tail -f 一样来输出容器内部的标准输出</span><br></pre></td></tr></table></figure>
+<p><strong>进入容器</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it [容器id/名称] /bin/bash		//推荐使用</span><br><span class="line">docker attach [容器id/名称] //不会在容器中创建进程执行额外的命令，只是附着到容器上</span><br><span class="line">//attach必须登陆到一个已经运行的容器里，如果从这个容器中exit退出的话，就会导致容器停止</span><br></pre></td></tr></table></figure>
+<p><strong>离开容器</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Ctrl+P+Q	//正常退出不关闭容器</span><br><span class="line">exit		//退出之后关闭容器,可以使用下面的流程进行恢复</span><br><span class="line">使用docker restart命令重启容器</span><br><span class="line">使用docker attach命令进入容器</span><br></pre></td></tr></table></figure>
+<p><strong>停止容器</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker stop [容器id/名称]</span><br></pre></td></tr></table></figure>
+<p><strong>重新开启容器</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker start [容器id/名称]</span><br></pre></td></tr></table></figure>
+<p><strong>查看所有容器</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker ps -a [容器id/名称]</span><br></pre></td></tr></table></figure>
+<p><strong>查看容器底层信息</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker inspect [容器id/名称]</span><br></pre></td></tr></table></figure>
+<p><strong>删除容器</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker rm [容器id/名称]</span><br><span class="line">//删除前必须先停止正在运行的容器</span><br></pre></td></tr></table></figure>
+<p><strong>导出容器</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker export [容器id/名称] &gt; test.tar</span><br></pre></td></tr></table></figure>
+<p><strong>导入容器</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker import &lt; test.tar</span><br></pre></td></tr></table></figure>
+<p><strong>docker批量删除容器、镜像</strong></p>
+<p>一条命令实现停用并删除容器</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker stop $(docker ps -q) &amp; docker rm $(docker ps -aq)</span><br></pre></td></tr></table></figure>
+<p>删除所有镜像</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker rmi $(docker images -q)</span><br></pre></td></tr></table></figure>
+<p>按条件删除容器</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker rm $(docker ps -a | awk &apos;/test\/webapp/ &#123;print $1&#125;&apos;)</span><br></pre></td></tr></table></figure>
+<p>按条件删除镜像</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#没有打标签</span><br><span class="line">docker rmi `docker images -q | awk &apos;/^&lt;none&gt;/ &#123; print $3 &#125;&apos;`</span><br><span class="line">#镜像名包含关键字</span><br><span class="line">docker rmi --force `docker images | grep keywords | awk &apos;&#123;print $3&#125;&apos;`   </span><br><span class="line">//其中keywords为关键字</span><br></pre></td></tr></table></figure>
+<h1 id="六、容器部署实例"><a href="#六、容器部署实例" class="headerlink" title="六、容器部署实例"></a>六、容器部署实例</h1><h3 id="1-安装nginx"><a href="#1-安装nginx" class="headerlink" title="1. 安装nginx"></a>1. 安装nginx</h3><ul>
+<li>从docker hub上拉取镜像</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull nginx:latest</span><br></pre></td></tr></table></figure>
+<ul>
+<li>托管一些简单的静态内容</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker run --name some-nginx -v  $PWD/html:/usr/share/nginx/html:ro -d nginx</span><br><span class="line"> -v $PWD/html:/usr/share/nginx/html：将主机中当前目录下的html挂载到容器的/usr/share/nginx/html</span><br></pre></td></tr></table></figure>
+<ul>
+<li>或者准备自己的配置文件和文件目录</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">docker run -p 80:80 --name mynginx -v $PWD/www:/www -v $PWD/conf/nginx.conf:/etc/nginx/nginx.conf -v $PWD/logs:/wwwlogs  -d nginx</span><br><span class="line">#dockerhub上有详细自定义配置部署说明</span><br><span class="line">-p 80:80：将容器的80端口映射到主机的80端口</span><br><span class="line">--name mynginx：将容器命名为mynginx</span><br><span class="line">-v $PWD/www:/www：将主机中当前目录下的www挂载到容器的/www</span><br><span class="line">-v $PWD/conf/nginx.conf:/etc/nginx/nginx.conf：将主机中当前目录下的nginx.conf挂载到容器的/etc/nginx/nginx.conf</span><br><span class="line">-v $PWD/logs:/wwwlogs：将主机中当前目录下的logs挂载到容器的/wwwlogs</span><br></pre></td></tr></table></figure>
+<p><strong>注意</strong>：如果出现以下类似报错</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker: Error response from daemon: OCI runtime create failed: container_linux.go:344: starting container process caused &quot;process_linux.go:424: container init caused \&quot;rootfs_linux.go:58: mounting \\\&quot;/opt/nginx/conf/nginx.conf\\\&quot; to rootfs \\\&quot;/var/lib/docker/overlay2/f72f02d7a8f04291ee3dd0515fd75cbaa8e12904816f5bb84c714da3d43f7cf0/merged\\\&quot; at \\\&quot;/var/lib/docker/overlay2/f72f02d7a8f04291ee3dd0515fd75cbaa8e12904816f5bb84c714da3d43f7cf0/merged/etc/nginx/nginx.conf\\\&quot; caused \\\&quot;not a directory\\\&quot;\&quot;&quot;: unknown: Are you trying to mount a directory onto a file (or vice-versa)? Check if the specified host path exists and is the expected type.</span><br></pre></td></tr></table></figure>
+<p>是因为没提前创建好挂载目录和配置文件导致conf/nginx.conf 自动创建成目录，删除并创建nginx.conf配置文件即可</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ll conf/</span><br><span class="line">rm -r conf/nginx.conf</span><br><span class="line">touch conf/nginx.conf</span><br></pre></td></tr></table></figure>
+<ul>
+<li>查看运行容器</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker ps</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/04/28/docker入门-环境部署实例/8268763-bde19eff6c1fd6ea.png" alt="当前正在运行的容器"></p>
+<h3 id="2-安装Lamp环境"><a href="#2-安装Lamp环境" class="headerlink" title="2. 安装Lamp环境"></a>2. 安装Lamp环境</h3><p>拉取一个lamp镜像</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull fauria/lamp</span><br></pre></td></tr></table></figure>
+<p>创建lamp目录&amp;挂载路径</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir ~/lamp &amp;&amp; cd ~/lamp</span><br><span class="line">mkdir www logs</span><br></pre></td></tr></table></figure>
+<p>创建容器</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d  -p 80:80 -v /opt/lamp/www:/var/www/html -v /opt/lamp/logs/:/var/log/httpd --name my-lamp-container fauria/lamp</span><br></pre></td></tr></table></figure>
+<p>查看是否启动成功</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker ps</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/04/28/docker入门-环境部署实例/8268763-1fab64e3d8195ff5.png" alt="STATUS为UP说明启动成功"></p>
+<p>查看所有容器</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker ps -a</span><br></pre></td></tr></table></figure>
+<p>进入一个已经在运行的容器</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#其中字符串为容器ID</span><br><span class="line">docker exec -it d27bd3998ad9 /bin/bash</span><br></pre></td></tr></table></figure>
+<p>删除容器删除前先停止</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker stop  d27b  &amp; docker rm d27b</span><br></pre></td></tr></table></figure>
+<h1 id="七、最后"><a href="#七、最后" class="headerlink" title="七、最后"></a>七、最后</h1><p>本文只是起到docker的入门作用，如果想深入学习</p>
+<p>以下推荐几个dokcer在线学习网站</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Docker/" rel="tag"># Docker</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/08/Metasploit利用-浏览器自动攻击/" rel="next" title="Metasploit利用-浏览器自动攻击">
+                <i class="fa fa-chevron-left"></i> Metasploit利用-浏览器自动攻击
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/04/28/使用Docker-Vulhub搭建漏洞测试靶场/" rel="prev" title="使用Docker+Vulhub搭建漏洞测试靶场">
+                使用Docker+Vulhub搭建漏洞测试靶场 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">EkEk</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/JeremyEkEk" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:jeremy.0394@foxmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.cnblogs.com/anbus/p/10046695.html" title="ArcticShell" target="_blank">ArcticShell</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://github.com/Micropoor/Micro8" title="Micropoor亮神" target="_blank">Micropoor亮神</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.csdn.net/zwjzqqb/article/list/7" title="VincentQB" target="_blank">VincentQB</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://github.com/PyxYuYu/MyBlog" title="PyxYuYu" target="_blank">PyxYuYu</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://3gstudent.github.io/3gstudent.github.io/" title="三好学生" target="_blank">三好学生</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.leavesongs.com/" title="离别歌" target="_blank">离别歌</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.inksec.cn/archives/page/2/" title="阿墨" target="_blank">阿墨</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.barradell-johns.com/" title="JACK" target="_blank">JACK</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://adsecurity.org/" title="AD安全" target="_blank">AD安全</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.fuzzysecurity.com" title="FuzzySecurity" target="_blank">FuzzySecurity</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.hexacorn.com/" title="Hexacorn" target="_blank">Hexacorn</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://evi1cg.me/" title="Evi1cg" target="_blank">Evi1cg</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://b404.xyz/" title="Jirairya" target="_blank">Jirairya</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://payloads.online/" title="倾旋" target="_blank">倾旋</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://times0ng.github.io/" title="Times0g" target="_blank">Times0g</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://firstlove2016.cn/" title="初恋的技术分享" target="_blank">初恋的技术分享</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://422926799.github.io/" title="九世" target="_blank">九世</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.netwrix.com/" title="netwrix" target="_blank">netwrix</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://klionsec.github.io/" title="klion" target="_blank">klion</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://jivoi.github.io/archive/" title="EK" target="_blank">EK</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://securityer.lofter.com/view" title="走过岁月" target="_blank">走过岁月</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.webbaozi.com/" title="baozi" target="_blank">baozi</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.myh0st.cn/" title="信安之路" target="_blank">信安之路</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://jdrops.dropsec.xyz/" title="Jdrops" target="_blank">Jdrops</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://exploit.kitploit.com/" title="exploit collector" target="_blank">exploit collector</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://zjw.dropsec.xyz/" title="Hello_C" target="_blank">Hello_C</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://cxsecurity.com/dorks" title="cxsecurity" target="_blank">cxsecurity</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://pentest.blog/" title="pentest" target="_blank">pentest</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://rcoil.me/" title="rcoil" target="_blank">rcoil</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://dayu.ink/" title="Dayu" target="_blank">Dayu</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://04z.net/" title="04z" target="_blank">04z</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.attackdebris.com/" title="attsckdebris" target="_blank">attsckdebris</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、docker介绍"><span class="nav-text">一、docker介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、docker三大核心概念"><span class="nav-text">二、docker三大核心概念</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、docker安装"><span class="nav-text">三、docker安装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-一键安装Docker"><span class="nav-text">1. 一键安装Docker</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-手动安装"><span class="nav-text">2.手动安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-加入docker组"><span class="nav-text">3. 加入docker组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-添加国内镜像仓库"><span class="nav-text">4. 添加国内镜像仓库</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#五、docker基本使用"><span class="nav-text">五、docker基本使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-启动docker"><span class="nav-text">1. 启动docker</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-镜像操作"><span class="nav-text">2. 镜像操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-容器操作"><span class="nav-text">3. 容器操作</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#六、容器部署实例"><span class="nav-text">六、容器部署实例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-安装nginx"><span class="nav-text">1. 安装nginx</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-安装Lamp环境"><span class="nav-text">2. 安装Lamp环境</span></a></li></ol></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#七、最后"><span class="nav-text">七、最后</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-snowflake-o"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">EkEk</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://jeremyekek-github-io.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://jeremyekek.github.io/2019/04/28/docker入门-环境部署实例/';
+          this.page.identifier = '2019/04/28/docker入门-环境部署实例/';
+          this.page.title = 'docker入门&&环境部署实例';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://jeremyekek-github-io.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
