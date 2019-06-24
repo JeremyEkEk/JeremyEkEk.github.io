@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Wireshark,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="一、流量包修复通过在线pacp包修复工具进行修复： http://f00l.de/hacking/pcapfix.php 二、WEB流量包分析WEB数据包分析主要包含WEB攻击行为的分析， 典型的WEB攻击行为有：WEB扫描、后台目录爆破、后台账号爆破、WEBSHELL上传、SQL注入等等。 1. WEB扫描分析常见的WEB扫描器有Awvs，Netsparker，Appscan，Webinspec">
+<meta name="keywords" content="Wireshark">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CTF流量分析">
+<meta property="og:url" content="https://jeremyekek.github.io/2019/06/16/CTF流量分析/index.html">
+<meta property="og:site_name" content="EkEk的个人博客">
+<meta property="og:description" content="一、流量包修复通过在线pacp包修复工具进行修复： http://f00l.de/hacking/pcapfix.php 二、WEB流量包分析WEB数据包分析主要包含WEB攻击行为的分析， 典型的WEB攻击行为有：WEB扫描、后台目录爆破、后台账号爆破、WEBSHELL上传、SQL注入等等。 1. WEB扫描分析常见的WEB扫描器有Awvs，Netsparker，Appscan，Webinspec">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-06-24T12:45:36.308Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CTF流量分析">
+<meta name="twitter:description" content="一、流量包修复通过在线pacp包修复工具进行修复： http://f00l.de/hacking/pcapfix.php 二、WEB流量包分析WEB数据包分析主要包含WEB攻击行为的分析， 典型的WEB攻击行为有：WEB扫描、后台目录爆破、后台账号爆破、WEBSHELL上传、SQL注入等等。 1. WEB扫描分析常见的WEB扫描器有Awvs，Netsparker，Appscan，Webinspec">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":20,"b2t":true,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://jeremyekek.github.io/2019/06/16/CTF流量分析/">
+
+
+
+
+
+  <title>CTF流量分析 | EkEk的个人博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">EkEk的个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://jeremyekek.github.io/2019/06/16/CTF流量分析/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="EkEk">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EkEk的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">CTF流量分析</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2019-06-24T20:45:36+08:00">
+                2019-06-24
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术文章/" itemprop="url" rel="index">
+                    <span itemprop="name">技术文章</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/06/16/CTF流量分析/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/06/16/CTF流量分析/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="一、流量包修复"><a href="#一、流量包修复" class="headerlink" title="一、流量包修复"></a>一、流量包修复</h2><p>通过在线pacp包修复工具进行修复：</p>
+<p><a href="http://f00l.de/hacking/pcapfix.php" target="_blank" rel="noopener">http://f00l.de/hacking/pcapfix.php</a></p>
+<h2 id="二、WEB流量包分析"><a href="#二、WEB流量包分析" class="headerlink" title="二、WEB流量包分析"></a>二、WEB流量包分析</h2><p>WEB数据包分析主要包含WEB攻击行为的分析， 典型的WEB攻击行为有：WEB扫描、后台目录爆破、后台账号爆破、WEBSHELL上传、SQL注入等等。</p>
+<h3 id="1-WEB扫描分析"><a href="#1-WEB扫描分析" class="headerlink" title="1. WEB扫描分析"></a>1. WEB扫描分析</h3><p>常见的WEB扫描器有Awvs，Netsparker，Appscan，Webinspect，Rsas（绿盟极光），Nessus，WebReaver，Sqlmap等。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http contains &quot;扫描器特征值&quot;</span><br></pre></td></tr></table></figure>
+<p>常见的扫描器特征参考：<a href="https://www.freebuf.com/column/156291.htm" target="_blank" rel="noopener">https://www.freebuf.com/column/156291.htm</a> </p>
+<h3 id="2-后台目录爆破分析"><a href="#2-后台目录爆破分析" class="headerlink" title="2. 后台目录爆破分析"></a>2. 后台目录爆破分析</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http contains &quot;后台url特征&quot;</span><br></pre></td></tr></table></figure>
+<p>常见后台url特征参考：<a href="https://www.freebuf.com/column/156291.html" target="_blank" rel="noopener">https://www.freebuf.com/column/156291.html</a> </p>
+<h3 id="3-后台账号爆破"><a href="#3-后台账号爆破" class="headerlink" title="3. 后台账号爆破"></a>3. 后台账号爆破</h3><p>WEB账号登陆页面通常采用post方法请求，要获取流量包中记录的账号信息可通过wireshark筛选出POST请求和账号中的关键字如‘admin’。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http.request.method==&quot;POST&quot; &amp;&amp; http contains &quot;关键字&quot;</span><br></pre></td></tr></table></figure>
+<h3 id="4-WEBSHELL上传"><a href="#4-WEBSHELL上传" class="headerlink" title="4. WEBSHELL上传"></a>4. WEBSHELL上传</h3><p>Webshell文件上传常采用post方法请求，文件内容常见关键字eval，system，assert。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">http.request.method==&quot;POST&quot; &amp;&amp; http contains &quot;关键字&quot;</span><br><span class="line">http contains &quot;base64_decode&quot;	#菜刀特征</span><br></pre></td></tr></table></figure>
+<h3 id="5-数据库密码"><a href="#5-数据库密码" class="headerlink" title="5. 数据库密码"></a>5. 数据库密码</h3><p>一般是读config文件查看数据库密码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http contains &quot;&lt;?php&quot;</span><br></pre></td></tr></table></figure>
+<h3 id="6-数据库中内容"><a href="#6-数据库中内容" class="headerlink" title="6. 数据库中内容"></a>6. 数据库中内容</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql contains &quot;关键字&quot;</span><br></pre></td></tr></table></figure>
+<h3 id="7-vpn及其ip"><a href="#7-vpn及其ip" class="headerlink" title="7. vpn及其ip"></a>7. vpn及其ip</h3><p>查看TCP流量最多的IP</p>
+<h2 id="三、USB流量包分析"><a href="#三、USB流量包分析" class="headerlink" title="三、USB流量包分析"></a>三、USB流量包分析</h2><p>USB流量指的是USB设备接口的流量，攻击者能够通过监听usb接口流量获取键盘敲击键、鼠标移动与点击、存储设备的铭文传输通信、USB无线网卡网络传输内容等等。</p>
+<h3 id="1-键盘流量"><a href="#1-键盘流量" class="headerlink" title="1. 键盘流量"></a>1. 键盘流量</h3><p>USB协议数据部分在Leftover Capture Data域中，数据长度为八个字节。其中键盘击键信息集中在第三个字节中。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">usb.capdata</span><br></pre></td></tr></table></figure>
+<ol>
+<li><p>使用kali linux中的<code>tshark</code> 命令把<code>cap data</code>提取出来：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tshark -r usb.pcap -T fields -e usb.capdata &gt; usbdata.txt</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>去除空行</p>
+<p>word里替换 <code>^p^p</code> 为 <code>^p</code>，但是这样显得很不专业，下面是更优雅一点的做法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sed -i &quot;/^$/d&quot; usbdata.txt</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>根据<a href="https://wenku.baidu.com/view/9050c3c3af45b307e971971e.html" target="_blank" rel="noopener">《USB键盘协议中键码》</a>中的HID Usage ID将数据还原成键位。</p>
+<p>这里贴下漏斗社区上的脚本</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">mappings = &#123; <span class="number">0x04</span>:<span class="string">"A"</span>,  <span class="number">0x05</span>:<span class="string">"B"</span>,  <span class="number">0x06</span>:<span class="string">"C"</span>, <span class="number">0x07</span>:<span class="string">"D"</span>, <span class="number">0x08</span>:<span class="string">"E"</span>, <span class="number">0x09</span>:<span class="string">"F"</span>, <span class="number">0x0A</span>:<span class="string">"G"</span>,  <span class="number">0x0B</span>:<span class="string">"H"</span>, <span class="number">0x0C</span>:<span class="string">"I"</span>,  <span class="number">0x0D</span>:<span class="string">"J"</span>, <span class="number">0x0E</span>:<span class="string">"K"</span>, <span class="number">0x0F</span>:<span class="string">"L"</span>, <span class="number">0x10</span>:<span class="string">"M"</span>, <span class="number">0x11</span>:<span class="string">"N"</span>,<span class="number">0x12</span>:<span class="string">"O"</span>,  <span class="number">0x13</span>:<span class="string">"P"</span>, <span class="number">0x14</span>:<span class="string">"Q"</span>, <span class="number">0x15</span>:<span class="string">"R"</span>, <span class="number">0x16</span>:<span class="string">"S"</span>, <span class="number">0x17</span>:<span class="string">"T"</span>, <span class="number">0x18</span>:<span class="string">"U"</span>,<span class="number">0x19</span>:<span class="string">"V"</span>, <span class="number">0x1A</span>:<span class="string">"W"</span>, <span class="number">0x1B</span>:<span class="string">"X"</span>, <span class="number">0x1C</span>:<span class="string">"Y"</span>, <span class="number">0x1D</span>:<span class="string">"Z"</span>, <span class="number">0x1E</span>:<span class="string">"1"</span>, <span class="number">0x1F</span>:<span class="string">"2"</span>, <span class="number">0x20</span>:<span class="string">"3"</span>, <span class="number">0x21</span>:<span class="string">"4"</span>, <span class="number">0x22</span>:<span class="string">"5"</span>,  <span class="number">0x23</span>:<span class="string">"6"</span>, <span class="number">0x24</span>:<span class="string">"7"</span>, <span class="number">0x25</span>:<span class="string">"8"</span>, <span class="number">0x26</span>:<span class="string">"9"</span>, <span class="number">0x27</span>:<span class="string">"0"</span>, <span class="number">0x28</span>:<span class="string">"\n"</span>, <span class="number">0x2a</span>:<span class="string">"[DEL]"</span>,  <span class="number">0X2B</span>:<span class="string">"    "</span>, <span class="number">0x2C</span>:<span class="string">" "</span>,  <span class="number">0x2D</span>:<span class="string">"-"</span>, <span class="number">0x2E</span>:<span class="string">"="</span>, <span class="number">0x2F</span>:<span class="string">"["</span>,  <span class="number">0x30</span>:<span class="string">"]"</span>,  <span class="number">0x31</span>:<span class="string">"\\"</span>, <span class="number">0x32</span>:<span class="string">"~"</span>, <span class="number">0x33</span>:<span class="string">";"</span>,  <span class="number">0x34</span>:<span class="string">"'"</span>, <span class="number">0x36</span>:<span class="string">","</span>,  <span class="number">0x37</span>:<span class="string">"."</span> &#125;</span><br><span class="line">nums = []</span><br><span class="line">keys = open(<span class="string">'usbdata.txt'</span>)</span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> keys:</span><br><span class="line">    <span class="keyword">if</span> line[<span class="number">0</span>]!=<span class="string">'0'</span> <span class="keyword">or</span> line[<span class="number">1</span>]!=<span class="string">'0'</span> <span class="keyword">or</span> line[<span class="number">3</span>]!=<span class="string">'0'</span> <span class="keyword">or</span> line[<span class="number">4</span>]!=<span class="string">'0'</span> <span class="keyword">or</span> line[<span class="number">9</span>]!=<span class="string">'0'</span> <span class="keyword">or</span> line[<span class="number">10</span>]!=<span class="string">'0'</span> <span class="keyword">or</span> line[<span class="number">12</span>]!=<span class="string">'0'</span> <span class="keyword">or</span> line[<span class="number">13</span>]!=<span class="string">'0'</span> <span class="keyword">or</span> line[<span class="number">15</span>]!=<span class="string">'0'</span> <span class="keyword">or</span> line[<span class="number">16</span>]!=<span class="string">'0'</span> <span class="keyword">or</span> line[<span class="number">18</span>]!=<span class="string">'0'</span> <span class="keyword">or</span> line[<span class="number">19</span>]!=<span class="string">'0'</span> <span class="keyword">or</span> line[<span class="number">21</span>]!=<span class="string">'0'</span> <span class="keyword">or</span> line[<span class="number">22</span>]!=<span class="string">'0'</span>:</span><br><span class="line">         <span class="keyword">continue</span></span><br><span class="line">    nums.append(int(line[<span class="number">6</span>:<span class="number">8</span>],<span class="number">16</span>))</span><br><span class="line">keys.close()</span><br><span class="line">output = <span class="string">""</span></span><br><span class="line"><span class="keyword">for</span> n <span class="keyword">in</span> nums:</span><br><span class="line">    <span class="keyword">if</span> n == <span class="number">0</span> :</span><br><span class="line">        <span class="keyword">continue</span></span><br><span class="line">    <span class="keyword">if</span> n <span class="keyword">in</span> mappings:</span><br><span class="line">        output += mappings[n]</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        output += <span class="string">'[unknown]'</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">'output :\n'</span> + output</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python2 .\keyboard.py</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="2-鼠标流量"><a href="#2-鼠标流量" class="headerlink" title="2. 鼠标流量"></a>2. 鼠标流量</h3><p>USB协议鼠标数据部分在Leftover Capture Data域中，数据长度为四个字节。</p>
+<p>其中第一个字节代表按键，当取0×00时，代表没有按键、为0×01时，代表按左键，为0×02时，代表当前按键为右键。第二个字节可以看成是一个signed byte类型，其最高位为符号位，当这个值为正时，代表鼠标水平右移多少像素，为负时，代表水平左移多少像素。第三个字节与第二字节类似，代表垂直上下移动的偏移。</p>
+<ol>
+<li><p>使用kali linux中的<code>tshark</code> 命令把<code>cap data</code>提取出来，并去除空行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tshark -r usb.pcap -T fields -e usb.capdata &gt; usbdata.txt &amp;&amp; sed -i &quot;/^$/d&quot; usbdata.txt</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>根据usb协议鼠标数据还原鼠标移动轨迹。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">python mouse.py &gt; &apos;xy.txt&apos;</span><br><span class="line">gnuplot</span><br><span class="line">plot &quot;xy.txt&quot;</span><br></pre></td></tr></table></figure>
+<p>或者另一个脚本直接运行出结果。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python UsbMiceDataHacker.py usb2.pcap RIGHT</span><br></pre></td></tr></table></figure>
+<p>mouse.py</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">nums = [] </span><br><span class="line">keys = open(<span class="string">'usbdata.txt'</span>,<span class="string">'r'</span>) </span><br><span class="line">posx = <span class="number">0</span> </span><br><span class="line">posy = <span class="number">0</span> </span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> keys: </span><br><span class="line">	<span class="keyword">if</span> len(line) != <span class="number">12</span> : </span><br><span class="line">		<span class="keyword">continue</span> </span><br><span class="line">	x = int(line[<span class="number">3</span>:<span class="number">5</span>],<span class="number">16</span>) </span><br><span class="line">	y = int(line[<span class="number">6</span>:<span class="number">8</span>],<span class="number">16</span>) </span><br><span class="line">	<span class="keyword">if</span> x &gt; <span class="number">127</span> : </span><br><span class="line">		x -= <span class="number">256</span> </span><br><span class="line">	<span class="keyword">if</span> y &gt; <span class="number">127</span> : </span><br><span class="line">		y -= <span class="number">256</span> </span><br><span class="line">	posx += x </span><br><span class="line">	posy += y </span><br><span class="line">	btn_flag = int(line[<span class="number">0</span>:<span class="number">2</span>],<span class="number">16</span>)  <span class="comment"># 1 for left , 2 for right , 0 for nothing </span></span><br><span class="line">	<span class="keyword">if</span> btn_flag == <span class="number">1</span> : </span><br><span class="line">		<span class="keyword">print</span> posx,posy </span><br><span class="line">keys.close()</span><br></pre></td></tr></table></figure>
+<p>UsbMiceDataHacker.py</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment"># coding:utf-8</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line">mousePositionX = <span class="number">0</span></span><br><span class="line">mousePositionY = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">X = []</span><br><span class="line">Y = []</span><br><span class="line"></span><br><span class="line">DataFileName = <span class="string">"usb.dat"</span></span><br><span class="line">data = []</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">global</span> mousePositionX</span><br><span class="line">    <span class="keyword">global</span> mousePositionY</span><br><span class="line">    <span class="comment"># check argv</span></span><br><span class="line">    <span class="keyword">if</span> len(sys.argv) != <span class="number">3</span>:</span><br><span class="line">        <span class="keyword">print</span> <span class="string">"Usage : "</span></span><br><span class="line">        <span class="keyword">print</span> <span class="string">"        python UsbMiceHacker.py data.pcap [LEFT|RIGHT|MOVE|ALL]"</span></span><br><span class="line">        <span class="keyword">print</span> <span class="string">"Tips : "</span></span><br><span class="line">        <span class="keyword">print</span> <span class="string">"        To use this python script , you must install the numpy,matplotlib first."</span></span><br><span class="line">        <span class="keyword">print</span> <span class="string">"        You can use `sudo pip install matplotlib numpy` to install it"</span></span><br><span class="line">        <span class="keyword">print</span> <span class="string">"Author : "</span></span><br><span class="line">        <span class="keyword">print</span> <span class="string">"        WangYihang &lt;wangyihanger@gmail.com&gt;"</span></span><br><span class="line">        <span class="keyword">print</span> <span class="string">"        If you have any questions , please contact me by email."</span></span><br><span class="line">        <span class="keyword">print</span> <span class="string">"        Thank you for using."</span></span><br><span class="line">        exit(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># get argv</span></span><br><span class="line">    pcapFilePath = sys.argv[<span class="number">1</span>]</span><br><span class="line">    action = sys.argv[<span class="number">2</span>]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> action != <span class="string">"LEFT"</span> <span class="keyword">and</span> action != <span class="string">"ALL"</span> <span class="keyword">and</span> action != <span class="string">"RIGHT"</span> <span class="keyword">and</span> action != <span class="string">"MOVE"</span>:</span><br><span class="line">        action = <span class="string">"LEFT"</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># get data of pcap</span></span><br><span class="line">    command = <span class="string">"tshark -r '%s' -T fields -e usb.capdata &gt; %s"</span> % (</span><br><span class="line">        pcapFilePath, DataFileName)</span><br><span class="line">    <span class="keyword">print</span> command</span><br><span class="line">    os.system(command)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># read data</span></span><br><span class="line">    <span class="keyword">with</span> open(DataFileName, <span class="string">"r"</span>) <span class="keyword">as</span> f:</span><br><span class="line">        <span class="keyword">for</span> line <span class="keyword">in</span> f:</span><br><span class="line">            data.append(line[<span class="number">0</span>:<span class="number">-1</span>])</span><br><span class="line"></span><br><span class="line">    <span class="comment"># handle move</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> data:</span><br><span class="line">        Bytes = i.split(<span class="string">":"</span>)</span><br><span class="line">        <span class="keyword">if</span> len(Bytes) == <span class="number">8</span>:</span><br><span class="line">            horizontal = <span class="number">2</span>  <span class="comment"># -</span></span><br><span class="line">            vertical = <span class="number">4</span>  <span class="comment"># |</span></span><br><span class="line">        <span class="keyword">elif</span> len(Bytes) == <span class="number">4</span>:</span><br><span class="line">            horizontal = <span class="number">1</span>  <span class="comment"># -</span></span><br><span class="line">            vertical = <span class="number">2</span>  <span class="comment"># |</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        offsetX = int(Bytes[horizontal], <span class="number">16</span>)</span><br><span class="line">        offsetY = int(Bytes[vertical], <span class="number">16</span>)</span><br><span class="line">        <span class="keyword">if</span> offsetX &gt; <span class="number">127</span>:</span><br><span class="line">            offsetX -= <span class="number">256</span></span><br><span class="line">        <span class="keyword">if</span> offsetY &gt; <span class="number">127</span>:</span><br><span class="line">            offsetY -= <span class="number">256</span></span><br><span class="line">        mousePositionX += offsetX</span><br><span class="line">        mousePositionY += offsetY</span><br><span class="line">        <span class="keyword">if</span> Bytes[<span class="number">0</span>] == <span class="string">"01"</span>:</span><br><span class="line">            <span class="comment"># print "[+] Left butten."</span></span><br><span class="line">            <span class="keyword">if</span> action == <span class="string">"LEFT"</span>:</span><br><span class="line">                <span class="comment"># draw point to the image panel</span></span><br><span class="line">                X.append(mousePositionX)</span><br><span class="line">                Y.append(-mousePositionY)</span><br><span class="line">        <span class="keyword">elif</span> Bytes[<span class="number">0</span>] == <span class="string">"02"</span>:</span><br><span class="line">            <span class="comment"># print "[+] Right Butten."</span></span><br><span class="line">            <span class="keyword">if</span> action == <span class="string">"RIGHT"</span>:</span><br><span class="line">                <span class="comment"># draw point to the image panel</span></span><br><span class="line">                X.append(mousePositionX)</span><br><span class="line">                Y.append(-mousePositionY)</span><br><span class="line">        <span class="keyword">elif</span> Bytes[<span class="number">0</span>] == <span class="string">"00"</span>:</span><br><span class="line">            <span class="comment"># print "[+] Move."</span></span><br><span class="line">            <span class="keyword">if</span> action == <span class="string">"MOVE"</span>:</span><br><span class="line">                <span class="comment"># draw point to the image panel</span></span><br><span class="line">                X.append(mousePositionX)</span><br><span class="line">                Y.append(-mousePositionY)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="comment"># print "[-] Known operate."</span></span><br><span class="line">            <span class="keyword">pass</span></span><br><span class="line">        <span class="keyword">if</span> action == <span class="string">"ALL"</span>:</span><br><span class="line">            <span class="comment"># draw point to the image panel</span></span><br><span class="line">            X.append(mousePositionX)</span><br><span class="line">            Y.append(-mousePositionY)</span><br><span class="line"></span><br><span class="line">    fig = plt.figure()</span><br><span class="line">    ax1 = fig.add_subplot(<span class="number">111</span>)</span><br><span class="line"></span><br><span class="line">    ax1.set_title(<span class="string">'[%s]-[%s] Author : WangYihang'</span> % (pcapFilePath, action))</span><br><span class="line">    ax1.scatter(X, Y, c=<span class="string">'r'</span>, marker=<span class="string">'o'</span>)</span><br><span class="line">    plt.show()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># clean temp data</span></span><br><span class="line">    os.system(<span class="string">"rm ./%s"</span> % (DataFileName))</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>参考：</p>
+<p>《CTF流量分析之题型深度解析》，<a href="https://www.freebuf.com/column/201830.html" target="_blank" rel="noopener">https://www.freebuf.com/column/201830.html</a></p>
+<p>《记一道USB流量分析CTF题》，<a href="https://blog.csdn.net/qq_36609913/article/details/78578406" target="_blank" rel="noopener">https://blog.csdn.net/qq_36609913/article/details/78578406</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Wireshark/" rel="tag"># Wireshark</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/15/Wireshark入门分析/" rel="next" title="wireshark入门分析">
+                <i class="fa fa-chevron-left"></i> wireshark入门分析
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">EkEk</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/JeremyEkEk" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i></a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:jeremy.0394@foxmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i></a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.cnblogs.com/anbus/p/10046695.html" title="ArcticShell" target="_blank">ArcticShell</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://github.com/Micropoor/Micro8" title="Micropoor亮神" target="_blank">Micropoor亮神</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.csdn.net/zwjzqqb/article/list/7" title="VincentQB" target="_blank">VincentQB</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://github.com/PyxYuYu/MyBlog" title="PyxYuYu" target="_blank">PyxYuYu</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://3gstudent.github.io/3gstudent.github.io/" title="三好学生" target="_blank">三好学生</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.leavesongs.com/" title="离别歌" target="_blank">离别歌</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.inksec.cn/archives/page/2/" title="阿墨" target="_blank">阿墨</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.barradell-johns.com/" title="JACK" target="_blank">JACK</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://adsecurity.org/" title="AD安全" target="_blank">AD安全</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.fuzzysecurity.com" title="FuzzySecurity" target="_blank">FuzzySecurity</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.hexacorn.com/" title="Hexacorn" target="_blank">Hexacorn</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://evi1cg.me/" title="Evi1cg" target="_blank">Evi1cg</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://b404.xyz/" title="Jirairya" target="_blank">Jirairya</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://payloads.online/" title="倾旋" target="_blank">倾旋</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://times0ng.github.io/" title="Times0g" target="_blank">Times0g</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://firstlove2016.cn/" title="初恋的技术分享" target="_blank">初恋的技术分享</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://422926799.github.io/" title="九世" target="_blank">九世</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.netwrix.com/" title="netwrix" target="_blank">netwrix</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://klionsec.github.io/" title="klion" target="_blank">klion</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://jivoi.github.io/archive/" title="EK" target="_blank">EK</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://securityer.lofter.com/view" title="走过岁月" target="_blank">走过岁月</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.webbaozi.com/" title="baozi" target="_blank">baozi</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.myh0st.cn/" title="信安之路" target="_blank">信安之路</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://jdrops.dropsec.xyz/" title="Jdrops" target="_blank">Jdrops</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://exploit.kitploit.com/" title="exploit collector" target="_blank">exploit collector</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://zjw.dropsec.xyz/" title="Hello_C" target="_blank">Hello_C</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://cxsecurity.com/dorks" title="cxsecurity" target="_blank">cxsecurity</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://pentest.blog/" title="pentest" target="_blank">pentest</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://rcoil.me/" title="rcoil" target="_blank">rcoil</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://dayu.ink/" title="Dayu" target="_blank">Dayu</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://04z.net/" title="04z" target="_blank">04z</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.attackdebris.com/" title="attsckdebris" target="_blank">attsckdebris</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、流量包修复"><span class="nav-text">一、流量包修复</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、WEB流量包分析"><span class="nav-text">二、WEB流量包分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-WEB扫描分析"><span class="nav-text">1. WEB扫描分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-后台目录爆破分析"><span class="nav-text">2. 后台目录爆破分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-后台账号爆破"><span class="nav-text">3. 后台账号爆破</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-WEBSHELL上传"><span class="nav-text">4. WEBSHELL上传</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-数据库密码"><span class="nav-text">5. 数据库密码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-数据库中内容"><span class="nav-text">6. 数据库中内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-vpn及其ip"><span class="nav-text">7. vpn及其ip</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、USB流量包分析"><span class="nav-text">三、USB流量包分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-键盘流量"><span class="nav-text">1. 键盘流量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-鼠标流量"><span class="nav-text">2. 鼠标流量</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-snowflake-o"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">EkEk</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://jeremyekek-github-io.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://jeremyekek.github.io/2019/06/16/CTF流量分析/';
+          this.page.identifier = '2019/06/16/CTF流量分析/';
+          this.page.title = 'CTF流量分析';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://jeremyekek-github-io.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
