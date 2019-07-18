@@ -91,7 +91,7 @@
 <meta property="og:image" content="https://jeremyekek.github.io/2019/06/24/信息收集/1557753338673.png">
 <meta property="og:image" content="https://jeremyekek.github.io/2019/06/24/信息收集/1559653838763.png">
 <meta property="og:image" content="https://jeremyekek.github.io/2019/06/24/信息收集/640.webp">
-<meta property="og:updated_time" content="2019-06-24T13:12:04.219Z">
+<meta property="og:updated_time" content="2019-07-01T13:07:03.347Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="信息收集">
 <meta name="twitter:description" content="信息收集分类 被动信息收集：不直接接触目标，而是通过搜索引擎或者爬虫系统等第三方服务来获取关于目标的信息（信息相对较少，但不会被发现） 主动信息收集：攻击者或者渗透测试人员通过工具去主动去探测或者收集目标的信息，直接和目标接触（获取的信息相对多一些，但是可能会被各种设备捕获到扫描行为）  从web安全的角度来考虑  域名(whois注册相关信息，子域名，备案信息) 服务器(DNS信息，端口服务，真">
@@ -290,8 +290,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2019-06-24T21:12:04+08:00">
-                2019-06-24
+              <time title="更新于" itemprop="dateModified" datetime="2019-07-01T21:07:03+08:00">
+                2019-07-01
               </time>
             
           </span>
@@ -446,6 +446,8 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python .\sublist3r.py -d ichunqiu.com</span><br></pre></td></tr></table></figure>
 <p>theHarvester（DNS、社会工程学工具、被动）</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">theharvester -d ichunqiu.com -l 100 -b bing</span><br></pre></td></tr></table></figure>
+<p><a href="https://github.com/Threezh1/JSFinder" target="_blank" rel="noopener">JSFinder</a>获取URL和子域名的方式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">python3 JSFinder.py -u https://www.x.com/</span><br><span class="line">python3 JSFinder.py -u https://www.x.com/ -d -ou jd_url.txt -os jd_domain.txt</span><br><span class="line">#	-d 深度爬取 -ou 保存URL -os 保存domain</span><br><span class="line">python JSFinder.py -f text.txt		#指定URL</span><br><span class="line">python JSFinder.py -f text.txt -j	#指定JS</span><br></pre></td></tr></table></figure>
 <p><a href="https://github.com/appsecco/bugcrowd-levelup-subdomain-enumeration" target="_blank" rel="noopener">bugcrowd-levelup-subdomain-enumeration</a> - Bharath在Bugcrowd Levelup的议题用到的工具，包含子域名枚举脚本、CTlog查询脚本。 </p>
 <p><a href="https://github.com/darkoperator/dnsrecon" target="_blank" rel="noopener">DNSrecon</a> - DNS枚举脚本 <a href="https://github.com/davidpepper/fierce-domain-scanner" target="_blank" rel="noopener">Fierce.pl Domain Scanner</a> - perl写的子域名爆破脚本 </p>
 <p><a href="https://github.com/michenriksen/aquatone" target="_blank" rel="noopener">AQUATONE</a> - 一款强大的域名工具，可以查子域名相同指纹站点。 <a href="https://github.com/laramies/theHarvester" target="_blank" rel="noopener">theHarvester</a> - 一款社会工程学工具，有查询子域名的功能。</p>
@@ -739,12 +741,9 @@
 </li>
 <li><p>社交平台</p>
 <ul>
-<li><p>QQ群</p>
-</li>
-<li><p>文库</p>
-</li>
-<li><p>求职网</p>
-</li>
+<li>QQ群</li>
+<li>文库</li>
+<li>求职网</li>
 <li>论坛</li>
 <li>公告</li>
 <li>新闻</li>
@@ -754,12 +753,17 @@
 <li>其他相关网站</li>
 </ul>
 </li>
+<li><p>敏感文件/目录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">robots.txt</span><br><span class="line">crossdomin.xml</span><br><span class="line">sitemap.xml</span><br><span class="line">/WEB-INF/</span><br><span class="line">svn</span><br><span class="line">SVN</span><br><span class="line">.svn</span><br><span class="line">.svn</span><br><span class="line">entries</span><br><span class="line">源码泄漏文件</span><br><span class="line">#根据系统类型，寻找对应的漏洞，下面是tomcat的session泄露</span><br><span class="line">/examples/servlets/servlet/SessionExample/examples/</span><br><span class="line">/WEB-INF/config/jdbc.properties/WEB-INF/web.xml/WEB-INF/classes/</span><br><span class="line">WEB-INF/web.xml :Web应用程序配置文件, 描述了servlet和其他的应用组件配置及命名规则.</span><br><span class="line">WEB-INF/database.properties :数据库配置文件</span><br><span class="line">WEB-INF/classes/ :一般用来存放Java类文件(.class)</span><br><span class="line">WEB-INF/lib/ :用来存放打包好的库(.jar)</span><br><span class="line">WEB-INF/src/ :用来放源代码(.asp和.php等)</span><br><span class="line">.bzr</span><br><span class="line">.DS_store</span><br><span class="line">.hg</span><br><span class="line">.swp</span><br><span class="line">.bak</span><br><span class="line">backup.tgz</span><br><span class="line">http://example.com/static../</span><br><span class="line">www.zip</span><br><span class="line">http://www.zip</span><br><span class="line">www.tar.gz</span><br><span class="line">http://www.tar.gz</span><br><span class="line">www.rar</span><br><span class="line">http://www.rar</span><br><span class="line">web.zip</span><br><span class="line">web.rar</span><br></pre></td></tr></table></figure>
+</li>
 </ol>
-<p>robots.txt、crossdomin.xml、sitemap.xml、/WEB-INF/、源码泄漏文件</p>
 <h3 id="脆弱系统-网络空间"><a href="#脆弱系统-网络空间" class="headerlink" title="脆弱系统(网络空间)"></a>脆弱系统(网络空间)</h3><p>网络空间搜索引擎</p>
 <ul>
-<li>Shodan</li>
-<li>Censys</li>
+<li><p>Shodan</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">https://www.shodan.io/search?query=http.title:</span><br><span class="line">http://www.shodan.io/search?query=http.title:&quot;百度&quot; country:&quot;CN&quot;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Censys</p>
+</li>
 <li>zoomeye</li>
 <li>fofa</li>
 </ul>
@@ -923,7 +927,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-count">25</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -934,7 +938,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -945,7 +949,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-count">27</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

