@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="域渗透,">
 
 
 
@@ -79,13 +79,18 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="EkEk的个人博客">
-<meta property="og:url" content="https://jeremyekek.github.io/tags/hexo/index.html">
+<meta name="description" content="域环境介绍网络工作模式工作组（WORKGROUP）：安装系统之后默认的网络工作模式就是工作组，systeminfo可以查看当前的工作模式。当网络模式为工作组时，整个网络以及资源是相互独立的，没有统一的管理者，适用于中小型企业。 域环境：将网络中的多台计算机逻辑上组织在一起，进行集中管理，区别于工作组的逻辑环境，域是组织和存储资源的核心管理单元，在域环境中有统一的管理者，该管理者叫做域控，这种工作模">
+<meta name="keywords" content="域渗透">
+<meta property="og:type" content="article">
+<meta property="og:title" content="域环境搭建">
+<meta property="og:url" content="https://jeremyekek.github.io/2019/03/14/域环境搭建/index.html">
 <meta property="og:site_name" content="EkEk的个人博客">
+<meta property="og:description" content="域环境介绍网络工作模式工作组（WORKGROUP）：安装系统之后默认的网络工作模式就是工作组，systeminfo可以查看当前的工作模式。当网络模式为工作组时，整个网络以及资源是相互独立的，没有统一的管理者，适用于中小型企业。 域环境：将网络中的多台计算机逻辑上组织在一起，进行集中管理，区别于工作组的逻辑环境，域是组织和存储资源的核心管理单元，在域环境中有统一的管理者，该管理者叫做域控，这种工作模">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-07-24T09:22:25.623Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="EkEk的个人博客">
+<meta name="twitter:title" content="域环境搭建">
+<meta name="twitter:description" content="域环境介绍网络工作模式工作组（WORKGROUP）：安装系统之后默认的网络工作模式就是工作组，systeminfo可以查看当前的工作模式。当网络模式为工作组时，整个网络以及资源是相互独立的，没有统一的管理者，适用于中小型企业。 域环境：将网络中的多台计算机逻辑上组织在一起，进行集中管理，区别于工作组的逻辑环境，域是组织和存储资源的核心管理单元，在域环境中有统一的管理者，该管理者叫做域控，这种工作模">
 
 
 
@@ -115,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://jeremyekek.github.io/tags/hexo/">
+  <link rel="canonical" href="https://jeremyekek.github.io/2019/03/14/域环境搭建/">
 
 
 
 
 
-  <title>标签: hexo | EkEk的个人博客</title>
+  <title>域环境搭建 | EkEk的个人博客</title>
   
 
 
@@ -140,7 +145,7 @@
     
   
 
-  <div class="container sidebar-position-right ">
+  <div class="container sidebar-position-right page-post-detail">
     <div class="headband"></div>
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
@@ -233,52 +238,253 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>hexo<small>标签</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://jeremyekek.github.io/2019/03/14/域环境搭建/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="EkEk">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EkEk的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2019/03/13/利用github pages+hexo 搭建个人博客/" itemprop="url">
-              
-                <span itemprop="name">利用GitHub Pages搭建个人博客</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">域环境搭建</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-03-13T20:55:18+08:00" content="2019-03-13">
-          03-13
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
 
-    </header>
-  </article>
+            
 
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2019-07-24T17:22:25+08:00">
+                2019-07-24
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">学习笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/03/14/域环境搭建/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/03/14/域环境搭建/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="域环境介绍"><a href="#域环境介绍" class="headerlink" title="域环境介绍"></a>域环境介绍</h2><h3 id="网络工作模式"><a href="#网络工作模式" class="headerlink" title="网络工作模式"></a>网络工作模式</h3><p><strong>工作组（WORKGROUP）</strong>：安装系统之后默认的网络工作模式就是工作组，systeminfo可以查看当前的工作模式。当网络模式为工作组时，整个网络以及资源是相互独立的，没有统一的管理者，适用于中小型企业。</p>
+<p><strong>域环境</strong>：将网络中的多台计算机逻辑上组织在一起，进行集中管理，区别于工作组的逻辑环境，域是组织和存储资源的核心管理单元，在域环境中有统一的管理者，该管理者叫做域控，这种工作模式适用于中大型企业。</p>
+<h2 id="域环境结构"><a href="#域环境结构" class="headerlink" title="域环境结构"></a>域环境结构</h2><h5 id="域控"><a href="#域控" class="headerlink" title="域控"></a>域控</h5><p>加入了域环境且安装了活动目录（AD）的计算机</p>
+<h5 id="成员服务器"><a href="#成员服务器" class="headerlink" title="成员服务器"></a>成员服务器</h5><p>加入了域且提供了某种服务的计算机</p>
+<h5 id="独立服务器"><a href="#独立服务器" class="headerlink" title="独立服务器"></a>独立服务器</h5><p>选择的工作模式是工作组且提供了某种服务的计算机</p>
+<h2 id="域控制的配置条件"><a href="#域控制的配置条件" class="headerlink" title="域控制的配置条件"></a>域控制的配置条件</h2><ol>
+<li><p>操作者必须是管理员</p>
+</li>
+<li><p>操作系统版本要求：</p>
+<ol>
+<li>Windows server 2003 企业版 专业版 （WEB除外）</li>
+</ol>
+<p>​    DNS和AD可以分配到不同的系统上安装</p>
+<ol start="2">
+<li>Windows server 2008 企业版 专业版  数据中心版（WEB除外）</li>
+</ol>
+<p>​    DNS和AD必须安装在同一机器上</p>
+</li>
+<li><p>安装AD（active directory）的存储空间必须是NTFS</p>
+<p>win: FAT16、FAT32、NTFS</p>
+<p>Linux：ext、xfs</p>
+</li>
+<li><p>磁盘空间容量足够大</p>
+</li>
+<li><p>内存：</p>
+<p>真实服务器：32G</p>
+<p>虚拟机：1G</p>
+</li>
+<li><p>域控服务器必须配置静态IP</p>
+</li>
+</ol>
+<h2 id="安装域控制器的步骤"><a href="#安装域控制器的步骤" class="headerlink" title="安装域控制器的步骤"></a>安装域控制器的步骤</h2><ol>
+<li><p>配置静态IP</p>
+</li>
+<li><p>安装DNS服务，DNS指向自己</p>
+</li>
+<li><p>安装活动目录(<a href="https://zhidao.baidu.com/question/489479730097836292.html" target="_blank" rel="noopener">参考</a>)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dcpromo</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>添加域账号</p>
+</li>
+</ol>
+<h2 id="域功能级别"><a href="#域功能级别" class="headerlink" title="域功能级别"></a>域功能级别</h2><table>
+<thead>
+<tr>
+<th>域功能级别</th>
+<th>支持的域控制器</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Windows 2000</td>
+<td>windows 2000 / windows server 2003 / 2008</td>
+</tr>
+<tr>
+<td>windows server 2003</td>
+<td>windows server 2003 / 2008</td>
+</tr>
+<tr>
+<td>windows server 2008</td>
+<td>windows server 2008</td>
+</tr>
+</tbody>
+</table>
+<p>客户端加入域：</p>
+<ol>
+<li>IP地址(静态/动态)</li>
+<li>首选DNS必须指向DNS服务器</li>
+<li>计算机–属性–更改–域–域名—确定 –重启</li>
+<li>登陆域账号</li>
+</ol>
 
       
     </div>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/域渗透/" rel="tag"># 域渗透</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/14/Metasploit-MSF/" rel="next" title="Metasploit(MSF)入门">
+                <i class="fa fa-chevron-left"></i> Metasploit(MSF)入门
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/03/16/CVE-2018-20250-WinRAR远程代码执行漏洞/" rel="prev" title="CVE-2018-20250-WinRAR远程代码执行漏洞">
+                CVE-2018-20250-WinRAR远程代码执行漏洞 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -286,6 +492,20 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
 
         </div>
         
@@ -306,8 +526,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -522,6 +751,22 @@
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#域环境介绍"><span class="nav-text">域环境介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#网络工作模式"><span class="nav-text">网络工作模式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#域环境结构"><span class="nav-text">域环境结构</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#域控"><span class="nav-text">域控</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#成员服务器"><span class="nav-text">成员服务器</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#独立服务器"><span class="nav-text">独立服务器</span></a></li></ol></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#域控制的配置条件"><span class="nav-text">域控制的配置条件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装域控制器的步骤"><span class="nav-text">安装域控制器的步骤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#域功能级别"><span class="nav-text">域功能级别</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
 
       
         <div class="back-to-top">
@@ -657,6 +902,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
@@ -674,6 +923,18 @@
       <script id="dsq-count-scr" src="https://jeremyekek-github-io.disqus.com/count.js" async></script>
     
 
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://jeremyekek.github.io/2019/03/14/域环境搭建/';
+          this.page.identifier = '2019/03/14/域环境搭建/';
+          this.page.title = '域环境搭建';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://jeremyekek-github-io.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
     
 
   
