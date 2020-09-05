@@ -79,22 +79,22 @@
 
 
 
-<meta name="description" content="参考：《逻辑漏洞挖掘有套路—支付漏洞挖掘》：http://falsespace.net/training.html 一、现在src关注的重点​    随着常规漏洞的风险降低，以及挖掘难度的增加，现在的src更多的关注点，也就是白帽子关注的重点是逻辑漏洞。逻辑漏洞不要求有很深的基础，比如sql注入手工注入需要对sql注入有很深厚的理解；逻辑漏洞只需要对业务逻辑和关键参数有一定的了解，剩下的看运气。">
+<meta name="description" content="一、现在src关注的重点​    随着常规漏洞的风险降低，以及挖掘难度的增加，现在的src更多的关注点，也就是白帽子关注的重点是逻辑漏洞。逻辑漏洞不要求有很深的基础，比如sql注入手工注入需要对sql注入有很深厚的理解；逻辑漏洞只需要对业务逻辑和关键参数有一定的了解，剩下的看运气。">
 <meta name="keywords" content="业务逻辑漏洞,支付逻辑漏洞">
 <meta property="og:type" content="article">
 <meta property="og:title" content="逻辑漏洞挖掘思路-支付逻辑">
 <meta property="og:url" content="https://jeremyekek.github.io/2019/04/07/逻辑漏洞挖掘思路-支付逻辑/index.html">
 <meta property="og:site_name" content="EkEk的个人博客">
-<meta property="og:description" content="参考：《逻辑漏洞挖掘有套路—支付漏洞挖掘》：http://falsespace.net/training.html 一、现在src关注的重点​    随着常规漏洞的风险降低，以及挖掘难度的增加，现在的src更多的关注点，也就是白帽子关注的重点是逻辑漏洞。逻辑漏洞不要求有很深的基础，比如sql注入手工注入需要对sql注入有很深厚的理解；逻辑漏洞只需要对业务逻辑和关键参数有一定的了解，剩下的看运气。">
+<meta property="og:description" content="一、现在src关注的重点​    随着常规漏洞的风险降低，以及挖掘难度的增加，现在的src更多的关注点，也就是白帽子关注的重点是逻辑漏洞。逻辑漏洞不要求有很深的基础，比如sql注入手工注入需要对sql注入有很深厚的理解；逻辑漏洞只需要对业务逻辑和关键参数有一定的了解，剩下的看运气。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://jeremyekek.github.io/2019/04/07/逻辑漏洞挖掘思路-支付逻辑/1554553268179.png">
 <meta property="og:image" content="https://jeremyekek.github.io/2019/04/07/逻辑漏洞挖掘思路-支付逻辑/1554553286437.png">
 <meta property="og:image" content="https://jeremyekek.github.io/2019/04/07/逻辑漏洞挖掘思路-支付逻辑/1554555632056.png">
 <meta property="og:image" content="https://jeremyekek.github.io/2019/04/07/逻辑漏洞挖掘思路-支付逻辑/1554557520785.png">
-<meta property="og:updated_time" content="2019-07-01T02:46:36.660Z">
+<meta property="og:updated_time" content="2020-09-05T16:14:18.597Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="逻辑漏洞挖掘思路-支付逻辑">
-<meta name="twitter:description" content="参考：《逻辑漏洞挖掘有套路—支付漏洞挖掘》：http://falsespace.net/training.html 一、现在src关注的重点​    随着常规漏洞的风险降低，以及挖掘难度的增加，现在的src更多的关注点，也就是白帽子关注的重点是逻辑漏洞。逻辑漏洞不要求有很深的基础，比如sql注入手工注入需要对sql注入有很深厚的理解；逻辑漏洞只需要对业务逻辑和关键参数有一定的了解，剩下的看运气。">
+<meta name="twitter:description" content="一、现在src关注的重点​    随着常规漏洞的风险降低，以及挖掘难度的增加，现在的src更多的关注点，也就是白帽子关注的重点是逻辑漏洞。逻辑漏洞不要求有很深的基础，比如sql注入手工注入需要对sql注入有很深厚的理解；逻辑漏洞只需要对业务逻辑和关键参数有一定的了解，剩下的看运气。">
 <meta name="twitter:image" content="https://jeremyekek.github.io/2019/04/07/逻辑漏洞挖掘思路-支付逻辑/1554553268179.png">
 
 
@@ -290,8 +290,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2019-07-01T10:46:36+08:00">
-                2019-07-01
+              <time title="更新于" itemprop="dateModified" datetime="2020-09-06T00:14:18+08:00">
+                2020-09-06
               </time>
             
           </span>
@@ -356,8 +356,7 @@
       
 
       
-        <p>参考：《逻辑漏洞挖掘有套路—支付漏洞挖掘》：<a href="http://falsespace.net/training.html" target="_blank" rel="noopener">http://falsespace.net/training.html</a></p>
-<h2 id="一、现在src关注的重点"><a href="#一、现在src关注的重点" class="headerlink" title="一、现在src关注的重点"></a>一、现在src关注的重点</h2><p>​    随着常规漏洞的风险降低，以及挖掘难度的增加，现在的src更多的关注点，也就是白帽子关注的重点是逻辑漏洞。逻辑漏洞不要求有很深的基础，比如sql注入手工注入需要对sql注入有很深厚的理解；逻辑漏洞只需要对业务逻辑和关键参数有一定的了解，剩下的看运气。</p>
+        <h2 id="一、现在src关注的重点"><a href="#一、现在src关注的重点" class="headerlink" title="一、现在src关注的重点"></a>一、现在src关注的重点</h2><p>​    随着常规漏洞的风险降低，以及挖掘难度的增加，现在的src更多的关注点，也就是白帽子关注的重点是逻辑漏洞。逻辑漏洞不要求有很深的基础，比如sql注入手工注入需要对sql注入有很深厚的理解；逻辑漏洞只需要对业务逻辑和关键参数有一定的了解，剩下的看运气。</p>
 <a id="more"></a>
 <h2 id="二、刷src之前的准备"><a href="#二、刷src之前的准备" class="headerlink" title="二、刷src之前的准备"></a>二、刷src之前的准备</h2><h3 id="1-信息收集（泛讲）"><a href="#1-信息收集（泛讲）" class="headerlink" title="1. 信息收集（泛讲）"></a>1. 信息收集（泛讲）</h3><p>​    渗透测试和漏洞挖掘，信息收集是贯彻于整个流程的；在进行src挖掘之前，要进行信息收集，在确定漏洞产生什么危害的时候，也要进行信息收集，也就是说渗透测试和漏洞挖掘的本质就是信息收集。</p>
 <h3 id="2-具体要收集哪些信息"><a href="#2-具体要收集哪些信息" class="headerlink" title="2. 具体要收集哪些信息"></a>2. 具体要收集哪些信息</h3><ol>
@@ -725,7 +724,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-count">44</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -736,7 +735,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">10</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -747,7 +746,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-count">31</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -959,7 +958,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+        <div class="copyright">&copy; 2019 &mdash; <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-snowflake-o"></i>
   </span>

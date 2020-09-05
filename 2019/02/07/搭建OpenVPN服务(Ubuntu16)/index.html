@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="VPN,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="一、参考Ubuntu16.04搭建OpenVPNUbuntu16.04搭建openvpn服务器 二、环境Ubuntu 16.10 yakkety (GNU/Linux 4.8.0-22-generic x86_64) 三、介绍VPN（Virtual Private Network，虚拟私人网络）是一种常用于连接中、大型企业或团体与团体间的私人网络的通讯方法。它利用隧道协议（Tunneling Pr">
+<meta name="keywords" content="VPN">
+<meta property="og:type" content="article">
+<meta property="og:title" content="搭建OpenVPN服务(Ubuntu16)">
+<meta property="og:url" content="https://jeremyekek.github.io/2019/02/07/搭建OpenVPN服务(Ubuntu16)/index.html">
+<meta property="og:site_name" content="EkEk的个人博客">
+<meta property="og:description" content="一、参考Ubuntu16.04搭建OpenVPNUbuntu16.04搭建openvpn服务器 二、环境Ubuntu 16.10 yakkety (GNU/Linux 4.8.0-22-generic x86_64) 三、介绍VPN（Virtual Private Network，虚拟私人网络）是一种常用于连接中、大型企业或团体与团体间的私人网络的通讯方法。它利用隧道协议（Tunneling Pr">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/02/07/搭建OpenVPN服务(Ubuntu16)/Ubuntu16下搭建OpenVPN服务/1554386400868.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/02/07/搭建OpenVPN服务(Ubuntu16)/Ubuntu16下搭建OpenVPN服务/1554386592562.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/02/07/搭建OpenVPN服务(Ubuntu16)/Ubuntu16下搭建OpenVPN服务/1554386666693.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/02/07/搭建OpenVPN服务(Ubuntu16)/Ubuntu16下搭建OpenVPN服务/1554387418885.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/02/07/搭建OpenVPN服务(Ubuntu16)/Ubuntu16下搭建OpenVPN服务/1554429618321.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/02/07/搭建OpenVPN服务(Ubuntu16)/Ubuntu16下搭建OpenVPN服务/1554429922860.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/02/07/搭建OpenVPN服务(Ubuntu16)/Ubuntu16下搭建OpenVPN服务/1554430607611.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/02/07/搭建OpenVPN服务(Ubuntu16)/Ubuntu16下搭建OpenVPN服务/1554430900402.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/02/07/搭建OpenVPN服务(Ubuntu16)/Ubuntu16下搭建OpenVPN服务/1554431450577.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/02/07/搭建OpenVPN服务(Ubuntu16)/Ubuntu16下搭建OpenVPN服务/1554431475663.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/02/07/搭建OpenVPN服务(Ubuntu16)/Ubuntu16下搭建OpenVPN服务/1554431815982.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/02/07/搭建OpenVPN服务(Ubuntu16)/Ubuntu16下搭建OpenVPN服务/1554431906735.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/02/07/搭建OpenVPN服务(Ubuntu16)/Ubuntu16下搭建OpenVPN服务/1554432065420.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/02/07/搭建OpenVPN服务(Ubuntu16)/Ubuntu16下搭建OpenVPN服务/1554432573267.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/02/07/搭建OpenVPN服务(Ubuntu16)/Ubuntu16下搭建OpenVPN服务/1554432778966.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/02/07/搭建OpenVPN服务(Ubuntu16)/Ubuntu16下搭建OpenVPN服务/1554432909071.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/02/07/搭建OpenVPN服务(Ubuntu16)/Ubuntu16下搭建OpenVPN服务/1554433320308.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/02/07/搭建OpenVPN服务(Ubuntu16)/Ubuntu16下搭建OpenVPN服务/1554433559377.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/02/07/搭建OpenVPN服务(Ubuntu16)/Ubuntu16下搭建OpenVPN服务/1554433627533.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/02/07/搭建OpenVPN服务(Ubuntu16)/Ubuntu16下搭建OpenVPN服务/1554433680420.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/02/07/搭建OpenVPN服务(Ubuntu16)/Ubuntu16下搭建OpenVPN服务/1554434147405.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/02/07/搭建OpenVPN服务(Ubuntu16)/Ubuntu16下搭建OpenVPN服务/1554434551477.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/02/07/搭建OpenVPN服务(Ubuntu16)/Ubuntu16下搭建OpenVPN服务/1554434461184.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/02/07/搭建OpenVPN服务(Ubuntu16)/Ubuntu16下搭建OpenVPN服务/1554434518742.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/02/07/搭建OpenVPN服务(Ubuntu16)/Ubuntu16下搭建OpenVPN服务/1554434639408.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/02/07/搭建OpenVPN服务(Ubuntu16)/Ubuntu16下搭建OpenVPN服务/1554434791663.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/02/07/搭建OpenVPN服务(Ubuntu16)/Ubuntu16下搭建OpenVPN服务/1554435021629.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/02/07/搭建OpenVPN服务(Ubuntu16)/Ubuntu16下搭建OpenVPN服务/1554438169932.png">
+<meta property="og:updated_time" content="2020-09-05T13:09:40.751Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="搭建OpenVPN服务(Ubuntu16)">
+<meta name="twitter:description" content="一、参考Ubuntu16.04搭建OpenVPNUbuntu16.04搭建openvpn服务器 二、环境Ubuntu 16.10 yakkety (GNU/Linux 4.8.0-22-generic x86_64) 三、介绍VPN（Virtual Private Network，虚拟私人网络）是一种常用于连接中、大型企业或团体与团体间的私人网络的通讯方法。它利用隧道协议（Tunneling Pr">
+<meta name="twitter:image" content="https://jeremyekek.github.io/2019/02/07/搭建OpenVPN服务(Ubuntu16)/Ubuntu16下搭建OpenVPN服务/1554386400868.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":20,"b2t":true,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://jeremyekek.github.io/2019/02/07/搭建OpenVPN服务(Ubuntu16)/">
+
+
+
+
+
+  <title>搭建OpenVPN服务(Ubuntu16) | EkEk的个人博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">EkEk的个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://jeremyekek.github.io/2019/02/07/搭建OpenVPN服务(Ubuntu16)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="EkEk">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EkEk的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">搭建OpenVPN服务(Ubuntu16)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2020-09-05T21:09:40+08:00">
+                2020-09-05
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/环境搭建/" itemprop="url" rel="index">
+                    <span itemprop="name">环境搭建</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/02/07/搭建OpenVPN服务(Ubuntu16)/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/02/07/搭建OpenVPN服务(Ubuntu16)/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="一、参考"><a href="#一、参考" class="headerlink" title="一、参考"></a>一、参考</h2><p><a href="https://blog.csdn.net/u012843189/article/details/77422505" target="_blank" rel="noopener">Ubuntu16.04搭建OpenVPN</a><br><a href="https://cndaqiang.github.io/2017/09/27/ubuntu1604-openvpn/" target="_blank" rel="noopener">Ubuntu16.04搭建openvpn服务器</a></p>
+<h2 id="二、环境"><a href="#二、环境" class="headerlink" title="二、环境"></a>二、环境</h2><p>Ubuntu 16.10 yakkety (GNU/Linux 4.8.0-22-generic x86_64)</p>
+<h2 id="三、介绍"><a href="#三、介绍" class="headerlink" title="三、介绍"></a>三、介绍</h2><p><strong>VPN</strong>（Virtual Private Network，虚拟私人网络）是一种常用于连接中、大型企业或团体与团体间的私人网络的通讯方法。它利用<a href="https://zh.wikipedia.org/wiki/%E9%9A%A7%E9%81%93%E5%8D%8F%E8%AE%AE" target="_blank" rel="noopener">隧道协议</a>（Tunneling Protocol）来达到保密、发送端认证、消息准确性等私人消息安全效果，这种技术可以用不安全的网络（例如：互联网）来发送可靠、安全的消息。</p>
+<h2 id="四、安装"><a href="#四、安装" class="headerlink" title="四、安装"></a>四、安装</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install openvpn easy-rsa</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<p><code>easy-rsa</code>内部CA（certificate authority）证书生成软件</p>
+<p><img src="/2019/02/07/搭建OpenVPN服务(Ubuntu16)/Ubuntu16下搭建OpenVPN服务/1554386400868.png" alt="1554386400868"></p>
+<h2 id="五、证书制作"><a href="#五、证书制作" class="headerlink" title="五、证书制作"></a>五、证书制作</h2><h3 id="1-证书配置"><a href="#1-证书配置" class="headerlink" title="1. 证书配置"></a>1. 证书配置</h3><p>复制证书制作工具到文件夹(该文件夹应该不存在，复制后自动创建该文件夹)，<code>make-cadir</code>为easy-rsa安装后增加的命令 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">make-cadir /etc/openvpn/ca</span><br><span class="line">cd /etc/openvpn/ca</span><br></pre></td></tr></table></figure>
+<p>更改证书默认设置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim vars</span><br></pre></td></tr></table></figure>
+<p>以下内容为证书的默认内容，可自定义，不能为空</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">export KEY_COUNTRY=&quot;US&quot;</span><br><span class="line">export KEY_PROVINCE=&quot;CA&quot;</span><br><span class="line">export KEY_CITY=&quot;SanFrancisco&quot;</span><br><span class="line">export KEY_ORG=&quot;Fort-Funston&quot;</span><br><span class="line">export KEY_EMAIL=&quot;me@myhost.mydomain&quot;</span><br><span class="line">export KEY_OU=&quot;MyOrganizationalUnit&quot;</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/02/07/搭建OpenVPN服务(Ubuntu16)/Ubuntu16下搭建OpenVPN服务/1554386592562.png" alt="1554386592562"></p>
+<p>下面有个KEY_NAME，值可自定义，例如heiheihei</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export KEY_NAME=&quot;heiheihei&quot;</span><br></pre></td></tr></table></figure>
+<p>保存退出</p>
+<p>现在可以使用刚才设置的变量，用easy-rsa包来制作CA。确保在CA目录下面，然后source编辑过的vars文件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source vars</span><br></pre></td></tr></table></figure>
+<p>如果source正确的话，会看到如下信息：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NOTE: If you run ./clean-all, I will be doing a rm -rf on /etc/openvpn/ca/keys</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/02/07/搭建OpenVPN服务(Ubuntu16)/Ubuntu16下搭建OpenVPN服务/1554386666693.png" alt="1554386666693"></p>
+<h3 id="2-CA证书"><a href="#2-CA证书" class="headerlink" title="2. CA证书"></a>2. CA证书</h3><p>CA数字证书认证机构,负责颁发证书，用于openvpn服务器和客户端的认证</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">./clean-all				//确保我们的操作处于一个clean环境中</span><br><span class="line">./build-ca				//之后需要一直回车确认</span><br><span class="line">./build-ca [--batch]	//保持默认设置，无须回车确认</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/02/07/搭建OpenVPN服务(Ubuntu16)/Ubuntu16下搭建OpenVPN服务/1554387418885.png" alt="1554387418885"></p>
+<h3 id="3-服务器证书"><a href="#3-服务器证书" class="headerlink" title="3. 服务器证书"></a>3. 服务器证书</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./build-key-server --batch heiheihei</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/02/07/搭建OpenVPN服务(Ubuntu16)/Ubuntu16下搭建OpenVPN服务/1554429618321.png" alt="1554429618321"></p>
+<p>heiheihei为之前vars里<code>export KEY_NAME=&quot;heiheihei&quot;</code>的值，自定义后，后面需要修改服务器配置文件中相应内容。</p>
+<p>client名称也可自定义,如果修改，最后在客户端配置文件中，也更改对应名称。</p>
+<h3 id="4-制作Diffie-Hellman-key"><a href="#4-制作Diffie-Hellman-key" class="headerlink" title="4. 制作Diffie-Hellman key"></a>4. 制作Diffie-Hellman key</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./build-dh</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/02/07/搭建OpenVPN服务(Ubuntu16)/Ubuntu16下搭建OpenVPN服务/1554429922860.png" alt="1554429922860"></p>
+<p>等待几分钟时间完成</p>
+<h3 id="5-生成HMAC签名加强TLS认证"><a href="#5-生成HMAC签名加强TLS认证" class="headerlink" title="5. 生成HMAC签名加强TLS认证"></a>5. 生成HMAC签名加强TLS认证</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openvpn --genkey --secret keys/ta.key</span><br></pre></td></tr></table></figure>
+<h3 id="6-客户端证书"><a href="#6-客户端证书" class="headerlink" title="6. 客户端证书"></a>6. 客户端证书</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./build-key --batch client</span><br></pre></td></tr></table></figure>
+<p>client名称可自定义,如果修改需要后面在客户端配置文件中，更改对应内容</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cert client.crt</span><br><span class="line">key client.key</span><br></pre></td></tr></table></figure>
+<h2 id="六、服务端配置"><a href="#六、服务端配置" class="headerlink" title="六、服务端配置"></a>六、服务端配置</h2><h3 id="1-移动证书"><a href="#1-移动证书" class="headerlink" title="1. 移动证书"></a>1. 移动证书</h3><p>进入keys目录可以看到生成的证书文件 我们需要<strong>ca.crt ca.key heiheihei.crt heiheihei.key ta.key dh2048.pem</strong> ，heiheihei为之前自定义的服务器证书名</p>
+<p><img src="/2019/02/07/搭建OpenVPN服务(Ubuntu16)/Ubuntu16下搭建OpenVPN服务/1554430607611.png" alt="1554430607611"></p>
+<p>复制证书文件到/etc/openvpn 当前目录是<code>/etc/openvpn/ca/keys</code>，所以<code>../../</code>就是配置目录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp ca.crt ca.key uuu.crt uuu.key ta.key dh2048.pem ../../</span><br></pre></td></tr></table></figure>
+<h3 id="2-修改配置文件"><a href="#2-修改配置文件" class="headerlink" title="2. 修改配置文件"></a>2. 修改配置文件</h3><p>复制配置文件模板到<code>/etc/openvpn/</code>,解压后修改</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cp /usr/share/doc/openvpn/examples/sample-config-files/server.conf.gz .</span><br><span class="line">gzip -d server.conf.gz</span><br><span class="line">sudo vim server.conf</span><br></pre></td></tr></table></figure>
+<p>以下内容替换为证书的路径名称，同路径下可直接写名称</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ca ca.crt</span><br><span class="line">cert server.crt</span><br><span class="line">key server.key </span><br><span class="line"></span><br><span class="line">dh dh2048.pem</span><br></pre></td></tr></table></figure>
+<p>这里我替换成</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ca ca.crt</span><br><span class="line">cert heiheihei.crt</span><br><span class="line">key heiheihei.key</span><br><span class="line"></span><br><span class="line">dh dh2048.pem</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/02/07/搭建OpenVPN服务(Ubuntu16)/Ubuntu16下搭建OpenVPN服务/1554430900402.png" alt="1554430900402"></p>
+<p>如果服务器证书一开始就命名为server默认值，这里就不用修改了</p>
+<p>去掉下面的注释，并再下一行添加<code>key-direction 0</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">;tls-auth ta.key 0 # This file is secret</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/02/07/搭建OpenVPN服务(Ubuntu16)/Ubuntu16下搭建OpenVPN服务/1554431450577.png" alt="1554431450577"></p>
+<p>最后，找到user和group参数，去除它们之前的<code>;</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">;user nobody</span><br><span class="line">;group nogroup</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/02/07/搭建OpenVPN服务(Ubuntu16)/Ubuntu16下搭建OpenVPN服务/1554431475663.png" alt="1554431475663"></p>
+<p><strong>（可选配置）推动DNS更改让VPN重定向所有流量</strong></p>
+<p>上面的配置可以在客户端和服务器端上创建VPN连接，但是没有强迫连接去使用tunnel。如果希望用VPN来路由所有流量，需要更改客户端机器的DNS设置。</p>
+<p><img src="/2019/02/07/搭建OpenVPN服务(Ubuntu16)/Ubuntu16下搭建OpenVPN服务/1554431815982.png" alt="1554431815982"></p>
+<p>这样就可以协助客户版重新配置DNS，以便使用VPN tunnel来作为默认网关。</p>
+<p><strong>（可选配置）修改OpenVPN服务器的端口和协议</strong></p>
+<p><img src="/2019/02/07/搭建OpenVPN服务(Ubuntu16)/Ubuntu16下搭建OpenVPN服务/1554431906735.png" alt="1554431906735"></p>
+<p>如果没有更换端口的需求，最好将上述的两项保持默认设置。</p>
+<h3 id="3-防火墙设置"><a href="#3-防火墙设置" class="headerlink" title="3. 防火墙设置"></a>3. 防火墙设置</h3><h4 id="1-打开ip转发"><a href="#1-打开ip转发" class="headerlink" title="1. 打开ip转发"></a>1. 打开ip转发</h4><p>我们需要让服务器来转发流量，这是需要VPN服务器来提供的最基本的功能。可以通过修改/etc/sysctl.conf文件来调整网络设置：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/sysctl.conf</span><br></pre></td></tr></table></figure>
+<p>取消注释<code>net.ipv4.ip_forward</code>，完成后保存并退出</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">net.ipv4.ip_forward=1</span><br></pre></td></tr></table></figure>
+<p>读取sysctl.conf文件并且让调整后设置对当前系统的session生效</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo sysctl -p</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/02/07/搭建OpenVPN服务(Ubuntu16)/Ubuntu16下搭建OpenVPN服务/1554432065420.png" alt="1554432065420"></p>
+<h4 id="2-添加规则"><a href="#2-添加规则" class="headerlink" title="2. 添加规则"></a>2. 添加规则</h4><p><strong>调整防火墙（UFW）规则</strong></p>
+<p>配置防火墙规则来引导进入服务器的一些流量，需要修改防火墙规则文件来建立伪装规则，iptables的概念用于提供动态的NAT，从而正确地路由客户端连接。在打开防火墙配置文件以添加伪装规则之前，需要找到Ubuntu服务器的公共网络接口，输入如下命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ip route | grep default</span><br></pre></td></tr></table></figure>
+<p>公共网络接口应当紧跟在单词”dev”后面，例如，我的接口名字为ens33：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">default via 172.18.31.253 dev ens33</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/02/07/搭建OpenVPN服务(Ubuntu16)/Ubuntu16下搭建OpenVPN服务/1554432573267.png" alt="1554432573267"></p>
+<p>打开/etc/ufw/before.rules这个文件并添加相应的规则：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/ufw/before.rules</span><br></pre></td></tr></table></figure>
+<p>在最前面填入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># START OPENVPN RULES</span><br><span class="line"># NAT table rules</span><br><span class="line">*nat</span><br><span class="line">:POSTROUTING ACCEPT [0:0] </span><br><span class="line"># Allow traffic from OpenVPN client to eth0</span><br><span class="line">-A POSTROUTING -s 10.8.0.0/8 -o ens33 -j MASQUERADE</span><br><span class="line">COMMIT</span><br><span class="line"># END OPENVPN RULES</span><br></pre></td></tr></table></figure>
+<p>其中10.8.0.0/8为openvpn客户端获取的ip，如在server.conf里面修改，此处应替换为相应ip，ens33为ubuntu连接网络的网卡</p>
+<p><img src="/2019/02/07/搭建OpenVPN服务(Ubuntu16)/Ubuntu16下搭建OpenVPN服务/1554432778966.png" alt="1554432778966"></p>
+<p>然后告诉防火墙默认允许转发包：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/default/ufw</span><br></pre></td></tr></table></figure>
+<p>将</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DEFAULT_FORWARD_POLICY=&quot;DROP&quot;</span><br></pre></td></tr></table></figure>
+<p>改为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DEFAULT_FORWARD_POLICY=&quot;ACCEPT&quot;</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/02/07/搭建OpenVPN服务(Ubuntu16)/Ubuntu16下搭建OpenVPN服务/1554432909071.png" alt="1554432909071"></p>
+<h4 id="3-开放端口"><a href="#3-开放端口" class="headerlink" title="3. 开放端口"></a>3. 开放端口</h4><p><strong>打开OpenVPN端口并且使变化生效</strong></p>
+<p>调整防火墙本身，以允许流量到OpenVPN。如果在/etc/openvpn/server.conf文件中没有修改OpenVPN的端口号和协议类型，那么直接配置防火墙允许UDP流量到1194端口，如果改变了端口和协议类型，那么根据自己设置的端口和协议类型进行配置。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo ufw allow 1194/udp</span><br><span class="line">sudo ufw allow OpenSSH</span><br></pre></td></tr></table></figure>
+<p>  从所有修改过的文件中装载配置来关闭和重启防火墙：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo ufw disable</span><br><span class="line">sudo ufw enable</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/02/07/搭建OpenVPN服务(Ubuntu16)/Ubuntu16下搭建OpenVPN服务/1554433320308.png" alt="1554433320308"></p>
+<p>至此服务器端可以正确地处理OpenVPN流量了。</p>
+<h2 id="七、启动OpenVPN服务"><a href="#七、启动OpenVPN服务" class="headerlink" title="七、启动OpenVPN服务"></a>七、启动OpenVPN服务</h2><p>在systemd单元文件的后面，可以通过指定特定的配置文件名来作为一个实例变量来开启OpenVPN服务，我们的配置文件名称为/etc/openvpn/server.conf，所以在systemd单元文件的后面添加@server来开启OpenVPN服务:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl start openvpn@server</span><br><span class="line">sudo systemctl status openvpn@server</span><br></pre></td></tr></table></figure>
+<p>如果一切正常的话，输出应当跟如下类似:</p>
+<p><img src="/2019/02/07/搭建OpenVPN服务(Ubuntu16)/Ubuntu16下搭建OpenVPN服务/1554433559377.png" alt="1554433559377"></p>
+<p>通过<code>ifconfig</code>可以查看新增的ip为<code>inet addr:10.8.0.1</code>的<code>tun0</code>网卡</p>
+<p><img src="/2019/02/07/搭建OpenVPN服务(Ubuntu16)/Ubuntu16下搭建OpenVPN服务/1554433627533.png" alt="1554433627533"></p>
+<p>或者</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ip addr show tun0</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/02/07/搭建OpenVPN服务(Ubuntu16)/Ubuntu16下搭建OpenVPN服务/1554433680420.png" alt="1554433680420"></p>
+<p>如果一切运行正常，将OpenVPN设置为开机自启动：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl enable openvpn@server</span><br></pre></td></tr></table></figure>
+<h2 id="八、客户端配置"><a href="#八、客户端配置" class="headerlink" title="八、客户端配置"></a>八、客户端配置</h2><p><strong>制作客户端配置文件</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /etc/openvpn/ca/keys</span><br><span class="line">cp /usr/share/doc/openvpn/examples/sample-config-files/client.conf .</span><br></pre></td></tr></table></figure>
+<p>因为是一直root权限操作，所以ubuntu普通用户没有访问证书目录的权限，可赋予普通用户读取权限</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod -R +rx /etc/openvpn/ca/</span><br></pre></td></tr></table></figure>
+<p>用scp等方法将keys中的客户端证书文件复制到客户端上</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ca.crt</span><br><span class="line">ta.key </span><br><span class="line">client.crt </span><br><span class="line">client.key </span><br><span class="line">client.conf</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/02/07/搭建OpenVPN服务(Ubuntu16)/Ubuntu16下搭建OpenVPN服务/1554434147405.png" alt="1554434147405"></p>
+<p>打开client.conf 将<code>remote my-server-1 1194</code>中<code>my-server-1</code> <code>1194</code>替换为服务器的ip/域名，端口，并去掉前面的分号</p>
+<p><img src="/2019/02/07/搭建OpenVPN服务(Ubuntu16)/Ubuntu16下搭建OpenVPN服务/1554434551477.png" alt="1554434551477"></p>
+<p>去掉前面的分号</p>
+<p><img src="/2019/02/07/搭建OpenVPN服务(Ubuntu16)/Ubuntu16下搭建OpenVPN服务/1554434461184.png" alt="1554434461184"></p>
+<p>设置证书地址,如果自定义了客户端证书名称自行更改</p>
+<p><img src="/2019/02/07/搭建OpenVPN服务(Ubuntu16)/Ubuntu16下搭建OpenVPN服务/1554434518742.png" alt="1554434518742"></p>
+<p>删掉分号</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">;tls-auth ta.key 1</span><br></pre></td></tr></table></figure>
+<p>并在下一行添加</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">key-direction 1</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/02/07/搭建OpenVPN服务(Ubuntu16)/Ubuntu16下搭建OpenVPN服务/1554434639408.png" alt="1554434639408"></p>
+<p>把client.conf命名为client.ovpn，然后将<strong>ca.crt ta.key client.crt client.key client.ovpn</strong>复制到客户端配置文件目录（此为windows环境下）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">C:\Program Files\OpenVPN\config</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/02/07/搭建OpenVPN服务(Ubuntu16)/Ubuntu16下搭建OpenVPN服务/1554434791663.png" alt="1554434791663"></p>
+<h2 id="九、连接测试"><a href="#九、连接测试" class="headerlink" title="九、连接测试"></a>九、连接测试</h2><p>客户端可访问官网（需要FQ），或者通过第三方渠道下载安装</p>
+<p><img src="/2019/02/07/搭建OpenVPN服务(Ubuntu16)/Ubuntu16下搭建OpenVPN服务/1554435021629.png" alt="1554435021629"></p>
+<p>如图连接成功</p>
+<p><img src="/2019/02/07/搭建OpenVPN服务(Ubuntu16)/Ubuntu16下搭建OpenVPN服务/1554438169932.png" alt="1554438169932"></p>
+<p>以上就是openvpn服务的搭建过程，如有不对遗漏之处，还望斧正，谢谢。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/VPN/" rel="tag"># VPN</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/28/Docker部署操作实例/" rel="next" title="Docker部署操作实例">
+                <i class="fa fa-chevron-left"></i> Docker部署操作实例
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/02/07/搭建OpenVPN服务(Windows-2008-R2)/" rel="prev" title="搭建OpenVPN服务(Windows08R2)">
+                搭建OpenVPN服务(Windows08R2) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">EkEk</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">44</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/JeremyEkEk" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i></a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:jeremy.0394@foxmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i></a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.cnblogs.com/anbus/p/10046695.html" title="ArcticShell" target="_blank">ArcticShell</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://github.com/Micropoor/Micro8" title="Micropoor亮神" target="_blank">Micropoor亮神</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.csdn.net/zwjzqqb/article/list/7" title="VincentQB" target="_blank">VincentQB</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://github.com/PyxYuYu/MyBlog" title="PyxYuYu" target="_blank">PyxYuYu</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://3gstudent.github.io/3gstudent.github.io/" title="三好学生" target="_blank">三好学生</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.leavesongs.com/" title="离别歌" target="_blank">离别歌</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.inksec.cn/archives/page/2/" title="阿墨" target="_blank">阿墨</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.barradell-johns.com/" title="JACK" target="_blank">JACK</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://adsecurity.org/" title="AD安全" target="_blank">AD安全</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.fuzzysecurity.com" title="FuzzySecurity" target="_blank">FuzzySecurity</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.hexacorn.com/" title="Hexacorn" target="_blank">Hexacorn</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://evi1cg.me/" title="Evi1cg" target="_blank">Evi1cg</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://b404.xyz/" title="Jirairya" target="_blank">Jirairya</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://payloads.online/" title="倾旋" target="_blank">倾旋</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://times0ng.github.io/" title="Times0g" target="_blank">Times0g</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://firstlove2016.cn/" title="初恋的技术分享" target="_blank">初恋的技术分享</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://422926799.github.io/" title="九世" target="_blank">九世</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.netwrix.com/" title="netwrix" target="_blank">netwrix</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://klionsec.github.io/" title="klion" target="_blank">klion</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://jivoi.github.io/archive/" title="EK" target="_blank">EK</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://securityer.lofter.com/view" title="走过岁月" target="_blank">走过岁月</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.webbaozi.com/" title="baozi" target="_blank">baozi</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.myh0st.cn/" title="信安之路" target="_blank">信安之路</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://jdrops.dropsec.xyz/" title="Jdrops" target="_blank">Jdrops</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://exploit.kitploit.com/" title="exploit collector" target="_blank">exploit collector</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://zjw.dropsec.xyz/" title="Hello_C" target="_blank">Hello_C</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://cxsecurity.com/dorks" title="cxsecurity" target="_blank">cxsecurity</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://pentest.blog/" title="pentest" target="_blank">pentest</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://rcoil.me/" title="rcoil" target="_blank">rcoil</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://dayu.ink/" title="Dayu" target="_blank">Dayu</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://04z.net/" title="04z" target="_blank">04z</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.attackdebris.com/" title="attsckdebris" target="_blank">attsckdebris</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、参考"><span class="nav-text">一、参考</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、环境"><span class="nav-text">二、环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、介绍"><span class="nav-text">三、介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、安装"><span class="nav-text">四、安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、证书制作"><span class="nav-text">五、证书制作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-证书配置"><span class="nav-text">1. 证书配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-CA证书"><span class="nav-text">2. CA证书</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-服务器证书"><span class="nav-text">3. 服务器证书</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-制作Diffie-Hellman-key"><span class="nav-text">4. 制作Diffie-Hellman key</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-生成HMAC签名加强TLS认证"><span class="nav-text">5. 生成HMAC签名加强TLS认证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-客户端证书"><span class="nav-text">6. 客户端证书</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#六、服务端配置"><span class="nav-text">六、服务端配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-移动证书"><span class="nav-text">1. 移动证书</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-修改配置文件"><span class="nav-text">2. 修改配置文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-防火墙设置"><span class="nav-text">3. 防火墙设置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-打开ip转发"><span class="nav-text">1. 打开ip转发</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-添加规则"><span class="nav-text">2. 添加规则</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-开放端口"><span class="nav-text">3. 开放端口</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#七、启动OpenVPN服务"><span class="nav-text">七、启动OpenVPN服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#八、客户端配置"><span class="nav-text">八、客户端配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#九、连接测试"><span class="nav-text">九、连接测试</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2019 &mdash; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-snowflake-o"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">EkEk</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://jeremyekek-github-io.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://jeremyekek.github.io/2019/02/07/搭建OpenVPN服务(Ubuntu16)/';
+          this.page.identifier = '2019/02/07/搭建OpenVPN服务(Ubuntu16)/';
+          this.page.title = '搭建OpenVPN服务(Ubuntu16)';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://jeremyekek-github-io.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

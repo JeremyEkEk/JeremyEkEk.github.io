@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="nmap,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="一、介绍nmap (network mapper) 最早是Linux中扫描和嗅探工具，网络连接端扫描工具，主要是探测目标机器上开启的服务、安全性问题、主机存活等等 二、基本功能 主机探测；（是否开机） 服务版本检测；（端口） 操作系统检测；（OS类型：NT/Linux） 网络路由跟踪； 扫描目标机器上的安全漏洞。（脚本引擎NSE）">
+<meta name="keywords" content="nmap">
+<meta property="og:type" content="article">
+<meta property="og:title" content="nmap笔记">
+<meta property="og:url" content="https://jeremyekek.github.io/2019/03/16/nmap笔记/index.html">
+<meta property="og:site_name" content="EkEk的个人博客">
+<meta property="og:description" content="一、介绍nmap (network mapper) 最早是Linux中扫描和嗅探工具，网络连接端扫描工具，主要是探测目标机器上开启的服务、安全性问题、主机存活等等 二、基本功能 主机探测；（是否开机） 服务版本检测；（端口） 操作系统检测；（OS类型：NT/Linux） 网络路由跟踪； 扫描目标机器上的安全漏洞。（脚本引擎NSE）">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-09-05T12:28:04.820Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="nmap笔记">
+<meta name="twitter:description" content="一、介绍nmap (network mapper) 最早是Linux中扫描和嗅探工具，网络连接端扫描工具，主要是探测目标机器上开启的服务、安全性问题、主机存活等等 二、基本功能 主机探测；（是否开机） 服务版本检测；（端口） 操作系统检测；（OS类型：NT/Linux） 网络路由跟踪； 扫描目标机器上的安全漏洞。（脚本引擎NSE）">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":20,"b2t":true,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://jeremyekek.github.io/2019/03/16/nmap笔记/">
+
+
+
+
+
+  <title>nmap笔记 | EkEk的个人博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">EkEk的个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://jeremyekek.github.io/2019/03/16/nmap笔记/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="EkEk">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EkEk的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">nmap笔记</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2020-09-05T20:28:04+08:00">
+                2020-09-05
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/渗透测试/" itemprop="url" rel="index">
+                    <span itemprop="name">渗透测试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/03/16/nmap笔记/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/03/16/nmap笔记/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="一、介绍"><a href="#一、介绍" class="headerlink" title="一、介绍"></a>一、介绍</h2><p><strong>nmap (network mapper)</strong> 最早是Linux中扫描和嗅探工具，网络连接端扫描工具，主要是探测目标机器上开启的服务、安全性问题、主机存活等等</p>
+<h2 id="二、基本功能"><a href="#二、基本功能" class="headerlink" title="二、基本功能"></a>二、基本功能</h2><ol>
+<li>主机探测；（是否开机）</li>
+<li>服务版本检测；（端口）</li>
+<li>操作系统检测；（OS类型：NT/Linux）</li>
+<li>网络路由跟踪；</li>
+<li>扫描目标机器上的安全漏洞。（脚本引擎NSE）</li>
+</ol>
+<a id="more"></a>
+<h2 id="三、nmap安装"><a href="#三、nmap安装" class="headerlink" title="三、nmap安装"></a>三、nmap安装</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">apt-get update</span><br><span class="line">apt-get isntall nmap</span><br></pre></td></tr></table></figure>
+<h2 id="四、基本用法"><a href="#四、基本用法" class="headerlink" title="四、基本用法"></a>四、基本用法</h2><p>默认情况下，，nmap通过4种方式 — ICMP echo请求（ping）、向443端口发送SYN包、向80端口发送TCP ACK包和ICMP时间戳请求。</p>
+<p><strong>命令行模式</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">nmap -h 			#帮助信息</span><br><span class="line">nmap 	[扫描类型] [选项] [目标]</span><br><span class="line">nmap 192.168.1.100	#对单个目标进行扫描</span><br></pre></td></tr></table></figure>
+<p>端口状态</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">open			#受理TCP连接、接收UDP数据包或者响应SCTP（流控制传输协议）请求</span><br><span class="line">closed			#可以访问端口，但是没有应用程序工作在该端口上</span><br><span class="line">filtered		#被过滤的，探测包被包过滤设备屏蔽</span><br><span class="line">unfiltered		#未过滤的，不确定是否开放</span><br><span class="line">open|filtered	#没有响应，可能是防火墙丢弃数据包</span><br><span class="line">close|filtered	#关闭或者被过滤</span><br></pre></td></tr></table></figure>
+<p>批量扫描</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">nmap 192.168.11.0/24	#扫描整个网段</span><br><span class="line">nmap 192.179.1.1-200	#扫描1-200之间的主机</span><br><span class="line">nmap 192.167.1.1,2,7-40	#十进制的IP区间</span><br><span class="line">nmap 192.168.168.1.0/24 192.10.1.3.1-200	#多网段扫描</span><br></pre></td></tr></table></figure>
+<p>文件扫描</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">echo 192.168.10.11 &gt; titlename</span><br><span class="line">nmap iL titlename（扫描文件）</span><br></pre></td></tr></table></figure>
+<p>随机选择目标 nmap -iR ，例:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap -sS -PS80 -iR 0（无休止去扫描） -p80</span><br></pre></td></tr></table></figure>
+<p>排除扫描</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">nmap 192.168.1.0/24 --exculde 192.168.1.1,255,4-10</span><br><span class="line">				   	--exculde 排除主机/网络</span><br><span class="line">nmap -iL scan_file(要扫的目标) --exculdefile noscan_file(不需要扫)</span><br></pre></td></tr></table></figure>
+<h2 id="五、带有参数的扫描"><a href="#五、带有参数的扫描" class="headerlink" title="五、带有参数的扫描"></a>五、带有参数的扫描</h2><p><strong>TCP扫描</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">-s（Scan）-T（TCP）</span><br><span class="line">nmap -sT 192.168.1.1</span><br><span class="line">#使用-sT实现TCP全连接扫描，扫描过程中有三次握手，建立连接则表明端口开放，扫描速度慢，很有可能被目标主机记录下来，低权限默认选项</span><br><span class="line">nmap -sS 192.168.1.1 </span><br><span class="line">#使用syn的数据包去探测,如果收到ACK，则说明端口开放，扫描速度快，比较隐蔽，高权限默认选项</span><br><span class="line">nmap -sN -p- 192.168.1.1 NULL扫描，不设置任何控制位</span><br><span class="line">默认随机1000	-p 1-1000	-p 20,21,22,23,24,25	-p-	所有端口		</span><br><span class="line">nmap -sF 192.168.1.1	#FIN扫描仅设置FIN标志位</span><br><span class="line">nmap -sX 192.168.1.1	#XMAS扫描，设置FIN、PSH、URG的标识位，返回RST响应即端口关闭，无响应即打开|过滤状态</span><br><span class="line">nmap -sM 192.168.1.1	#对于BSD衍生版本，回复RST响应即端口关闭，端口开放会丢弃</span><br><span class="line">nmap -sA 192.168.1.1	#确定哪些端口被防火墙屏蔽，只有ACK标识位，回复RST，则没有被过滤</span><br><span class="line">nmap -sW 192.168.1.1	#TCP窗口扫描，检测目标返回的RST数据包中的TCP窗口字段，端口开放为正值，关闭为0</span><br><span class="line">nmap -sI 192.168.1.1	#通过指定的僵尸主机发送扫描数据包，本机不与目标主机通信</span><br></pre></td></tr></table></figure>
+<p><strong>UDP扫描</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap -sU 192.168.1.1 -p 53,161	#非常慢，所以可以指定端口扫描</span><br></pre></td></tr></table></figure>
+<p>改善扫描速度主要有：</p>
+<ul>
+<li>进行并发的UDP扫描</li>
+<li>优先扫描常用端口</li>
+<li>防火墙后面扫描</li>
+<li>启用–host-time选项跳过响应过慢的主机</li>
+</ul>
+<p><strong>保存输出</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">nmap 192.168.1.1 -oN 			#交互输出，不显示runtime信息和警告信息</span><br><span class="line">nmap 192.168.1.1 &gt;./result.txt	#将结果写入到文件中</span><br><span class="line">nmap 192.168.1.1 -oX result.xml	#XML格式，可被Nmap图形界面解析，也方便导入数据库</span><br><span class="line">nmap 192.168.1.1 -oG	#方便grep和awk整理扫描结果</span><br><span class="line">nmap 192.168.1.1 -oA	#三种方式输出</span><br><span class="line">xsltproc result.xml -o result.html	#xml转换为html</span><br></pre></td></tr></table></figure>
+<p><strong>时间控制</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">nmap -T 0 192.168.1.1	#每5分钟发送一次数据包，且不会并行发送多组数据，不会被IDS检测到</span><br><span class="line">nmap -T 1 192.168.1.1	#每15秒发送一次数据包，且不会并行发送多组数据</span><br><span class="line">nmap -T 2 192.168.1.1	#每0.4秒发送一次数据包，且不会并行发送多组数据</span><br><span class="line">nmap -T 3 192.168.1.1	#默认模式，同时向多个目标发送多个数据包，自动在扫描时间和网络负载之间平衡</span><br><span class="line">nmap -T 4 192.168.1.1	#对每个目标只扫描5分钟，然后扫描下一台，等待响应时间不超过1.25秒</span><br><span class="line">nmap -T 5 192.168.1.1	#对每个目标只扫描75秒，然后扫描下一台，等待响应时间不超过0.3秒</span><br><span class="line">无特殊需求，默认即可</span><br></pre></td></tr></table></figure>
+<p><strong>常用选项</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">nmap -sV 192.168.1.1	#服务版本识别</span><br><span class="line">nmap -O 192.168.1.1 	#操作系统检测</span><br><span class="line">nmap -Pn 192.168.1.1	#主机屏蔽ping请求，禁用主机检测功能，直接进行扫描</span><br><span class="line">nmap -A 192.168.1.1 	#强力检测，服务版本(-sV)，操作系统(-o)，脚本(-sC)，路由(--traceroute)</span><br></pre></td></tr></table></figure>
+<p>扫描IPv6主机</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap -6 IPv6地址	#只能逐个指定目标进行扫描，端口比IPv4要少，部分服务未支持IPv6</span><br></pre></td></tr></table></figure>
+<p>规避IDS/防火墙检测</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">-f;--mtu		#使用&lt;=8字节数据体的数据包;mtu调整数据包大小，必须是8的整数倍</span><br><span class="line">-D &lt;decoy1,decoy2,ME&gt;RND: number(个数)	</span><br><span class="line">#掺杂伪装假IP，掩盖真实IP，RND随机生成，越往后越好，需要伪装成在线主机，否则容易造成网络拥堵；可以用在ping扫描，端口扫描，操作系统检测，不可用于版本检测和TCP连接扫描</span><br><span class="line">-S &lt;IP_Address&gt;		#源地址哄骗</span><br><span class="line">-e &lt;interface&gt;		#指定网卡接口</span><br><span class="line">--source-port&lt;portnumber&gt;/-g(模拟源端口)		#防火墙限制入站流量使用</span><br><span class="line">--data-length			#改变发送数据包的默认长度，比年被识别出是nmap扫描</span><br><span class="line">--max-parallelism		#限制Nmap并发扫描最大连接数</span><br><span class="line">--scan-delay &lt;time&gt;		#控制发送探测数据的时间间隔，避免达到IDS/IPS端口扫描规则的阈值</span><br><span class="line">--data-length &lt;number&gt;	#发送报文时 附加随机数据</span><br><span class="line">--randomize-hosts		#对目标主机的顺序随机排列</span><br><span class="line">--spoof-mac &lt;mac address，prefix，or vendor name&gt;	#MAC地址哄骗</span><br></pre></td></tr></table></figure>
+<p>官方文档：<a href="https://nmap.org/man/zh/man-bypass-firewalls-ids.html" target="_blank" rel="noopener">https://nmap.org/man/zh/man-bypass-firewalls-ids.html</a></p>
+<h2 id="六、高级用法"><a href="#六、高级用法" class="headerlink" title="六、高级用法"></a>六、高级用法</h2><p><strong>脚本引擎，扫描安全漏洞</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">--script	#使用脚本探测漏洞</span><br><span class="line">nmap --script	#脚本名称 目标</span><br><span class="line">#在nmap的安装路径中有 /script/</span><br><span class="line">#在该目录中存放nmap的脚本</span><br><span class="line">nmap -sC/-A/--script=default 192.168.1.1		#启动默认类NSE脚本</span><br><span class="line">nmap --script=vuln 203.207.118.201				#自动测试漏洞</span><br><span class="line">nmap 目标 --script=auth,vuln					  #判断常见的漏洞并扫描端口</span><br><span class="line">nmap --script http-enum,http-headers,http-methods,http-php-version -p 80 192.168.1.1</span><br><span class="line">#分析HTTP服务</span><br><span class="line">nmap --script smb-vuln-ms17-010 192.168.11.232	#永恒之蓝</span><br><span class="line">nmap --script smb-check-vulns 192.168.11.232	#MS08-067（SMB）溢出漏洞</span><br><span class="line">nmap --script ssl-heartbleed 192.168.11.232		#探测心脏滴血漏洞</span><br><span class="line"></span><br><span class="line">nmap 目标 --script=ftp-brute,imap-brute,smtp-brute,pop3-brute,mongodb-brute,redis-brute,ms-sql-brute,rlogin-brute,rsync-brute,mysql-brute,pgsql-brute,oracle-sid-brute,oracle-brute,rtsp-url-brute,snmp-brute,svn-brute,telnet-brute,vnc-brute,xmpp-brute		#扫描端口并且标记可以爆破的服务</span><br><span class="line"></span><br><span class="line">nmap 目标 --script=dns-zone-transfer,ftp-anon,ftp-proftpd-backdoor,ftp-vsftpd-backdoor,ftp-vuln-cve2010-4221,http-backup-finder,http-cisco-anyconnect,http-iis-short-name-brute,http-put,http-php-version,http-shellshock,http-robots.txt,http-svn-enum,http-webdav-scan,iis-buffer-overflow,iax2-version,memcached-info,mongodb-info,msrpc-enum,ms-sql-info,mysql-info,nrpe-enum,pptp-version,redis-info,rpcinfo,samba-vuln-cve-2012-1182,smb-vuln-ms08-067,smb-vuln-ms17-010,snmp-info,sshv1,xmpp-info,tftp-enum,teamspeak2-version		#精确判断漏洞并扫描端口</span><br><span class="line"></span><br><span class="line">nmap -iL host.txt --script=auth,vuln,ftp-brute,imap-brute,smtp-brute,pop3-brute,mongodb-brute,redis-brute,ms-sql-brute,rlogin-brute,rsync-brute,mysql-brute,pgsql-brute,oracle-sid-brute,oracle-brute,rtsp-url-brute,snmp-brute,svn-brute,telnet-brute,vnc-brute,xmpp-brute &gt; scan.txt</span><br></pre></td></tr></table></figure>
+<p>参考：</p>
+<p>Nmap参考指南(真香)：<a href="https://nmap.org/man/zh/index.html#man-description" target="_blank" rel="noopener">https://nmap.org/man/zh/index.html#man-description</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/nmap/" rel="tag"># nmap</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/16/CVE-2018-20250-WinRAR远程代码执行漏洞/" rel="next" title="CVE-2018-20250-WinRAR远程代码执行漏洞">
+                <i class="fa fa-chevron-left"></i> CVE-2018-20250-WinRAR远程代码执行漏洞
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/03/16/nmap基础命令/" rel="prev" title="nmap基础命令">
+                nmap基础命令 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">EkEk</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">44</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/JeremyEkEk" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i></a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:jeremy.0394@foxmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i></a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.cnblogs.com/anbus/p/10046695.html" title="ArcticShell" target="_blank">ArcticShell</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://github.com/Micropoor/Micro8" title="Micropoor亮神" target="_blank">Micropoor亮神</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.csdn.net/zwjzqqb/article/list/7" title="VincentQB" target="_blank">VincentQB</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://github.com/PyxYuYu/MyBlog" title="PyxYuYu" target="_blank">PyxYuYu</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://3gstudent.github.io/3gstudent.github.io/" title="三好学生" target="_blank">三好学生</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.leavesongs.com/" title="离别歌" target="_blank">离别歌</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.inksec.cn/archives/page/2/" title="阿墨" target="_blank">阿墨</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.barradell-johns.com/" title="JACK" target="_blank">JACK</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://adsecurity.org/" title="AD安全" target="_blank">AD安全</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.fuzzysecurity.com" title="FuzzySecurity" target="_blank">FuzzySecurity</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.hexacorn.com/" title="Hexacorn" target="_blank">Hexacorn</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://evi1cg.me/" title="Evi1cg" target="_blank">Evi1cg</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://b404.xyz/" title="Jirairya" target="_blank">Jirairya</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://payloads.online/" title="倾旋" target="_blank">倾旋</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://times0ng.github.io/" title="Times0g" target="_blank">Times0g</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://firstlove2016.cn/" title="初恋的技术分享" target="_blank">初恋的技术分享</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://422926799.github.io/" title="九世" target="_blank">九世</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.netwrix.com/" title="netwrix" target="_blank">netwrix</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://klionsec.github.io/" title="klion" target="_blank">klion</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://jivoi.github.io/archive/" title="EK" target="_blank">EK</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://securityer.lofter.com/view" title="走过岁月" target="_blank">走过岁月</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.webbaozi.com/" title="baozi" target="_blank">baozi</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.myh0st.cn/" title="信安之路" target="_blank">信安之路</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://jdrops.dropsec.xyz/" title="Jdrops" target="_blank">Jdrops</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://exploit.kitploit.com/" title="exploit collector" target="_blank">exploit collector</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://zjw.dropsec.xyz/" title="Hello_C" target="_blank">Hello_C</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://cxsecurity.com/dorks" title="cxsecurity" target="_blank">cxsecurity</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://pentest.blog/" title="pentest" target="_blank">pentest</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://rcoil.me/" title="rcoil" target="_blank">rcoil</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://dayu.ink/" title="Dayu" target="_blank">Dayu</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://04z.net/" title="04z" target="_blank">04z</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.attackdebris.com/" title="attsckdebris" target="_blank">attsckdebris</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、介绍"><span class="nav-text">一、介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、基本功能"><span class="nav-text">二、基本功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、nmap安装"><span class="nav-text">三、nmap安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、基本用法"><span class="nav-text">四、基本用法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、带有参数的扫描"><span class="nav-text">五、带有参数的扫描</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#六、高级用法"><span class="nav-text">六、高级用法</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2019 &mdash; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-snowflake-o"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">EkEk</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://jeremyekek-github-io.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://jeremyekek.github.io/2019/03/16/nmap笔记/';
+          this.page.identifier = '2019/03/16/nmap笔记/';
+          this.page.title = 'nmap笔记';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://jeremyekek-github-io.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

